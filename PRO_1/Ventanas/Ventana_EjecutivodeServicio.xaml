@@ -16,7 +16,7 @@
                 <MenuItem Header="ABM Cliente" FontSize="15" Click="ABMClienteMenu_Click"></MenuItem>
                 <MenuItem Header="Recibo De Cliente" FontSize="15" Click="ReciboDeClienteMenu_Click"></MenuItem>
             </Menu>
-            <Grid Name="grid_SeccionBajaCliente" Visibility="Visible">
+            <Grid Name="grid_SeccionABMCliente" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -37,6 +37,7 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ListaDeServicios}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -56,6 +57,7 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
+                                
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -97,7 +99,7 @@
 
                      <StackPanel Orientation="Horizontal">
                          <Label FontSize="17" Content="Matricula del vehiculo de Cliente:"></Label>
-                        <TextBox x:Name="MatriculaVehiculoActualCliente_TextBox" Width="220" Margin="0,3,0,3" ></TextBox>
+                        <Label x:Name="MatriculaVehiculoActualCliente_TextBox" Width="220" Margin="0,3,0,3" ></Label>
                      </StackPanel>
 
                      <Label Background="NavajoWhite"></Label>
@@ -159,7 +161,8 @@
                     <Button Content="Ingresar Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="IngresarCliente_Click"></Button>
                 </StackPanel>
             </Grid>
-            <Grid Name="grid_SeccionFacturacion" Visibility="Collapsed">
+            
+            <Grid Name="grid_SeccionFacturacion" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -173,7 +176,11 @@
                 <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Name="OrdenarPantallaDerecha">
 
                     <Label Content="Cliente seleccionado" HorizontalContentAlignment="Center" FontSize="20" Width="500" Background="MediumPurple" />
-                    <ComboBox Name="Combobos_ClientesFacturacion"></ComboBox>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Usuario:" FontSize="15" ></Label>
+                        <Label Name="Label_UsuarioSeleccionado" FontSize="13"></Label>
+                        <Label Name="Label_MatriculaUsuarioSeleccionado" FontSize="13"></Label>
+                    </StackPanel>
 
                     <Grid Name="Grid_Ventas">
                         <StackPanel Name="Alineacion_Stack" Visibility="Hidden">
@@ -219,11 +226,11 @@
 
                     </StackPanel>
                     <Label Content="Servicios:"></Label>
-                    <ListView Name="ListView_Servicios" SelectionMode="Multiple">
+                    <ListView MaxHeight="500" Name="Lista_ServiciosSolicitados" SelectionMode="Multiple" ItemsSource="{Binding listServicios}">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding nombre}" Header="Servicio:" Width="auto"></GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding precio}" Header="Costo:" Width="auto"></GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding nombreServicio}" Header="Servicio:" Width="auto"></GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding precioServicio}" Header="Costo:" Width="auto"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -254,15 +261,15 @@
 
                         <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="2" Name="OrdenarListView" >
 
-                            <ListView FontSize="15" Height="350" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_Cliente" SelectionMode="Multiple" d:ItemsSource="{d:SampleData ItemCount=5}">
-                                <ListView.View>
+                            <ListView FontSize="15" Height="350" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="Lista_Cliente_SelectionChanged">
+                                <ListView.View> 
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Apellido}" Header="Apellido" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
-                                        <GridViewColumn DisplayMemberBinding="{Binding ListaDeServicios}" Width="auto"/>
+                                        
                                     </GridView>
                                 </ListView.View>
                             </ListView>

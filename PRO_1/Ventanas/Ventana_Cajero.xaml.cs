@@ -21,13 +21,16 @@ namespace PRO_1.Ventanas
     public partial class Ventana_Cajero : Window
     {
         List<ListServicios> listServicios = new List<ListServicios>();
-        Clientes acceso_Cliente;
+        ListaDeClientes acceso_Cliente;
         
 
-        public Ventana_Cajero(Clientes objetocliente)
+        public Ventana_Cajero(ListaDeClientes objetocliente)
         {
-            this.acceso_Cliente = objetocliente;
+            
             InitializeComponent();
+
+            DataContext = objetocliente;
+            this.acceso_Cliente = objetocliente;
 
 
         }
@@ -39,7 +42,7 @@ namespace PRO_1.Ventanas
             {
                 foreach (var item in listServicios)
                 {
-                    x = x + item.precio;
+                    x = x + item.precioServicio;
                 }
             }
             else { x = 0; }
@@ -50,7 +53,7 @@ namespace PRO_1.Ventanas
         {
             if (Combobos_Clientes.SelectedItem != null)
             {
-                listServicios.Add(new ListServicios() { nombre = nombre, precio = precio});
+                listServicios.Add(new ListServicios() { nombreServicio = nombre, precioServicio = precio});
 
                 ListView_Servicios.ItemsSource = null;
                 ListView_Servicios.ItemsSource = listServicios;
@@ -80,19 +83,9 @@ namespace PRO_1.Ventanas
         //Actualiza la lista de Clientes
         private void Actualizar_Click(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<Clientes> clientes = new ObservableCollection<Clientes>();
+            Lista_Cliente.ItemsSource = null;
+            Lista_Cliente.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
-            foreach (var Cliente_Objeto in acceso_Cliente.GetCliente())
-            {
-                clientes.Add(new Clientes() {Nombre = Cliente_Objeto.Nombre, Apellido = Cliente_Objeto.Apellido, Telefono = Cliente_Objeto.Telefono, Marca = Cliente_Objeto.Marca, Modelo = Cliente_Objeto.Modelo, Matricula = Cliente_Objeto.Matricula });
-                string toCombo = $"{Cliente_Objeto.Nombre} {Cliente_Objeto.Apellido} {Cliente_Objeto.Telefono} {Cliente_Objeto.Matricula}";
-                Combobos_Clientes.Items.Add(toCombo);
-            }
-
-            Lista_Cliente.ItemsSource = clientes;
-
-            
-                
         }
 
         private void Autorizar_Click(object sender, RoutedEventArgs e)

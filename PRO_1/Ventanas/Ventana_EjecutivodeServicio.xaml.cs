@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,41 +23,57 @@ namespace PRO_1.Ventanas
     public partial class Ventana_EjecutivodeServicio : Window
     {
         List<ListServicios> listServicios = new List<ListServicios>();
-        Clientes acceso_Cliente;
+        ListaDeClientes acceso_Cliente;
 
-        public Ventana_EjecutivodeServicio(Clientes objetocliente)
+        public Ventana_EjecutivodeServicio(ListaDeClientes objetocliente)
         {
             this.acceso_Cliente = objetocliente;
+            DataContext = acceso_Cliente;
             InitializeComponent();
         }
 
-        public void UpdatePrecioTotal()
+        public void UpdatePrecioTotal(string matriculaUsuario)
         {
             int x = 0;
-            if (listServicios.Count > 0)
+            foreach(var item in acceso_Cliente.ListaGlobalClientes)
             {
-                foreach (var item in listServicios)
+                if (item.Matricula.Equals(matriculaUsuario))
                 {
-                    x = x + item.precio;
+                    foreach(var itemListaDeServicios in item.ListaDeServicios)
+                    {
+                        x = x + itemListaDeServicios.PrecioServicio;
+                    }
+
                 }
             }
-            else { x = 0; }
             PrecioTotal_Label.Content = "Total: " + x;
         }
 
-        public void AgregarServicioALista(string nombre, int precio)
+        public void AgregarServicioALista(string nombreServicio, int precioServicio)
         {
-            if (Combobos_ClientesFacturacion.SelectedItem != null)
+            if (Label_UsuarioSeleccionado.Content != null)
             {
-                listServicios.Add(new ListServicios() { nombre = nombre, precio = precio });
+                foreach(var item in acceso_Cliente.ListaGlobalClientes)
+                {
+                    if(item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                    {
+                        var itemModificacionDeLista = item.ListaDeServicios;
+                        itemModificacionDeLista.Add((nombreServicio, precioServicio));
 
-                ListView_Servicios.ItemsSource = null;
-                ListView_Servicios.ItemsSource = listServicios;
+                        listServicios.Add(new ListServicios() { nombreServicio = nombreServicio, precioServicio = precioServicio });
+
+                        Lista_ServiciosSolicitados.ItemsSource = null;
+                        Lista_ServiciosSolicitados.ItemsSource = listServicios;
+
+                    }
+                }
             }
             else
             {
                 MessageBox.Show("ERROR: Seleccionar un cliente!");
             }
+
+            Lista_ServiciosSolicitados.DataContext = acceso_Cliente.ListaGlobalClientes;
         }
 
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
@@ -78,28 +95,14 @@ namespace PRO_1.Ventanas
         //Actualiza la lista de Clientes
         private void Actualizar_Click(object sender, RoutedEventArgs e)
         {
-            ObservableCollection<Clientes> clientes = new ObservableCollection<Clientes>();
-
-            foreach (var Cliente_Objeto in acceso_Cliente.GetCliente())
-            {
-                clientes.Add(new Clientes() { Nombre = Cliente_Objeto.Nombre, Apellido = Cliente_Objeto.Apellido, Telefono = Cliente_Objeto.Telefono, Marca = Cliente_Objeto.Marca, Modelo = Cliente_Objeto.Modelo, Matricula = Cliente_Objeto.Matricula,  });
-                string toComboParcial = $"{Cliente_Objeto.Nombre} {Cliente_Objeto.Apellido} {Cliente_Objeto.Telefono} {Cliente_Objeto.Matricula}";
-                string toComboCompleto = $"{Cliente_Objeto.Nombre} {Cliente_Objeto.Apellido} {Cliente_Objeto.Telefono} {Cliente_Objeto.Marca} {Cliente_Objeto.Modelo} {Cliente_Objeto.Matricula}";
-                
-                Combobos_ClientesFacturacion.Items.Clear();
-                Combobos_ClientesFacturacion.Items.Add(toComboParcial);
-
-            }
+            Lista_BajaClientes.ItemsSource = null;
+            Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
             Lista_ClientesParaModificar.ItemsSource = null;
-            Lista_ClientesParaModificar.ItemsSource = clientes;
+            Lista_ClientesParaModificar.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
-            Lista_BajaClientes.ItemsSource = null;
-            Lista_BajaClientes.ItemsSource = clientes;
-
-            Lista_Cliente.ItemsSource = null;
-            Lista_Cliente.ItemsSource = clientes;
-
+            Lista_ClienteRecibo.ItemsSource = null;
+            Lista_ClienteRecibo.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
 
         }
@@ -141,18 +144,11 @@ namespace PRO_1.Ventanas
 
         }
 
-        private void Servicios_Selected_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-
         private void Alineacion1Tren_Click(object sender, RoutedEventArgs e)
         {
 
             AgregarServicioALista("Alineacion para 1 tren", Precios.alineacion1Tren);
-            UpdatePrecioTotal();
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
 
 
@@ -161,7 +157,7 @@ namespace PRO_1.Ventanas
         private void Alineacion2Tren_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Alineacion para 2 trenes", Precios.alineacion2Tren);
-            UpdatePrecioTotal();
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
 
         }
@@ -169,41 +165,52 @@ namespace PRO_1.Ventanas
         private void Motocicleta_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Lavado de Moto", Precios.lavadomoto);
-            UpdatePrecioTotal();
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
         private void Auto_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Lavado de Auto", Precios.lavadoauto);
-            UpdatePrecioTotal();
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
         }
 
         private void Camioneta_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Lavado de Camioneta", Precios.lavadocamioneta);
-            UpdatePrecioTotal();
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
         private void CamionChico_Click(object sender, RoutedEventArgs e)
         {
 
             AgregarServicioALista("Lavado de Camion Chico", Precios.lavadocamionchico);
-            UpdatePrecioTotal();
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
         private void CamionUtilitario_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Lavado de Camion Utilitario", Precios.lavadocamionutilitario);
-            UpdatePrecioTotal();
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
         private void EliminarTodoDeLista_Click(object sender, RoutedEventArgs e)
         {
-            listServicios.Clear();
-            ListView_Servicios.ItemsSource = null;
-            ListView_Servicios.ItemsSource = listServicios;
-            UpdatePrecioTotal();
+            Lista_ServiciosSolicitados.ItemsSource = null;
+            Lista_ServiciosSolicitados.ItemsSource = acceso_Cliente.ListaGlobalClientes;
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString()); ;
+        }
+
+        private void BalanceoAuto_Click(object sender, RoutedEventArgs e)
+        {
+            AgregarServicioALista("Balanceo de Auto", Precios.balanceoauto);
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+        }
+
+        private void BalanceoCamioneta_Click(object sender, RoutedEventArgs e)
+        {
+            AgregarServicioALista("Balanceo de Camioneta", Precios.balanceoamioneta);
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
         private void EliminarSeleccionadoDeLista_Click(object sender, RoutedEventArgs e)
@@ -212,74 +219,54 @@ namespace PRO_1.Ventanas
 
         }
 
-
-
-        private void BalanceoAuto_Click(object sender, RoutedEventArgs e)
-        {
-            AgregarServicioALista("Balanceo de Auto", Precios.balanceoauto);
-            UpdatePrecioTotal();
-        }
-        private void BalanceoCamioneta_Click(object sender, RoutedEventArgs e)
-        {
-            AgregarServicioALista("Balanceo de Camioneta", Precios.balanceoamioneta);
-            UpdatePrecioTotal();
-        }
-
         private void ABMClienteMenu_Click(object sender, RoutedEventArgs e)
         {
             grid_SeccionFacturacion.Visibility = Visibility.Collapsed;
-            grid_SeccionBajaCliente.Visibility = Visibility.Visible;
+            grid_SeccionABMCliente.Visibility = Visibility.Visible;
         }
 
         private void ReciboDeClienteMenu_Click(object sender, RoutedEventArgs e)
         {
             grid_SeccionFacturacion.Visibility = Visibility.Visible;
-            grid_SeccionBajaCliente.Visibility = Visibility.Collapsed;
+            grid_SeccionABMCliente.Visibility = Visibility.Collapsed;
         }
 
         private void IngresarCliente_Click(object sender, RoutedEventArgs e)
         {
-            if(int.TryParse(TelefonoCliente_TextBox.Text, out int val))
+            bool existeMatricula = acceso_Cliente.ListaGlobalClientes.Any(item => item.Matricula == MatriculaVehiculoCliente_TextBox.Text);
+
+            if (!existeMatricula)
             {
-                acceso_Cliente.AgregarCliente(NombreCliente_TextBox.Text,ApellidoCliente_TextBox.Text,int.Parse(TelefonoCliente_TextBox.Text),MarcaVehiculoCliente_TextBox.Text,ModeloVehiculoCliente_TextBox.Text,MatriculaVehiculoCliente_TextBox.Text);
+                Clientes Cliente = new Clientes(NombreCliente_TextBox.Text, ApellidoCliente_TextBox.Text,MarcaVehiculoCliente_TextBox.Text, ModeloVehiculoCliente_TextBox.Text, MatriculaVehiculoCliente_TextBox.Text, Convert.ToInt16(TelefonoCliente_TextBox.Text));
+
+                acceso_Cliente.ListaGlobalClientes.Add(Cliente);
+                MessageBox.Show($"Usuario {MatriculaVehiculoCliente_TextBox.Text}, creado.");
             }
-            else
-            {
-                MessageBox.Show("ERROR: El cliente ingresado no es valido");
-            }
+            else MessageBox.Show("ERROR: Esta matrícula ya está ingresada en el sistema. Modificar o Eliminar el respectivo.");
             
+
         }
 
         
 
         private void GuardarCliente_Click(object sender, RoutedEventArgs e)
         {
-            var SelectedItem = (Clientes)Lista_ClientesParaModificar.SelectedItem;
-            List<(string NombreServicio, int PrecioServicio)> SelectedItemList;
-            if (SelectedItem != null)
+            for (int i = acceso_Cliente.ListaGlobalClientes.Count - 1; i >= 0; i--)
             {
-                foreach (var item in acceso_Cliente.GetCliente())
+                var item = acceso_Cliente.ListaGlobalClientes[i];
+                if (item.Matricula == MatriculaVehiculoActualCliente_TextBox.Content.ToString())
                 {
+                    MessageBox.Show(MatriculaVehiculoActualCliente_TextBox.Content.ToString());
 
-                    if (SelectedItem.Matricula == item.Matricula)
-                    {
-                        SelectedItemList = item.ListaDeServicios;
+                    acceso_Cliente.ListaGlobalClientes.Remove(item);
 
-                        bool existencia;
-                        foreach(var item_ in acceso_Cliente.GetCliente())
-                        {
-                            
-                        }
-                        acceso_Cliente.RemoverCliente(item.Matricula);
-                        acceso_Cliente.AgregarCliente(NombreActualCliente_TextBox.Text ,ApellidoActualCliente_TextBox.Text, int.Parse(TelefonoActualCliente_TextBox.Text), MarcaVehiculoActualCliente_TextBox.Text, ModeloVehiculoActualCliente_TextBox.Text, MatriculaVehiculoActualCliente_TextBox.Text);
+                    Clientes clientes = new Clientes(NombreActualCliente_TextBox.Text, ApellidoActualCliente_TextBox.Text, MarcaVehiculoActualCliente_TextBox.Text, ModeloVehiculoActualCliente_TextBox.Text, MatriculaVehiculoActualCliente_TextBox.Content.ToString(), Convert.ToInt32(TelefonoActualCliente_TextBox.Text));
 
-                        MessageBox.Show("Cliente modificado");
-                    }
+                    acceso_Cliente.ListaGlobalClientes.Add(clientes);
+
+                    MessageBox.Show("Usuario modificado!");
                 }
             }
-            else MessageBox.Show("Debe Seleccionar un cliente");
-            
-            
 
         }
 
@@ -297,15 +284,32 @@ namespace PRO_1.Ventanas
                 TelefonoActualCliente_TextBox.Text = SelectedItem.Telefono.ToString();
                 MarcaVehiculoActualCliente_TextBox.Text = SelectedItem.Marca;
                 ModeloVehiculoActualCliente_TextBox.Text = SelectedItem.Modelo;
-                MatriculaVehiculoActualCliente_TextBox.Text = SelectedItem.Matricula;
+                MatriculaVehiculoActualCliente_TextBox.Content = SelectedItem.Matricula;
             }
-            else MessageBox.Show("Debe Seleccionar un cliente");
+            
 
         }
 
         private void BajaACliente_Click(object sender, RoutedEventArgs e)
         {
+            var SelectedItem = (Clientes)Lista_BajaClientes.SelectedItem;
 
+            if(SelectedItem != null)
+            {
+                acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
+            }
+               
+        }
+
+        private void Lista_Cliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var SelectedItem = (Clientes)Lista_ClienteRecibo.SelectedItem;
+
+            if (SelectedItem != null)
+            {
+                Label_UsuarioSeleccionado.Content = $"{SelectedItem.Nombre} {SelectedItem.Apellido} {SelectedItem.Telefono} ";
+                Label_MatriculaUsuarioSeleccionado.Content = SelectedItem.Matricula;
+            }
         }
     }
 }

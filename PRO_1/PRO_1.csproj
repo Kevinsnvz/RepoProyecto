@@ -108,6 +108,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Clases\Adm_Ventanas.cs" />
+    <Compile Include="Clases\ListaDeClientes.cs" />
     <Compile Include="Clases\ListServicios.cs" />
     <Compile Include="Clases\Precios.cs" />
     <Compile Include="Ventanas\Ventana_Cajero.xaml.cs">

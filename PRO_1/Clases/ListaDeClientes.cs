@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PRO_1.Clases
 {
-    public class ListServicios
+    public class ListaDeClientes
     {
-        public string nombreServicio { get; set; }
-        public int precioServicio { get; set; }
-        
+        public List<Clientes> ListaGlobalClientes { get; set; } = new List<Clientes>();
+
+
     }
 }

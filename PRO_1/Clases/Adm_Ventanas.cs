@@ -12,7 +12,7 @@ namespace PRO_1.Clases
     
     public class Adm_Ventanas
     {
-        public static Clientes copiade_Cliente = new Clientes();
+        static ListaDeClientes deClientes = new ListaDeClientes();
 
         //Abrir una ventana dependiendo del rol en string que se le ingrese
         public static void AbrirVentanaPorRol(string rol)
@@ -20,12 +20,12 @@ namespace PRO_1.Clases
             switch (rol)
             {
                 case "Cajero":
-                    Ventana_Cajero ventana_Cajero = new Ventana_Cajero(copiade_Cliente);
+                    Ventana_Cajero ventana_Cajero = new Ventana_Cajero(deClientes);
                     ventana_Cajero.Show();
                     Application.Current.MainWindow?.Close();
                     break;
                 case "Ej_serv":
-                    Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(copiade_Cliente);
+                    Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(deClientes);
                     ventana_ejecutivo.Show();
                     Application.Current.MainWindow?.Close();
                     break;
@@ -44,11 +44,11 @@ namespace PRO_1.Clases
                     mainWindow.Show();
                     break;
                 case "Ventana_Cajero":
-                    Ventana_Cajero ventana_Cajero = new Ventana_Cajero(copiade_Cliente);
+                    Ventana_Cajero ventana_Cajero = new Ventana_Cajero(deClientes);
                     ventana_Cajero.Show();
                     break;
                 case "Ventana_EjecutivodeServicio":
-                    Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(copiade_Cliente);
+                    Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(deClientes);
                     ventana_ejecutivo.Show();
                     break;
                 default:
