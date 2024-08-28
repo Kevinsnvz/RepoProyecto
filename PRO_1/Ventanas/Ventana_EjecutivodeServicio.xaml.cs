@@ -237,7 +237,7 @@ namespace PRO_1.Ventanas
 
             if (!existeMatricula)
             {
-                Clientes Cliente = new Clientes(NombreCliente_TextBox.Text, ApellidoCliente_TextBox.Text,MarcaVehiculoCliente_TextBox.Text, ModeloVehiculoCliente_TextBox.Text, MatriculaVehiculoCliente_TextBox.Text, Convert.ToInt16(TelefonoCliente_TextBox.Text));
+                Clientes Cliente = new Clientes(NombreCliente_TextBox.Text, ApellidoCliente_TextBox.Text,MarcaVehiculoCliente_TextBox.Text, ModeloVehiculoCliente_TextBox.Text, MatriculaVehiculoCliente_TextBox.Text, Convert.ToInt32(TelefonoCliente_TextBox.Text));
 
                 acceso_Cliente.ListaGlobalClientes.Add(Cliente);
                 MessageBox.Show($"Usuario {MatriculaVehiculoCliente_TextBox.Text}, creado.");

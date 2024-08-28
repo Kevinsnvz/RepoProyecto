@@ -37,7 +37,6 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding ListaDeServicios}"></GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -226,7 +225,7 @@
 
                     </StackPanel>
                     <Label Content="Servicios:"></Label>
-                    <ListView MaxHeight="500" Name="Lista_ServiciosSolicitados" SelectionMode="Multiple" ItemsSource="{Binding listServicios}">
+                    <ListView MaxHeight="500" Name="Lista_ServiciosSolicitados" SelectionMode="Multiple" ItemsSource="{Binding ListServicios}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding nombreServicio}" Header="Servicio:" Width="auto"></GridViewColumn>
@@ -240,7 +239,10 @@
                         <Button Margin="15,0,0,0" HorizontalAlignment="Center" Content="Eliminar Seleccionado" FontSize="20" Click="EliminarSeleccionadoDeLista_Click"></Button>
                     </StackPanel>
 
-                </StackPanel>
+                    <Label Background="MediumPurple"></Label>
+                    <Button Content="Enviar a Cajero" FontSize="20" Width="150"></Button>
+
+                    </StackPanel>
 
 
                 <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Name="OrdenarPantallaIzquierda">
@@ -261,7 +263,7 @@
 
                         <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="2" Name="OrdenarListView" >
 
-                            <ListView FontSize="15" Height="350" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="Lista_Cliente_SelectionChanged">
+                            <ListView FontSize="15" MinHeight="100" MaxHeight="250" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="Lista_Cliente_SelectionChanged">
                                 <ListView.View> 
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
