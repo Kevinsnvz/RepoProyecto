@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,13 +38,21 @@ namespace PRO_1.Ventanas
             int x = 0;
             foreach(var item in acceso_Cliente.ListaGlobalClientes)
             {
-                if (item.Matricula.Equals(matriculaUsuario))
+                try
                 {
-                    foreach(var itemListaDeServicios in item.ListaDeServicios)
+                    if (item.Matricula.Equals(matriculaUsuario))
                     {
-                        x = x + itemListaDeServicios.PrecioServicio;
-                    }
+                        foreach (var itemListaDeServicios in item.ListaDeServicios)
+                        {
+                            x = x + itemListaDeServicios.PrecioServicio;
+                        }
 
+                    }
+                }
+                catch(ArgumentNullException)
+                {
+
+                    MessageBox.Show("ERROR: Se debe seleccionar un usuario de matricula valida.");
                 }
             }
             PrecioTotal_Label.Content = "Total: " + x;
@@ -111,35 +120,35 @@ namespace PRO_1.Ventanas
         {
 
         }
-        private void Balanceo_Click(object sender, RoutedEventArgs e)
+        private void BalanceoSeccion_Click(object sender, RoutedEventArgs e)
         {
             Alineacion_Stack.Visibility = Visibility.Hidden;
             Lavado_stack.Visibility = Visibility.Hidden;
             Balanceo_Stack.Visibility = Visibility.Visible;
             Neumatico_stack.Visibility = Visibility.Hidden;
         }
-        private void Lavadero_Click(object sender, RoutedEventArgs e)
+        private void LavaderoSeccion_Click(object sender, RoutedEventArgs e)
         {
             Alineacion_Stack.Visibility = Visibility.Hidden;
             Lavado_stack.Visibility = Visibility.Visible;
             Balanceo_Stack.Visibility = Visibility.Hidden;
             Neumatico_stack.Visibility = Visibility.Hidden;
         }
-        private void Alineacion_Click(object sender, RoutedEventArgs e)
+        private void AlineacionSeccion_Click(object sender, RoutedEventArgs e)
         {
             Alineacion_Stack.Visibility = Visibility.Visible;
             Lavado_stack.Visibility = Visibility.Hidden;
             Balanceo_Stack.Visibility = Visibility.Hidden;
             Neumatico_stack.Visibility = Visibility.Hidden;
         }
-        private void Neumatico_Click(object sender, RoutedEventArgs e)
+        private void NeumaticoSeccion_Click(object sender, RoutedEventArgs e)
         {
             Alineacion_Stack.Visibility = Visibility.Hidden;
             Lavado_stack.Visibility = Visibility.Hidden;
             Balanceo_Stack.Visibility = Visibility.Hidden;
             Neumatico_stack.Visibility = Visibility.Visible;
         }
-        private void Parking_Click(object sender, RoutedEventArgs e)
+        private void ParkingSeccion_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -162,33 +171,33 @@ namespace PRO_1.Ventanas
 
         }
 
-        private void Motocicleta_Click(object sender, RoutedEventArgs e)
+        private void MotocicletaLavado_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Lavado de Moto", Precios.lavadomoto);
             UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
-        private void Auto_Click(object sender, RoutedEventArgs e)
+        private void AutoLavado_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Lavado de Auto", Precios.lavadoauto);
             UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
         }
 
-        private void Camioneta_Click(object sender, RoutedEventArgs e)
+        private void CamionetaLavado_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Lavado de Camioneta", Precios.lavadocamioneta);
             UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
-        private void CamionChico_Click(object sender, RoutedEventArgs e)
+        private void CamionChicoLavado_Click(object sender, RoutedEventArgs e)
         {
 
             AgregarServicioALista("Lavado de Camion Chico", Precios.lavadocamionchico);
             UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
-        private void CamionUtilitario_Click(object sender, RoutedEventArgs e)
+        private void CamionUtilitarioLavado_Click(object sender, RoutedEventArgs e)
         {
             AgregarServicioALista("Lavado de Camion Utilitario", Precios.lavadocamionutilitario);
             UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
@@ -196,9 +205,27 @@ namespace PRO_1.Ventanas
 
         private void EliminarTodoDeLista_Click(object sender, RoutedEventArgs e)
         {
+            if (Label_UsuarioSeleccionado.Content != null)
+            {
+                foreach (var item in acceso_Cliente.ListaGlobalClientes)
+                {
+                    if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                    {
+                        var itemModificacionDeLista = item.ListaDeServicios;
+                        itemModificacionDeLista.Clear();
+                        listServicios.Clear();
+
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("ERROR: Seleccionar un cliente!");
+            }
+
             Lista_ServiciosSolicitados.ItemsSource = null;
             Lista_ServiciosSolicitados.ItemsSource = acceso_Cliente.ListaGlobalClientes;
-            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString()); ;
+            UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
         private void BalanceoAuto_Click(object sender, RoutedEventArgs e)
@@ -231,14 +258,27 @@ namespace PRO_1.Ventanas
             grid_SeccionABMCliente.Visibility = Visibility.Collapsed;
         }
 
-        private void IngresarCliente_Click(object sender, RoutedEventArgs e)
+        private void CrearCliente_Click(object sender, RoutedEventArgs e)
         {
             bool existeMatricula = acceso_Cliente.ListaGlobalClientes.Any(item => item.Matricula == MatriculaVehiculoCliente_TextBox.Text);
 
             if (!existeMatricula)
             {
-                Clientes Cliente = new Clientes(NombreCliente_TextBox.Text, ApellidoCliente_TextBox.Text,MarcaVehiculoCliente_TextBox.Text, ModeloVehiculoCliente_TextBox.Text, MatriculaVehiculoCliente_TextBox.Text, Convert.ToInt32(TelefonoCliente_TextBox.Text));
-
+                if (string.IsNullOrEmpty(NombreCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(ApellidoCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(MarcaVehiculoCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(ModeloVehiculoCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(MatriculaVehiculoCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(TelefonoCliente_TextBox.Text)
+                    )
+                {
+                    MessageBox.Show("ERROR: Todos los campos deben estar llenos");
+                    return;
+                }
+                if (!int.TryParse(TelefonoCliente_TextBox.Text, out int t) || TelefonoCliente_TextBox.Text.Length != 9) { MessageBox.Show("ERROR: Ingresar un numero telefonico valido"); return; }
+                string patron = @"^[A-Z]{3}\d{4}$"; Regex regex = new Regex(patron);
+                if(!regex.IsMatch(MatriculaVehiculoCliente_TextBox.Text)) { MessageBox.Show("ERROR: Debe de ingresar una matricula valida. EJ: 'ABC1234'"); return; }
+                Clientes Cliente = new Clientes(NombreCliente_TextBox.Text, ApellidoCliente_TextBox.Text, MarcaVehiculoCliente_TextBox.Text, ModeloVehiculoCliente_TextBox.Text, MatriculaVehiculoCliente_TextBox.Text, Convert.ToInt32(TelefonoCliente_TextBox.Text));
                 acceso_Cliente.ListaGlobalClientes.Add(Cliente);
                 MessageBox.Show($"Usuario {MatriculaVehiculoCliente_TextBox.Text}, creado.");
             }
@@ -251,23 +291,22 @@ namespace PRO_1.Ventanas
 
         private void GuardarCliente_Click(object sender, RoutedEventArgs e)
         {
-            for (int i = acceso_Cliente.ListaGlobalClientes.Count - 1; i >= 0; i--)
-            {
-                var item = acceso_Cliente.ListaGlobalClientes[i];
-                if (item.Matricula == MatriculaVehiculoActualCliente_TextBox.Content.ToString())
+                for (int i = acceso_Cliente.ListaGlobalClientes.Count - 1; i >= 0; i--)
                 {
-                    MessageBox.Show(MatriculaVehiculoActualCliente_TextBox.Content.ToString());
+                    var item = acceso_Cliente.ListaGlobalClientes[i];
+                    if (item.Matricula == MatriculaVehiculoActualCliente_TextBox.Content.ToString())
+                    {
+                        MessageBox.Show(MatriculaVehiculoActualCliente_TextBox.Content.ToString());
 
-                    acceso_Cliente.ListaGlobalClientes.Remove(item);
+                        acceso_Cliente.ListaGlobalClientes.Remove(item);
 
-                    Clientes clientes = new Clientes(NombreActualCliente_TextBox.Text, ApellidoActualCliente_TextBox.Text, MarcaVehiculoActualCliente_TextBox.Text, ModeloVehiculoActualCliente_TextBox.Text, MatriculaVehiculoActualCliente_TextBox.Content.ToString(), Convert.ToInt32(TelefonoActualCliente_TextBox.Text));
+                        Clientes clientes = new Clientes(NombreActualCliente_TextBox.Text, ApellidoActualCliente_TextBox.Text, MarcaVehiculoActualCliente_TextBox.Text, ModeloVehiculoActualCliente_TextBox.Text, MatriculaVehiculoActualCliente_TextBox.Content.ToString(), int.Parse(TelefonoActualCliente_TextBox.Text));
 
-                    acceso_Cliente.ListaGlobalClientes.Add(clientes);
+                        acceso_Cliente.ListaGlobalClientes.Add(clientes);
 
-                    MessageBox.Show("Usuario modificado!");
+                        MessageBox.Show("Usuario modificado!");
+                    }
                 }
-            }
-
         }
 
         private void Lista_ClientesParaModificar_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -309,6 +348,7 @@ namespace PRO_1.Ventanas
             {
                 Label_UsuarioSeleccionado.Content = $"{SelectedItem.Nombre} {SelectedItem.Apellido} {SelectedItem.Telefono} ";
                 Label_MatriculaUsuarioSeleccionado.Content = SelectedItem.Matricula;
+                Lista_ServiciosSolicitados.ItemsSource = null;
             }
         }
     }

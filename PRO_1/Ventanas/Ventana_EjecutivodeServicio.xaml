@@ -35,6 +35,7 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Apellido}" Header="Apellido" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="Marca" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
                             </GridView>
@@ -54,6 +55,7 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Apellido}" Header="Apellido" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="Marca" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
                                 
@@ -157,7 +159,7 @@
 
                     <Label Background="NavajoWhite"></Label>
 
-                    <Button Content="Ingresar Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="IngresarCliente_Click"></Button>
+                    <Button Content="Crear Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="CrearCliente_Click"></Button>
                 </StackPanel>
             </Grid>
             
@@ -194,11 +196,11 @@
                         <StackPanel Name="Lavado_stack" Visibility="Hidden">
                             <Label Content="Seccion LAVADERO" HorizontalContentAlignment="Center" FontSize="20" Background="AliceBlue"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                                <Button FontSize="20" Width="auto" Height="auto" Content="Motocicleta" Click="Motocicleta_Click"></Button>
-                                <Button Margin="5,0,5,0" FontSize="20" Width="auto" Height="auto" Content="Auto" Click="Auto_Click"></Button>
-                                <Button FontSize="20" Width="auto" Height="auto" Content="Camioneta" Click="Camioneta_Click"></Button>
-                                <Button Margin="5,0,5,0" FontSize="20" Width="auto" Height="auto" Content="Peq.Camion" Click="CamionChico_Click"></Button>
-                                <Button FontSize="20" Width="auto" Height="auto" Content="Camion Util" Click="CamionUtilitario_Click"></Button>
+                                <Button FontSize="20" Width="auto" Height="auto" Content="Motocicleta" Click="MotocicletaLavado_Click"></Button>
+                                <Button Margin="5,0,5,0" FontSize="20" Width="auto" Height="auto" Content="Auto" Click="AutoLavado_Click"></Button>
+                                <Button FontSize="20" Width="auto" Height="auto" Content="Camioneta" Click="CamionetaLavado_Click"></Button>
+                                <Button Margin="5,0,5,0" FontSize="20" Width="auto" Height="auto" Content="Peq.Camion" Click="CamionChicoLavado_Click"></Button>
+                                <Button FontSize="20" Width="auto" Height="auto" Content="Camion Util" Click="CamionUtilitarioLavado_Click"></Button>
                             </StackPanel>
                         </StackPanel>
 
@@ -269,6 +271,7 @@
                                         <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Apellido}" Header="Apellido" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="Marca" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
                                         
@@ -312,22 +315,22 @@
 
                                 <Border BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
-                                <Button FontWeight="ExtraLight" Content="Lavado" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="Lavadero_Click"></Button>
+                                <Button FontWeight="ExtraLight" Content="Lavado" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="LavaderoSeccion_Click"></Button>
 
                                 <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Grid.Column="1" Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
-                                <Button Grid.Column="1" FontWeight="ExtraLight" Content="Alineacion" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="Alineacion_Click"></Button>
+                                <Button Grid.Column="1" FontWeight="ExtraLight" Content="Alineacion" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="AlineacionSeccion_Click"></Button>
 
                                 <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Grid.Column="2" Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
-                                <Button Grid.Column="2" FontWeight="ExtraLight" Content="Neumatico" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="Neumatico_Click"></Button>
+                                <Button Grid.Column="2" FontWeight="ExtraLight" Content="Neumatico" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="NeumaticoSeccion_Click"></Button>
 
                                 <Border Grid.Column="1" Grid.Row="1" BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Grid.Column="1" Grid.Row="1" Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
-                                <Button Grid.Column="1" Grid.Row="1" FontWeight="ExtraLight" Content="Parking" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="Parking_Click"></Button>
+                                <Button Grid.Column="1" Grid.Row="1" FontWeight="ExtraLight" Content="Parking" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="ParkingSeccion_Click"></Button>
 
                                 <Border Grid.Column="1" Grid.Row="2" BorderBrush="LightGray" BorderThickness="5"></Border>
-                                <Button Grid.Column="1" Grid.Row="2" FontWeight="ExtraLight" Content="Balanceo" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="Balanceo_Click"></Button>
+                                <Button Grid.Column="1" Grid.Row="2" FontWeight="ExtraLight" Content="Balanceo" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="BalanceoSeccion_Click"></Button>
                                 <Rectangle Grid.Column="1" Grid.Row="2" Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
 
                                 <Border Grid.Column="0" Grid.Row="1" BorderBrush="LightGray" BorderThickness="5"></Border>
