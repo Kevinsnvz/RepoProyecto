@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PRO_1.Ventanas"
         mc:Ignorable="d"
-        Title="Ventana_EjecutivodeServicio" Height="800" Width="1000">
+        Title="Ventana_EjecutivodeServicio" Height="800" Width="1100">
     <Grid Background="FloralWhite">
         <StackPanel>
             <Menu Height="auto" HorizontalAlignment="Stretch" >
@@ -25,7 +25,7 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                
+
                 <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="GhostWhite" >
 
                     <Label FontSize="20" Content="Baja Cliente" Background="DarkKhaki" HorizontalContentAlignment="Center"></Label>
@@ -43,9 +43,9 @@
                     </ListView>
                     <Label Background="Khaki"></Label>
                     <Button Margin="10,0,0,0" Content="Dar Baja de Cliente" FontSize="19" Width="180" Background="BlanchedAlmond" BorderThickness="0" Click="BajaACliente_Click" ></Button>
-                    
+
                 </StackPanel>
-                
+
                 <StackPanel Grid.Column="1">
 
                     <Label FontSize="20" Content="Modificacion Cliente" Background="BurlyWood"></Label>
@@ -58,62 +58,62 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="Marca" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
-                                
+
                             </GridView>
                         </ListView.View>
                     </ListView>
 
                     <StackPanel Orientation="Horizontal">
-                     <Label FontSize="17" Content="Nombre Cliente:"></Label>
-                     <TextBox x:Name="NombreActualCliente_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
-                     </StackPanel>
+                        <Label FontSize="17" Content="Nombre Cliente:"></Label>
+                        <TextBox x:Name="NombreActualCliente_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
+                    </StackPanel>
 
-                     <Label Background="NavajoWhite"></Label>
- 
-                     <StackPanel Orientation="Horizontal">
-                         <Label FontSize="17" Content="Apellido Cliente:"></Label>
-                         <TextBox x:Name="ApellidoActualCliente_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
-                     </StackPanel>
+                    <Label Background="NavajoWhite"></Label>
 
-                     <Label Background="NavajoWhite"></Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="17" Content="Apellido Cliente:"></Label>
+                        <TextBox x:Name="ApellidoActualCliente_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
+                    </StackPanel>
 
-                     <StackPanel Orientation="Horizontal">
-                         <Label FontSize="17" Content="Telefono Cliente:"></Label>
+                    <Label Background="NavajoWhite"></Label>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="17" Content="Telefono Cliente:"></Label>
                         <TextBox x:Name="TelefonoActualCliente_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
-                     </StackPanel>
+                    </StackPanel>
 
-                     <Label Background="NavajoWhite"></Label>
+                    <Label Background="NavajoWhite"></Label>
 
-                     <StackPanel Orientation="Horizontal">
-                         <Label FontSize="17" Content="Marca del vehiculo de Cliente:"></Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="17" Content="Marca del vehiculo de Cliente:"></Label>
                         <TextBox x:Name="MarcaVehiculoActualCliente_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
-                     </StackPanel>
+                    </StackPanel>
 
-                     <Label Background="NavajoWhite"></Label>
+                    <Label Background="NavajoWhite"></Label>
 
-                     <StackPanel Orientation="Horizontal">
-                         <Label FontSize="17" Content="Modelo del vehiculo de Cliente:"></Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="17" Content="Modelo del vehiculo de Cliente:"></Label>
                         <TextBox x:Name="ModeloVehiculoActualCliente_TextBox" Width="250" Margin="3,3,0,3" ></TextBox>
-                     </StackPanel>
+                    </StackPanel>
 
-                     <Label Background="NavajoWhite"></Label>
+                    <Label Background="NavajoWhite"></Label>
 
-                     <StackPanel Orientation="Horizontal">
-                         <Label FontSize="17" Content="Matricula del vehiculo de Cliente:"></Label>
+                    <StackPanel Orientation="Horizontal">
+                        <Label FontSize="17" Content="Matricula del vehiculo de Cliente:"></Label>
                         <Label x:Name="MatriculaVehiculoActualCliente_TextBox" Width="220" Margin="0,3,0,3" ></Label>
-                     </StackPanel>
+                    </StackPanel>
 
-                     <Label Background="NavajoWhite"></Label>
+                    <Label Background="NavajoWhite"></Label>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                       <Button Content="Guardar Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="GuardarCliente_Click"></Button>
-                        <Button Margin="10,0,0,0" Content="Actualizar Clientes" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="Actualizar_Click"></Button>
+                        <Button Content="Guardar Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="GuardarCliente_Click"></Button>
+                        <Button Margin="10,0,0,0" Content="Actualizar Clientes" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="ActualizarListas_Click"></Button>
 
                     </StackPanel>
-                    
+
 
                 </StackPanel>
-                
+
                 <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Background="GhostWhite">
                     <Label FontSize="20" Background="Aquamarine" Content="ABM Cliente"></Label>
 
@@ -123,7 +123,7 @@
                     </StackPanel>
 
                     <Label Background="NavajoWhite"></Label>
-                    
+
                     <StackPanel Orientation="Horizontal">
                         <Label FontSize="17" Content="Apellido Cliente:"></Label>
                         <TextBox x:Name="ApellidoCliente_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
@@ -162,7 +162,7 @@
                     <Button Content="Crear Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="CrearCliente_Click"></Button>
                 </StackPanel>
             </Grid>
-            
+
             <Grid Name="grid_SeccionFacturacion" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -246,7 +246,7 @@
                     <Label Background="MediumPurple"></Label>
                     <Button Content="Enviar a Cajero" FontSize="20" Width="150"></Button>
 
-                    </StackPanel>
+                </StackPanel>
 
 
                 <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Name="OrdenarPantallaIzquierda">
@@ -255,7 +255,7 @@
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                  
+
                     </Grid>
 
                     <Grid Name="GridBajoMenu">
@@ -265,10 +265,10 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="2" Name="OrdenarListView" >
+                        <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="2" Name="OrdenarListView" Background="FloralWhite" >
 
                             <ListView FontSize="15" MinHeight="100" MaxHeight="250" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="Lista_Cliente_SelectionChanged">
-                                <ListView.View> 
+                                <ListView.View>
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Apellido}" Header="Apellido" Width="auto"/>
@@ -276,17 +276,16 @@
                                         <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="Marca" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                         <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
-                                        
+                                        <GridViewColumn DisplayMemberBinding="{Binding Autorizado}" Header="Entregar?" Width="auto"/>
+
                                     </GridView>
                                 </ListView.View>
                             </ListView>
 
-                            <StackPanel Orientation="Horizontal" Width="500" Name="OrdenarBotones">
+                            <StackPanel Orientation="Horizontal" Width="500" Name="OrdenarBotones"  >
 
-                                <Button Content="Autorizar" Width="90" FontSize="15" Click="Autorizar_Click" />
-                                <Button Content="Actualizar" Width="90" FontSize="15" Click="Actualizar_Click" />
-                                <Line X1="0" X2="5"  Stroke="DarkGray" StrokeThickness="50"></Line>
-                                <Line X1="0" X2="320" Y1="13" Y2="13" StrokeThickness="5" Stroke="DarkGray"></Line>
+                                <Button Background="WhiteSmoke" Content="Entregar" Width="90" FontSize="15" Click="EntregarVehiculo_Click" />
+                                <Button Margin="15,0,0,0" Background="WhiteSmoke" Content="Actualizar" Width="90" FontSize="15" Click="ActualizarListas_Click" />
 
                             </StackPanel>
                         </StackPanel>
@@ -297,11 +296,12 @@
                             <RowDefinition Height="92*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="69*"></ColumnDefinition>
+                            <ColumnDefinition Width="206*"/>
+                            <ColumnDefinition Width="275*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <Border x:Name="BorderDeBotones" Grid.Column="0" Height="388" BorderBrush="DarkGray" BorderThickness="2" Grid.RowSpan="2">
+                        <Border x:Name="BorderDeBotones" Grid.Column="0" Height="388" BorderBrush="DarkGray" BorderThickness="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
 
                             <Grid>
                                 <Grid.ColumnDefinitions>

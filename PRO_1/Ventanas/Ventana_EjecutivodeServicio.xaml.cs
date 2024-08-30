@@ -33,6 +33,15 @@ namespace PRO_1.Ventanas
             InitializeComponent();
         }
 
+        public void ActualizarListas()
+        {
+            Lista_ServiciosSolicitados.ItemsSource = null;
+            Lista_ServiciosSolicitados.ItemsSource = listServicios;
+
+            Lista_ClienteRecibo.ItemsSource = null;
+            Lista_ClienteRecibo.ItemsSource = acceso_Cliente.ListaGlobalClientes;
+        }
+
         public void AgregarServicioALista(string nombreServicio, int precioServicio)
         {
             if (Label_UsuarioSeleccionado.Content != null)
@@ -152,6 +161,52 @@ namespace PRO_1.Ventanas
             }
         }
 
+        private void EntregarVehiculo_Click(object sender, RoutedEventArgs e)
+        {
+            var SelectedItem = (Clientes)Lista_ClienteRecibo.SelectedItem;
+
+            if(SelectedItem != null)
+            {
+               if(SelectedItem.Autorizado == false)
+                {
+                    MessageBoxButton buttons = MessageBoxButton.YesNo;
+                    MessageBoxImage icon = MessageBoxImage.Question;
+                    string caption = "Confirmar.";
+                    string message = "La entrega de este vehiculo no fue autorizada. ¿Estas seguro de esto?";
+                    MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon);
+
+                    if (result == MessageBoxResult.No) return;
+
+                    if(result == MessageBoxResult.Yes)
+                    {
+                        acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
+
+                        MessageBox.Show("Entregado. Vehiculo removido del sistema.");
+                    }
+
+                }
+               else
+                {
+                    MessageBoxButton buttons = MessageBoxButton.YesNo;
+                    MessageBoxImage icon = MessageBoxImage.Question;
+                    string caption = "Confirmar.";
+                    string message = "¿Entregar vehiculo? Sera eliminado del sistema.";
+                    MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon);
+
+                    if (result == MessageBoxResult.No) return;
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
+                        
+
+
+                        MessageBox.Show("Entregado. Vehiculo removido del sistema.");
+                    }
+                }
+            }
+        }
+
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
         private void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -169,7 +224,7 @@ namespace PRO_1.Ventanas
         }
 
         //Actualiza la lista de Clientes
-        private void Actualizar_Click(object sender, RoutedEventArgs e)
+        private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
             Lista_BajaClientes.ItemsSource = null;
             Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;
@@ -183,10 +238,6 @@ namespace PRO_1.Ventanas
 
         }
 
-        private void Autorizar_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void BalanceoSeccion_Click(object sender, RoutedEventArgs e)
         {
             Alineacion_Stack.Visibility = Visibility.Collapsed;

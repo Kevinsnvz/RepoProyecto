@@ -20,6 +20,7 @@ namespace PRO_1.Clases
         public string Modelo { get; set; }
         public string Matricula { get; set; }
         public int Telefono { get; set; }
+        public bool Autorizado { get; set; }
 
         public List<(string NombreServicio, int PrecioServicio)> ListaDeServicios { get; set; }
 
@@ -33,6 +34,7 @@ namespace PRO_1.Clases
             this.Matricula = matricula;
             this.Telefono = telefono;
             this.ListaDeServicios = new List<(string NombreServicio, int PrecioServicio)>();
+            this.Autorizado = false;
         }
     }   
 }
