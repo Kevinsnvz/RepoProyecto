@@ -53,7 +53,7 @@ namespace PRO_1.Ventanas
         {
             if (Combobos_Clientes.SelectedItem != null)
             {
-                listServicios.Add(new ListServicios() { nombreServicio = nombre, precioServicio = precio});
+                listServicios.Add(new ListServicios(nombre,precio));
 
                 ListView_Servicios.ItemsSource = null;
                 ListView_Servicios.ItemsSource = listServicios;

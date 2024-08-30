@@ -133,7 +133,7 @@
 
                     <StackPanel Orientation="Horizontal">
                         <Label FontSize="17" Content="Telefono Cliente:"></Label>
-                        <TextBox x:Name="TelefonoCliente_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
+                        <TextBox x:Name="TelefonoCliente_TextBox" Text="123456789" Width="250" Margin="15,3,0,3" ></TextBox>
                     </StackPanel>
 
                     <Label Background="NavajoWhite"></Label>
@@ -154,7 +154,7 @@
 
                     <StackPanel Orientation="Horizontal">
                         <Label FontSize="17" Content="Matricula del vehiculo de Cliente:"></Label>
-                        <TextBox x:Name="MatriculaVehiculoCliente_TextBox" Width="220" Margin="0,3,0,3" ></TextBox>
+                        <TextBox x:Name="MatriculaVehiculoCliente_TextBox" Text="ABC1234" Width="220" Margin="0,3,0,3" ></TextBox>
                     </StackPanel>
 
                     <Label Background="NavajoWhite"></Label>
@@ -184,7 +184,7 @@
                     </StackPanel>
 
                     <Grid Name="Grid_Ventas">
-                        <StackPanel Name="Alineacion_Stack" Visibility="Hidden">
+                        <StackPanel Name="Alineacion_Stack" Visibility="Visible">
                             <Label Content="Seccion ALINEACION" HorizontalContentAlignment="Center" FontSize="20" Background="Beige"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button FontSize="20" Width="auto" Height="auto" Content="Alineacion de un Tren" Click="Alineacion1Tren_Click"></Button>
@@ -193,7 +193,7 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <StackPanel Name="Lavado_stack" Visibility="Hidden">
+                        <StackPanel Name="Lavado_stack" Visibility="Collapsed">
                             <Label Content="Seccion LAVADERO" HorizontalContentAlignment="Center" FontSize="20" Background="AliceBlue"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                                 <Button FontSize="20" Width="auto" Height="auto" Content="Motocicleta" Click="MotocicletaLavado_Click"></Button>
@@ -204,7 +204,7 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <StackPanel x:Name="Balanceo_Stack" Visibility="Hidden">
+                        <StackPanel x:Name="Balanceo_Stack" Visibility="Collapsed">
                             <Label Content=" Seccion BALANCEO" HorizontalContentAlignment="Center" FontSize="20" Background="AntiqueWhite"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
@@ -214,7 +214,7 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <StackPanel Name="Neumatico_stack" Visibility="Hidden" >
+                        <StackPanel Name="Neumatico_stack" Visibility="Collapsed" >
                             <Label Content=" Seccion Neumatico" HorizontalContentAlignment="Center" FontSize="20" Background="HotPink"></Label>
                             <StackPanel>
 
@@ -227,11 +227,13 @@
 
                     </StackPanel>
                     <Label Content="Servicios:"></Label>
-                    <ListView MaxHeight="500" Name="Lista_ServiciosSolicitados" SelectionMode="Multiple" ItemsSource="{Binding ListServicios}">
+                    <ListView MaxHeight="300" Name="Lista_ServiciosSolicitados" SelectionMode="Single" ItemsSource="{Binding ListServicios}">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding nombreServicio}" Header="Servicio:" Width="auto"></GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding precioServicio}" Header="Costo:" Width="auto"></GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Servicio_ID}" Header="Costo:" Width="auto"></GridViewColumn>
+
                             </GridView>
                         </ListView.View>
                     </ListView>
