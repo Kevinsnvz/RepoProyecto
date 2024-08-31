@@ -11,6 +11,8 @@ namespace PRO_1.Clases
     {
         public static int UpdatePrecioTotal(string matriculaUsuario, ListaDeClientes lista_a_buscar)
         {
+            if(matriculaUsuario == null) { MessageBox.Show("ERROR: No se proporciono una matricula valida."); return 0; }
+            if(lista_a_buscar == null) { MessageBox.Show("ERROR: No se proporciono una lista valida."); return 0; }
             int x = 0;
             foreach (var item in lista_a_buscar.ListaGlobalClientes)
             {

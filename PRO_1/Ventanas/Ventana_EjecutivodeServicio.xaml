@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PRO_1.Ventanas"
         mc:Ignorable="d"
-        Title="Ventana_EjecutivodeServicio" Height="800" Width="1100">
+        Title="Ventana_EjecutivodeServicio" Height="700" Width="1100">
     <Grid Background="FloralWhite">
         <StackPanel>
             <Menu Height="auto" HorizontalAlignment="Stretch" >
@@ -184,7 +184,7 @@
                     </StackPanel>
 
                     <Grid Name="Grid_Ventas">
-                        <StackPanel Name="Alineacion_Stack" Visibility="Visible">
+                        <StackPanel Name="Alineacion_Stack" Visibility="Collapsed">
                             <Label Content="Seccion ALINEACION" HorizontalContentAlignment="Center" FontSize="20" Background="Beige"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button FontSize="20" Width="auto" Height="auto" Content="Alineacion de un Tren" Click="Alineacion1Tren_Click"></Button>
@@ -193,6 +193,13 @@
                             </StackPanel>
                         </StackPanel>
 
+                        <StackPanel Name="Parking_Stack" Visibility="Collapsed">
+                            <Label Content="Seccion PARKING" HorizontalContentAlignment="Center" FontSize="20" Background="LightGoldenrodYellow"></Label>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                
+                            </StackPanel>
+                        </StackPanel>
+                        
                         <StackPanel Name="Lavado_stack" Visibility="Collapsed">
                             <Label Content="Seccion LAVADERO" HorizontalContentAlignment="Center" FontSize="20" Background="AliceBlue"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
@@ -215,7 +222,7 @@
                         </StackPanel>
 
                         <StackPanel Name="Neumatico_stack" Visibility="Collapsed" >
-                            <Label Content=" Seccion Neumatico" HorizontalContentAlignment="Center" FontSize="20" Background="HotPink"></Label>
+                            <Label Content=" Seccion NEUMATICO" HorizontalContentAlignment="Center" FontSize="20" Background="HotPink"></Label>
                             <StackPanel>
 
                             </StackPanel>
@@ -267,7 +274,7 @@
 
                         <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="2" Name="OrdenarListView" Background="FloralWhite" >
 
-                            <ListView FontSize="15" MinHeight="100" MaxHeight="250" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="Lista_Cliente_SelectionChanged">
+                            <ListView FontSize="15" MinHeight="100" MaxHeight="240" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="Lista_Cliente_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=15}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>

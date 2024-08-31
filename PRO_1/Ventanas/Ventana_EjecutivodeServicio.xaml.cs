@@ -244,6 +244,7 @@ namespace PRO_1.Ventanas
             Lavado_stack.Visibility = Visibility.Collapsed;
             Balanceo_Stack.Visibility = Visibility.Visible;
             Neumatico_stack.Visibility = Visibility.Collapsed;
+            Parking_Stack.Visibility = Visibility.Collapsed;
         }
         private void LavaderoSeccion_Click(object sender, RoutedEventArgs e)
         {
@@ -251,6 +252,7 @@ namespace PRO_1.Ventanas
             Lavado_stack.Visibility = Visibility.Visible;
             Balanceo_Stack.Visibility = Visibility.Collapsed;
             Neumatico_stack.Visibility = Visibility.Collapsed;
+            Parking_Stack.Visibility = Visibility.Collapsed;
         }
         private void AlineacionSeccion_Click(object sender, RoutedEventArgs e)
         {
@@ -258,6 +260,7 @@ namespace PRO_1.Ventanas
             Lavado_stack.Visibility = Visibility.Collapsed;
             Balanceo_Stack.Visibility = Visibility.Collapsed;
             Neumatico_stack.Visibility = Visibility.Collapsed;
+            Parking_Stack.Visibility = Visibility.Collapsed;
         }
         private void NeumaticoSeccion_Click(object sender, RoutedEventArgs e)
         {
@@ -265,10 +268,15 @@ namespace PRO_1.Ventanas
             Lavado_stack.Visibility = Visibility.Collapsed;
             Balanceo_Stack.Visibility = Visibility.Collapsed;
             Neumatico_stack.Visibility = Visibility.Visible;
+            Parking_Stack.Visibility = Visibility.Collapsed;
         }
         private void ParkingSeccion_Click(object sender, RoutedEventArgs e)
         {
-
+            Alineacion_Stack.Visibility = Visibility.Collapsed;
+            Lavado_stack.Visibility = Visibility.Collapsed;
+            Balanceo_Stack.Visibility = Visibility.Collapsed;
+            Neumatico_stack.Visibility = Visibility.Collapsed;
+            Parking_Stack.Visibility = Visibility.Visible;
         }
 
         private void Alineacion1Tren_Click(object sender, RoutedEventArgs e)
@@ -380,22 +388,39 @@ namespace PRO_1.Ventanas
 
         private void GuardarCliente_Click(object sender, RoutedEventArgs e)
         {
-                for (int i = acceso_Cliente.ListaGlobalClientes.Count - 1; i >= 0; i--)
-                {
-                    var item = acceso_Cliente.ListaGlobalClientes[i];
-                    if (item.Matricula == MatriculaVehiculoActualCliente_TextBox.Content.ToString())
-                    {
-                        MessageBox.Show(MatriculaVehiculoActualCliente_TextBox.Content.ToString());
+            //Si los campos (Donde se inserta el parametro) esta vacio, corta la ejecucion del resto de la funcion y muestra el mensaje error correspondiente.
+            if (string.IsNullOrEmpty(NombreActualCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(ApellidoActualCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(MarcaVehiculoActualCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(ModeloVehiculoActualCliente_TextBox.Text) ||
+                    string.IsNullOrEmpty(MatriculaVehiculoActualCliente_TextBox.Content.ToString()) ||
+                    string.IsNullOrEmpty(TelefonoActualCliente_TextBox.Text)
+                    )
+            {
+                MessageBox.Show("ERROR: Todos los campos deben estar llenos");
+                return;
+            }
 
-                        acceso_Cliente.ListaGlobalClientes.Remove(item);
+            ///Reitera todo el contenido hasta encontrar la el usuario que contiene la matricula del usuario que se quiere modificiar.
+            for (int i = acceso_Cliente.ListaGlobalClientes.Count - 1; i >= 0; i--)
+            {
+                var item = acceso_Cliente.ListaGlobalClientes[i];
 
-                        Clientes clientes = new Clientes(NombreActualCliente_TextBox.Text, ApellidoActualCliente_TextBox.Text, MarcaVehiculoActualCliente_TextBox.Text, ModeloVehiculoActualCliente_TextBox.Text, MatriculaVehiculoActualCliente_TextBox.Content.ToString(), int.Parse(TelefonoActualCliente_TextBox.Text));
+                ///Si no es la matricula que buscamos, cancela la iteracion actual del for loop y salta a la siguiente sin ejecutar el codigo que lo procede.
+                if (item.Matricula != MatriculaVehiculoActualCliente_TextBox.Content.ToString()) continue;
 
-                        acceso_Cliente.ListaGlobalClientes.Add(clientes);
+                acceso_Cliente.ListaGlobalClientes.Remove(item);
 
-                        MessageBox.Show("Usuario modificado!");
-                    }
-                }
+                Clientes clientes = new Clientes(NombreActualCliente_TextBox.Text, ApellidoActualCliente_TextBox.Text, MarcaVehiculoActualCliente_TextBox.Text, ModeloVehiculoActualCliente_TextBox.Text, MatriculaVehiculoActualCliente_TextBox.Content.ToString(), int.Parse(TelefonoActualCliente_TextBox.Text));
+
+                acceso_Cliente.ListaGlobalClientes.Add(clientes);
+
+                MessageBox.Show("Usuario modificado!");
+
+                //Se encontro el usuario deseado, se modifico y no hay necesidad de seguir iterando la lista, entonces salimos del for con un break;
+                break;
+                    
+            }
         }
 
         private void Lista_ClientesParaModificar_SelectionChanged(object sender, SelectionChangedEventArgs e)
