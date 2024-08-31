@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -31,15 +32,6 @@ namespace PRO_1.Ventanas
             this.acceso_Cliente = objetocliente;
             DataContext = acceso_Cliente;
             InitializeComponent();
-        }
-
-        public void ActualizarListas()
-        {
-            Lista_ServiciosSolicitados.ItemsSource = null;
-            Lista_ServiciosSolicitados.ItemsSource = listServicios;
-
-            Lista_ClienteRecibo.ItemsSource = null;
-            Lista_ClienteRecibo.ItemsSource = acceso_Cliente.ListaGlobalClientes;
         }
 
         public void AgregarServicioALista(string nombreServicio, int precioServicio)
@@ -163,48 +155,7 @@ namespace PRO_1.Ventanas
 
         private void EntregarVehiculo_Click(object sender, RoutedEventArgs e)
         {
-            var SelectedItem = (Clientes)Lista_ClienteRecibo.SelectedItem;
-
-            if(SelectedItem != null)
-            {
-               if(SelectedItem.Autorizado == false)
-                {
-                    MessageBoxButton buttons = MessageBoxButton.YesNo;
-                    MessageBoxImage icon = MessageBoxImage.Question;
-                    string caption = "Confirmar.";
-                    string message = "La entrega de este vehiculo no fue autorizada. ¿Estas seguro de esto?";
-                    MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon);
-
-                    if (result == MessageBoxResult.No) return;
-
-                    if(result == MessageBoxResult.Yes)
-                    {
-                        acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
-
-                        MessageBox.Show("Entregado. Vehiculo removido del sistema.");
-                    }
-
-                }
-               else
-                {
-                    MessageBoxButton buttons = MessageBoxButton.YesNo;
-                    MessageBoxImage icon = MessageBoxImage.Question;
-                    string caption = "Confirmar.";
-                    string message = "¿Entregar vehiculo? Sera eliminado del sistema.";
-                    MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon);
-
-                    if (result == MessageBoxResult.No) return;
-
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
-                        
-
-
-                        MessageBox.Show("Entregado. Vehiculo removido del sistema.");
-                    }
-                }
-            }
+            FuncionesEjecutivo.EntregarVehiculo(Lista_ClienteRecibo, acceso_Cliente);
         }
 
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
@@ -238,109 +189,118 @@ namespace PRO_1.Ventanas
 
         }
 
-        private void BalanceoSeccion_Click(object sender, RoutedEventArgs e)
-        {
-            Alineacion_Stack.Visibility = Visibility.Collapsed;
-            Lavado_stack.Visibility = Visibility.Collapsed;
-            Balanceo_Stack.Visibility = Visibility.Visible;
-            Neumatico_stack.Visibility = Visibility.Collapsed;
-            Parking_Stack.Visibility = Visibility.Collapsed;
-        }
-        private void LavaderoSeccion_Click(object sender, RoutedEventArgs e)
-        {
-            Alineacion_Stack.Visibility = Visibility.Collapsed;
-            Lavado_stack.Visibility = Visibility.Visible;
-            Balanceo_Stack.Visibility = Visibility.Collapsed;
-            Neumatico_stack.Visibility = Visibility.Collapsed;
-            Parking_Stack.Visibility = Visibility.Collapsed;
-        }
-        private void AlineacionSeccion_Click(object sender, RoutedEventArgs e)
-        {
-            Alineacion_Stack.Visibility = Visibility.Visible;
-            Lavado_stack.Visibility = Visibility.Collapsed;
-            Balanceo_Stack.Visibility = Visibility.Collapsed;
-            Neumatico_stack.Visibility = Visibility.Collapsed;
-            Parking_Stack.Visibility = Visibility.Collapsed;
-        }
-        private void NeumaticoSeccion_Click(object sender, RoutedEventArgs e)
-        {
-            Alineacion_Stack.Visibility = Visibility.Collapsed;
-            Lavado_stack.Visibility = Visibility.Collapsed;
-            Balanceo_Stack.Visibility = Visibility.Collapsed;
-            Neumatico_stack.Visibility = Visibility.Visible;
-            Parking_Stack.Visibility = Visibility.Collapsed;
-        }
-        private void ParkingSeccion_Click(object sender, RoutedEventArgs e)
+        private void SeccionDeCobranza(object sender, RoutedEventArgs e)
         {
             Alineacion_Stack.Visibility = Visibility.Collapsed;
             Lavado_stack.Visibility = Visibility.Collapsed;
             Balanceo_Stack.Visibility = Visibility.Collapsed;
             Neumatico_stack.Visibility = Visibility.Collapsed;
-            Parking_Stack.Visibility = Visibility.Visible;
-        }
+            Parking_Stack.Visibility = Visibility.Collapsed;
+            switch (sender)
+            {
+                case Button button when button == SeccionAlineacion_Button:
 
-        private void Alineacion1Tren_Click(object sender, RoutedEventArgs e)
-        {
+                    Alineacion_Stack.Visibility = Visibility.Visible;
+                    
+                    break;
+                case Button button when button == SeccionBalanceo_Button:
 
-            AgregarServicioALista("Alineacion para 1 tren", Precios.alineacion1Tren);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+                    Balanceo_Stack.Visibility = Visibility.Visible;
 
+                    break;
+                case Button button when button == SeccionLavado_Button:
 
+                    Lavado_stack.Visibility = Visibility.Visible;
 
-        }
+                    break;
+                case Button button when button == SeccionNeumatico_Button:
 
-        private void Alineacion2Tren_Click(object sender, RoutedEventArgs e)
-        {
-            AgregarServicioALista("Alineacion para 2 trenes", Precios.alineacion2Tren);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+                    Neumatico_stack.Visibility = Visibility.Visible;
 
+                    break;
+                case Button button when button == SeccionParking_Button:
 
-        }
+                    Parking_Stack.Visibility = Visibility.Visible;
 
-        private void MotocicletaLavado_Click(object sender, RoutedEventArgs e)
-        {
-            AgregarServicioALista("Lavado de Moto", Precios.lavadomoto);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-        }
-
-        private void AutoLavado_Click(object sender, RoutedEventArgs e)
-        {
-            AgregarServicioALista("Lavado de Auto", Precios.lavadoauto);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+                    break;
+            }
 
         }
 
-        private void CamionetaLavado_Click(object sender, RoutedEventArgs e)
+        private void VentadeServicios(object sender, RoutedEventArgs e)
         {
-            AgregarServicioALista("Lavado de Camioneta", Precios.lavadocamioneta);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-        }
+            
+            
+            if (Label_MatriculaUsuarioSeleccionado.Content.ToString() == "0") { MessageBox.Show("ERROR: No se proporciono un cliente."); return; }
+            switch(sender)
+            {
+                case Button button when button == CobrarAlineacion1Tren_Button:
 
-        private void CamionChicoLavado_Click(object sender, RoutedEventArgs e)
-        {
+                    AgregarServicioALista("Alineacion para 1 tren", Precios.alineacion1Tren);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
 
-            AgregarServicioALista("Lavado de Camion Chico", Precios.lavadocamionchico);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-        }
 
-        private void CamionUtilitarioLavado_Click(object sender, RoutedEventArgs e)
-        {
-            AgregarServicioALista("Lavado de Camion Utilitario", Precios.lavadocamionutilitario);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-        }
+                    break;
+                case Button button when button == CobrarAlineacion2Tren_Button:
 
-  
+                    AgregarServicioALista("Alineacion para 2 trenes", Precios.alineacion2Tren);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
 
-        private void BalanceoAuto_Click(object sender, RoutedEventArgs e)
-        {
-            AgregarServicioALista("Balanceo de Auto", Precios.balanceoauto);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-        }
 
-        private void BalanceoCamioneta_Click(object sender, RoutedEventArgs e)
-        {
-            AgregarServicioALista("Balanceo de Camioneta", Precios.balanceoamioneta);
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+                    break;
+                case Button button when button == CobrarLavadoAuto_Button:
+
+                    AgregarServicioALista("Lavado de Auto", Precios.lavadoauto);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+
+
+                    break;
+                case Button button when button == CobrarLavadoCamioneta_Button:
+
+                    AgregarServicioALista("Lavado de Camioneta", Precios.lavadocamioneta);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+
+
+                    break;
+                case Button button when button == CobrarLavadoCamionUtil_Button:
+
+                    AgregarServicioALista("Lavado de Camion Utilitario", Precios.lavadocamionutilitario);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+
+
+                    break;
+                case Button button when button == CobrarLavadoCamion_Button:
+
+                    AgregarServicioALista("Lavado de Camion Chico", Precios.lavadocamionchico);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+
+
+                    break;
+                case Button button when button == CobrarLavadoMoto_Button:
+
+                    AgregarServicioALista("Lavado de Moto", Precios.lavadomoto);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+
+
+                    break;
+                case Button button when button == CobrarBalanceoAutoConValvula:
+
+                    AgregarServicioALista("Balanceo de Auto", Precios.balanceoauto);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+
+
+                    break;
+                case Button button when button == CobrarBalanceoCamionetaConValvula:
+
+                    AgregarServicioALista("Balanceo de Camioneta", Precios.balanceoamioneta);
+                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+
+
+                    break;
+
+            }
+
+
         }
 
         private void ABMClienteMenu_Click(object sender, RoutedEventArgs e)
@@ -372,9 +332,12 @@ namespace PRO_1.Ventanas
                     MessageBox.Show("ERROR: Todos los campos deben estar llenos");
                     return;
                 }
-                if (!int.TryParse(TelefonoCliente_TextBox.Text, out int t) || TelefonoCliente_TextBox.Text.Length != 9) { MessageBox.Show("ERROR: Ingresar un numero telefonico valido"); return; }
+                if (!int.TryParse(TelefonoCliente_TextBox.Text, out int t) || TelefonoCliente_TextBox.Text.Length != 9) 
+                { MessageBox.Show("ERROR: Ingresar un numero telefonico valido"); return; }
+
                 string patron = @"^[A-Z]{3}\d{4}$"; Regex regex = new Regex(patron);
                 if(!regex.IsMatch(MatriculaVehiculoCliente_TextBox.Text)) { MessageBox.Show("ERROR: Debe de ingresar una matricula valida. EJ: 'ABC1234'"); return; }
+
                 Clientes Cliente = new Clientes(NombreCliente_TextBox.Text, ApellidoCliente_TextBox.Text, MarcaVehiculoCliente_TextBox.Text, ModeloVehiculoCliente_TextBox.Text, MatriculaVehiculoCliente_TextBox.Text, Convert.ToInt32(TelefonoCliente_TextBox.Text));
                 acceso_Cliente.ListaGlobalClientes.Add(Cliente);
                 MessageBox.Show($"Usuario {MatriculaVehiculoCliente_TextBox.Text}, creado.");

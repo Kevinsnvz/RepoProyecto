@@ -179,16 +179,16 @@
                     <Label Content="Cliente seleccionado" HorizontalContentAlignment="Center" FontSize="20" Width="500" Background="MediumPurple" />
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Usuario:" FontSize="15" ></Label>
-                        <Label Name="Label_UsuarioSeleccionado" FontSize="13"></Label>
-                        <Label Name="Label_MatriculaUsuarioSeleccionado" FontSize="13"></Label>
+                        <Label Name="Label_UsuarioSeleccionado" Content="0" FontSize="13"></Label>
+                        <Label Name="Label_MatriculaUsuarioSeleccionado" Content="0" FontSize="13"></Label>
                     </StackPanel>
 
                     <Grid Name="Grid_Ventas">
                         <StackPanel Name="Alineacion_Stack" Visibility="Collapsed">
                             <Label Content="Seccion ALINEACION" HorizontalContentAlignment="Center" FontSize="20" Background="Beige"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button FontSize="20" Width="auto" Height="auto" Content="Alineacion de un Tren" Click="Alineacion1Tren_Click"></Button>
-                                <Button Margin="25,0,0,0" FontSize="20" Width="auto" Height="auto" Content="Alineacion de dos Tren" Click="Alineacion2Tren_Click"></Button>
+                                <Button x:Name="CobrarAlineacion1Tren_Button" FontSize="20" Width="auto" Height="auto" Content="Alineacion de un Tren" Click="VentadeServicios"></Button>
+                                <Button Name="CobrarAlineacion2Tren_Button" Margin="25,0,0,0" FontSize="20" Width="auto" Height="auto" Content="Alineacion de dos Tren" Click="VentadeServicios"></Button>
 
                             </StackPanel>
                         </StackPanel>
@@ -203,11 +203,11 @@
                         <StackPanel Name="Lavado_stack" Visibility="Collapsed">
                             <Label Content="Seccion LAVADERO" HorizontalContentAlignment="Center" FontSize="20" Background="AliceBlue"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                                <Button FontSize="20" Width="auto" Height="auto" Content="Motocicleta" Click="MotocicletaLavado_Click"></Button>
-                                <Button Margin="5,0,5,0" FontSize="20" Width="auto" Height="auto" Content="Auto" Click="AutoLavado_Click"></Button>
-                                <Button FontSize="20" Width="auto" Height="auto" Content="Camioneta" Click="CamionetaLavado_Click"></Button>
-                                <Button Margin="5,0,5,0" FontSize="20" Width="auto" Height="auto" Content="Peq.Camion" Click="CamionChicoLavado_Click"></Button>
-                                <Button FontSize="20" Width="auto" Height="auto" Content="Camion Util" Click="CamionUtilitarioLavado_Click"></Button>
+                                <Button Name="CobrarLavadoMoto_Button" FontSize="20" Width="auto" Height="auto" Content="Motocicleta" Click="VentadeServicios"></Button>
+                                <Button Name="CobrarLavadoAuto_Button" Margin="5,0,5,0" FontSize="20" Width="auto" Height="auto" Content="Auto" Click="VentadeServicios"></Button>
+                                <Button Name="CobrarLavadoCamioneta_Button" FontSize="20" Width="auto" Height="auto" Content="Camioneta" Click="VentadeServicios"></Button>
+                                <Button Name="CobrarLavadoCamion_Button" Margin="5,0,5,0" FontSize="20" Width="auto" Height="auto" Content="Peq.Camion" Click="VentadeServicios"></Button>
+                                <Button Name="CobrarLavadoCamionUtil_Button" FontSize="20" Width="auto" Height="auto" Content="Camion Util" Click="VentadeServicios"></Button>
                             </StackPanel>
                         </StackPanel>
 
@@ -215,8 +215,8 @@
                             <Label Content=" Seccion BALANCEO" HorizontalContentAlignment="Center" FontSize="20" Background="AntiqueWhite"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-                                <Button Width="auto" Height="auto" FontSize="20" Content="+ Valvula - Auto" Margin="0,0,15,0" Click="BalanceoAuto_Click"></Button>
-                                <Button Width="auto" Height="auto" FontSize="20" Content="+ Valvula - Camioneta" Click="BalanceoCamioneta_Click"></Button>
+                                <Button Name="CobrarBalanceoAutoConValvula" Width="auto" Height="auto" FontSize="20" Content="+ Valvula - Auto" Margin="0,0,15,0" Click="VentadeServicios"></Button>
+                                <Button Name="CobrarBalanceoCamionetaConValvula" Width="auto" Height="auto" FontSize="20" Content="+ Valvula - Camioneta" Click="VentadeServicios"></Button>
 
                             </StackPanel>
                         </StackPanel>
@@ -324,22 +324,22 @@
 
                                 <Border BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
-                                <Button FontWeight="ExtraLight" Content="Lavado" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="LavaderoSeccion_Click"></Button>
+                                <Button Name="SeccionLavado_Button" FontWeight="ExtraLight" Content="Lavado" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="SeccionDeCobranza"></Button>
 
                                 <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Grid.Column="1" Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
-                                <Button Grid.Column="1" FontWeight="ExtraLight" Content="Alineacion" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="AlineacionSeccion_Click"></Button>
+                                <Button Name="SeccionAlineacion_Button" Grid.Column="1" FontWeight="ExtraLight" Content="Alineacion" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="SeccionDeCobranza"></Button>
 
                                 <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Grid.Column="2" Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
-                                <Button Grid.Column="2" FontWeight="ExtraLight" Content="Neumatico" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="NeumaticoSeccion_Click"></Button>
+                                <Button Name="SeccionNeumatico_Button" Grid.Column="2" FontWeight="ExtraLight" Content="Neumatico" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="SeccionDeCobranza"></Button>
 
                                 <Border Grid.Column="1" Grid.Row="1" BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Grid.Column="1" Grid.Row="1" Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
-                                <Button Grid.Column="1" Grid.Row="1" FontWeight="ExtraLight" Content="Parking" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="ParkingSeccion_Click"></Button>
+                                <Button Name="SeccionParking_Button" Grid.Column="1" Grid.Row="1" FontWeight="ExtraLight" Content="Parking" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="SeccionDeCobranza"></Button>
 
                                 <Border Grid.Column="1" Grid.Row="2" BorderBrush="LightGray" BorderThickness="5"></Border>
-                                <Button Grid.Column="1" Grid.Row="2" FontWeight="ExtraLight" Content="Balanceo" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="BalanceoSeccion_Click"></Button>
+                                <Button Name="SeccionBalanceo_Button" Grid.Column="1" Grid.Row="2" FontWeight="ExtraLight" Content="Balanceo" FontSize="25" Margin="15" BorderThickness="1" BorderBrush="MediumPurple" Background="MediumPurple" Click="SeccionDeCobranza"></Button>
                                 <Rectangle Grid.Column="1" Grid.Row="2" Stroke="MediumPurple" StrokeThickness="15" Margin="3"></Rectangle>
 
                                 <Border Grid.Column="0" Grid.Row="1" BorderBrush="LightGray" BorderThickness="5"></Border>
@@ -350,7 +350,6 @@
 
                                 <Border Grid.Column="0" Grid.Row="2" BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Grid.Column="0" Grid.Row="2" Fill="LightSteelBlue" Margin="3"></Rectangle>
-
 
                                 <Border Grid.Column="2" Grid.Row="2" BorderBrush="LightGray" BorderThickness="5"></Border>
                                 <Rectangle Grid.Column="2" Grid.Row="1" Fill="LightGreen" Margin="3"></Rectangle>

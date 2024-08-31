@@ -118,6 +118,9 @@
     <Compile Include="Ventanas\Ventana_EjecutivodeServicio.xaml.cs">
       <DependentUpon>Ventana_EjecutivodeServicio.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\Ventana_Gerente.xaml.cs">
+      <DependentUpon>Ventana_Gerente.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -137,6 +140,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\Ventana_EjecutivodeServicio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\Ventana_Gerente.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
