@@ -1,8 +1,17 @@
-﻿using PRO_1.Clases;
+﻿using iText.Kernel.Geom;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using MySqlX.XDevAPI;
+using Org.BouncyCastle.Ocsp;
+using PRO_1.Clases;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +33,7 @@ namespace PRO_1.Ventanas
         private ListaDeClientes acceso_Cliente;
         
 
+
         public Ventana_Cajero(ListaDeClientes objetocliente)
         {
             
@@ -31,6 +41,7 @@ namespace PRO_1.Ventanas
 
             DataContext = objetocliente;
             this.acceso_Cliente = objetocliente;
+            
 
 
         }
@@ -70,6 +81,37 @@ namespace PRO_1.Ventanas
             MarcaCliente_Label.Content = SelectedItem.Marca;
             MatriculaCliente_label.Content = SelectedItem.Matricula;
 
+            
+
+            var SelectedItemServicios = SelectedItem.ListaDeServicios;
+
+            ServiciosACobrar_Label.Content = string.Empty;
+
+            foreach (var Servicio in SelectedItemServicios)
+            {
+                ServiciosACobrar_Label.Content += $"  - {Servicio.NombreServicio}: {Servicio.PrecioServicio}\n";
+            }
+            ServiciosACobrar_Label.Content += "\n";
+
         }
+
+        private void ImprimirRecibo(object sender, RoutedEventArgs e)
+        {
+            String dest = "C:/Users/ksnvz/Desktop/recibo.pdf";
+
+            PdfWriter writer = new PdfWriter(dest);  
+
+            PdfDocument pdf = new PdfDocument(writer);
+
+            Document document = new Document(pdf);
+
+            // Adding paragraphs to document       
+            document.Add(new iText.Layout.Element.Paragraph("hola!."));       
+      
+              // Closing the document       
+            document.Close();             
+            
+    }
+        
     }
 }

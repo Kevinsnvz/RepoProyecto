@@ -48,27 +48,27 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Background="GhostWhite">
                     <Label FontSize="20" Content="Seccion FACTURACION" HorizontalContentAlignment="Center" Background="MediumPurple"></Label>
 
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
                         <Label Content="Nombre: "></Label>
                         <Label Name="NombreCliente_Label" Content=""></Label>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" >
                         <Label Content="Apellido: "></Label>
                         <Label Name="ApellidoCliente_Label" Content=""></Label>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" >
                         <Label Content="Telefono: "></Label>
                         <Label Name="TelefonoCliente_Label" Content=""></Label>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" >
                         <Label Content="Modelo: "></Label>
                         <Label Name="ModeloCliente_Label" Content=""></Label>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" >
                         <Label Content="Marca: "></Label>
                         <Label Name="MarcaCliente_Label" Content=""></Label>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" >
                         <Label Content="Matricula: "></Label>
                         <Label Name="MatriculaCliente_label" Content=""></Label>
                     </StackPanel>
@@ -76,8 +76,14 @@
                     <CheckBox HorizontalAlignment="Center" Content="Autorizar entrega?" IsChecked="True"></CheckBox>
 
                     <Label Background="MediumPurple"></Label>
+
+                    <Label Content="Servicios a cobrar" HorizontalAlignment="Center"></Label>
+                    <Label Name="ServiciosACobrar_Label"/>
+
+                    <Label Background="MediumPurple"></Label>
                     
-                    <Button Content="Imprimir" Width="100"></Button>
+                    
+                    <Button Content="Imprimir" Width="100" Click="ImprimirRecibo"></Button>
 
                 </StackPanel>
             </Grid>

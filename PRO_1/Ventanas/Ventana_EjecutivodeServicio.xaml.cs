@@ -1,21 +1,14 @@
 ﻿using PRO_1.Clases;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+
 
 namespace PRO_1.Ventanas
 {
@@ -106,32 +99,33 @@ namespace PRO_1.Ventanas
         private void EliminarSeleccionadoDeLista_Click(object sender, RoutedEventArgs e)
         {
 
-            if (Label_UsuarioSeleccionado.Content == null && Lista_ServiciosSolicitados.SelectedItem == null)
+            if (Label_MatriculaUsuarioSeleccionado.Content == null || Lista_ServiciosSolicitados.SelectedItem == null)
                 return;
 
             for (int i = acceso_Cliente.ListaGlobalClientes.Count - 1; i >= 0; i--)
             {
                 var item = acceso_Cliente.ListaGlobalClientes[i];
-                if (item.Matricula != Label_MatriculaUsuarioSeleccionado.Content.ToString())
-                    return;
+                if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                { 
 
-                var itemModificacionDeLista = item.ListaDeServicios;
-                var serviciosSeleccionado = (ListServicios)Lista_ServiciosSolicitados.SelectedItem;
-                foreach (var ListasEnItem in itemModificacionDeLista)
-                {
-                    if (ListasEnItem.NombreServicio == serviciosSeleccionado.nombreServicio)
+                    var itemModificacionDeLista = item.ListaDeServicios;
+                    var serviciosSeleccionado = (ListServicios)Lista_ServiciosSolicitados.SelectedItem;
+                    foreach (var ListasEnItem in itemModificacionDeLista)
                     {
-                        itemModificacionDeLista.Remove(ListasEnItem);
-                        listServicios.Remove(serviciosSeleccionado);
+                        if (ListasEnItem.NombreServicio == serviciosSeleccionado.nombreServicio)
+                        {
+                            itemModificacionDeLista.Remove(ListasEnItem);
+                            listServicios.Remove(serviciosSeleccionado);
 
-                        Lista_ServiciosSolicitados.ItemsSource = null;
-                        Lista_ServiciosSolicitados.ItemsSource = listServicios;
+                            Lista_ServiciosSolicitados.ItemsSource = null;
+                            Lista_ServiciosSolicitados.ItemsSource = listServicios;
 
-                        PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
-                        return;
+                            PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+                            return;
+                        }
+
+
                     }
-
-
                 }
 
 
@@ -192,6 +186,8 @@ namespace PRO_1.Ventanas
 
                     Lista_ServiciosSolicitados.ItemsSource = listServicios;
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+
+
                 }
             }
 
