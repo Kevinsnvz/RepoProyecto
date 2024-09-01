@@ -24,8 +24,8 @@ namespace PRO_1.Ventanas
     /// </summary>
     public partial class Ventana_EjecutivodeServicio : Window
     {
-        List<ListServicios> listServicios = new List<ListServicios>();
-        ListaDeClientes acceso_Cliente;
+        private List<ListServicios> listServicios = new List<ListServicios>();
+        private ListaDeClientes acceso_Cliente;
 
         public Ventana_EjecutivodeServicio(ListaDeClientes objetocliente)
         {
@@ -76,7 +76,7 @@ namespace PRO_1.Ventanas
             return x;
         }
 
-        public void AgregarServicioALista(string nombreServicio, int precioServicio)
+        private void AgregarServicioALista(string nombreServicio, int precioServicio)
         {
             if (Label_UsuarioSeleccionado.Content != null)
             {

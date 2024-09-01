@@ -20,8 +20,8 @@ namespace PRO_1.Ventanas
 
     public partial class Ventana_Cajero : Window
     {
-        List<ListServicios> listServicios = new List<ListServicios>();
-        ListaDeClientes acceso_Cliente;
+        private List<ListServicios> listServicios = new List<ListServicios>();
+        private ListaDeClientes acceso_Cliente;
         
 
         public Ventana_Cajero(ListaDeClientes objetocliente)

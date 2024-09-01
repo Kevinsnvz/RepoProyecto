@@ -9,9 +9,24 @@ namespace PRO_1.Clases
     public class ListServicios
     {
 
-        public string nombreServicio { get; set; }
-        public int precioServicio { get; set; }
-        public int Servicio_ID { get; set; }
+        private string _nombreservicio;
+        public string nombreServicio
+        {
+            get { return _nombreservicio; }
+            set { _nombreservicio = value; }
+        }
+        private int _precioservicio;
+        public int precioServicio
+        {
+            get { return _precioservicio; }
+            set { _precioservicio = value; }
+        }
+        private int _servicioid;
+        public int Servicio_ID
+        {
+            get { return _servicioid; }
+            set { _servicioid = value; }
+        }
 
         int counter = 0;
         public ListServicios(string nombreServicio, int precioServicio)
