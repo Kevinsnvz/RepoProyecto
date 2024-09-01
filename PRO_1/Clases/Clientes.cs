@@ -73,7 +73,7 @@ namespace PRO_1.Clases
         }
 
         //Constructor de la clase Clientes
-        public Clientes(string nombre, string apellido, string marca, string modelo, string matricula, int telefono)
+        public  Clientes(string nombre, string apellido, string marca, string modelo, string matricula, int telefono)
         {
             this.Nombre = nombre;
             this.Apellido = apellido;
