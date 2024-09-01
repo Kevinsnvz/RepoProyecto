@@ -22,6 +22,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Paragraph = iText.Layout.Element.Paragraph;
 
 namespace PRO_1.Ventanas
 {
@@ -99,17 +100,19 @@ namespace PRO_1.Ventanas
         {
             String dest = "C:/Users/ksnvz/Desktop/recibo.pdf";
 
-            PdfWriter writer = new PdfWriter(dest);  
+            using(PdfWriter writer = new PdfWriter(dest))
+                using(PdfDocument  pdfDocument = new PdfDocument(writer))
+                    using (Document document = new Document(pdfDocument) )
+                    {
+                        Paragraph paragraph = new Paragraph("FACTURA").SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+                        Paragraph paragraph1 = new Paragraph("----------------").SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+                        
+                        document.Add(paragraph);
+                        document.Add(paragraph1);
 
-            PdfDocument pdf = new PdfDocument(writer);
-
-            Document document = new Document(pdf);
-
-            // Adding paragraphs to document       
-            document.Add(new iText.Layout.Element.Paragraph("hola!."));       
-      
-              // Closing the document       
-            document.Close();             
+                        document.Close();
+                        
+                    }
             
     }
         
