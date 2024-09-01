@@ -98,21 +98,55 @@ namespace PRO_1.Ventanas
 
         private void ImprimirRecibo(object sender, RoutedEventArgs e)
         {
+
+            if(NombreCliente_Label == null ) return;
+
             String dest = "C:/Users/ksnvz/Desktop/recibo.pdf";
+            
 
-            using(PdfWriter writer = new PdfWriter(dest))
-                using(PdfDocument  pdfDocument = new PdfDocument(writer))
-                    using (Document document = new Document(pdfDocument) )
+            using (PdfWriter writer = new PdfWriter(dest))
+            using (PdfDocument pdfDocument = new PdfDocument(writer))
+            using (Document document = new Document(pdfDocument))
+            {
+                Paragraph paragraph = new Paragraph("FACTURA").SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+                Paragraph SPACING = new Paragraph();
+
+                document.Add(paragraph);
+                document.Add(SPACING);
+                document.Add(SPACING);
+
+                document.Add(new Paragraph("CLIENTE:"));
+                document.Add(new Paragraph(NombreCliente_Label.Content.ToString()));
+                document.Add(new Paragraph(ApellidoCliente_Label.Content.ToString()));
+                document.Add(new Paragraph(TelefonoCliente_Label.Content.ToString()));
+                document.Add(new Paragraph(MatriculaCliente_label.Content.ToString()));
+
+                iText.Layout.Element.Table table = new iText.Layout.Element.Table(new float[] { 3, 7 });
+                table.AddCell("Servicio");
+                table.AddCell("Precio");
+
+                int TOTAL = 0;
+                foreach(var CLIENTES in acceso_Cliente.ListaGlobalClientes)
+                {
+                    if (CLIENTES.Matricula != MatriculaCliente_label.Content.ToString())
+                        break;
+                    foreach(var SERVICIOSENCLIENTES in CLIENTES.ListaDeServicios)
                     {
-                        Paragraph paragraph = new Paragraph("FACTURA").SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
-                        Paragraph paragraph1 = new Paragraph("----------------").SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
-                        
-                        document.Add(paragraph);
-                        document.Add(paragraph1);
-
-                        document.Close();
-                        
+                        table.AddCell(SERVICIOSENCLIENTES.NombreServicio);
+                        table.AddCell(SERVICIOSENCLIENTES.PrecioServicio.ToString());
+                        TOTAL += SERVICIOSENCLIENTES.PrecioServicio;
                     }
+                }
+                table.AddCell("TOTAL:");
+                table.AddCell(TOTAL.ToString());
+                document.Add(table);
+                
+
+                document.Add(SPACING);
+                document.Add(new Paragraph("Kibe APPS")).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.LEFT);
+                document.Close();
+                        
+            }
             
     }
         
