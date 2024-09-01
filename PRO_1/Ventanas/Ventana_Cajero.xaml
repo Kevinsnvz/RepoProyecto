@@ -7,92 +7,15 @@
         mc:Ignorable="d"
         Title="Ventana de Cajero" Height="800" Width="1000">
     <Grid>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Name="OrdenarPantallaDerecha">
-            
-            <Label Content="Cliente seleccionado" HorizontalContentAlignment="Center" FontSize="20" Width="500" Background="MediumPurple" />
-            <ComboBox Name="Combobos_Clientes"></ComboBox>
-            
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Total:" Name="PrecioTotal_Label"></Label>
-                <Label Content=""></Label>
-                
-            </StackPanel>
-            <Label Content="Servicios:"></Label>
-            <ListView Name="ListView_Servicios" SelectionMode="Multiple">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding nombre}" Header="Servicio:" Width="auto"></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding precio}" Header="Costo:" Width="auto"></GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Margin="15,0,0,0" HorizontalAlignment="Center" Content="Eliminar Seleccionado" FontSize="20" Click="Button_Click"></Button>
-            </StackPanel>
-
-        </StackPanel>
-
-
-        <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="2" Name="OrdenarPantallaIzquierda">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Menu>
                 <Menu Height="auto" HorizontalAlignment="Stretch" >
                     <MenuItem FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
-                        <MenuItem FontSize="15" Header="Cerrar Sesion" Click="CerrarSesion" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
-                        <MenuItem FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesion" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                        <MenuItem FontSize="15" Header="Cerrar Sesion" Click="CerrarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                        <MenuItem FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
                     </MenuItem>
                 </Menu>
-            </Grid>
-
-            <Grid Name="GridBajoMenu">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-                <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="2" Name="OrdenarListView" >
-
-                    <ListView FontSize="15" Height="350" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_Cliente" SelectionMode="Multiple" d:ItemsSource="{d:SampleData ItemCount=5}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Apellido}" Header="Apellido" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-
-                    <StackPanel Orientation="Horizontal" Width="500" Name="OrdenarBotones">
-
-                        <Button Content="Autorizar" Width="90" FontSize="15" Click="Autorizar_Click" />
-                        <Button Content="Actualizar" Width="90" FontSize="15" Click="Actualizar_Click" />
-                        <Line X1="0" X2="5"  Stroke="DarkGray" StrokeThickness="50"></Line>
-                        <Line X1="0" X2="320" Y1="13" Y2="13" StrokeThickness="5" Stroke="DarkGray"></Line>
-
-                    </StackPanel>
-                </StackPanel>
-            </Grid>
-
-
+            </Menu>
         </StackPanel>
-
     </Grid>
 </Window>

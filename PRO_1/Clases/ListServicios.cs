@@ -13,7 +13,7 @@ namespace PRO_1.Clases
         public int precioServicio { get; set; }
         public int Servicio_ID { get; set; }
 
-        int counter;
+        int counter = 0;
         public ListServicios(string nombreServicio, int precioServicio)
         {
             this.nombreServicio = nombreServicio;

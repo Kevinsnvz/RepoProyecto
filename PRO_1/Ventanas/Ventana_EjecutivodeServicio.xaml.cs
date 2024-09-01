@@ -34,6 +34,48 @@ namespace PRO_1.Ventanas
             InitializeComponent();
         }
 
+        private void CollapseAllStackPanelsExcept(StackPanel visibleStackPanel, Grid gridContainer)
+        {
+            
+
+            foreach (var child in gridContainer.Children)
+            {
+                if (child is StackPanel otrosStackPanel && otrosStackPanel != visibleStackPanel)
+                {
+                    otrosStackPanel.Visibility = Visibility.Collapsed;
+                }
+                else if (child is StackPanel elStackkPanel && elStackkPanel == visibleStackPanel)
+                {
+                    elStackkPanel.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private int UpdatePrecioTotal(string matriculaUsuario)
+        {
+            int x = 0;
+            foreach (var item in acceso_Cliente.ListaGlobalClientes)
+            {
+                try
+                {
+                    if (item.Matricula.Equals(matriculaUsuario))
+                    {
+                        foreach (var itemListaDeServicios in item.ListaDeServicios)
+                        {
+                            x = x + itemListaDeServicios.PrecioServicio;
+                        }
+
+                    }
+                }
+                catch (ArgumentNullException)
+                {
+
+                    MessageBox.Show("ERROR: Se debe seleccionar un usuario de matricula valida.");
+                }
+            }
+            return x;
+        }
+
         public void AgregarServicioALista(string nombreServicio, int precioServicio)
         {
             if (Label_UsuarioSeleccionado.Content != null)
@@ -64,39 +106,42 @@ namespace PRO_1.Ventanas
         private void EliminarSeleccionadoDeLista_Click(object sender, RoutedEventArgs e)
         {
 
-            if(Label_UsuarioSeleccionado.Content != null && Lista_ServiciosSolicitados.SelectedItem != null)
+            if (Label_UsuarioSeleccionado.Content == null && Lista_ServiciosSolicitados.SelectedItem == null)
+                return;
+
+            for (int i = acceso_Cliente.ListaGlobalClientes.Count - 1; i >= 0; i--)
             {
-                for (int i = acceso_Cliente.ListaGlobalClientes.Count - 1; i >= 0; i--)
+                var item = acceso_Cliente.ListaGlobalClientes[i];
+                if (item.Matricula != Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                    return;
+
+                var itemModificacionDeLista = item.ListaDeServicios;
+                var serviciosSeleccionado = (ListServicios)Lista_ServiciosSolicitados.SelectedItem;
+                foreach (var ListasEnItem in itemModificacionDeLista)
                 {
-                    var item = acceso_Cliente.ListaGlobalClientes[i];
-                    if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                    if (ListasEnItem.NombreServicio == serviciosSeleccionado.nombreServicio)
                     {
-                        var itemModificacionDeLista = item.ListaDeServicios;
-                        var serviciosSeleccionado = (ListServicios)Lista_ServiciosSolicitados.SelectedItem;
-                        foreach(var ListasEnItem in itemModificacionDeLista)
-                        {
-                            if (ListasEnItem.NombreServicio == serviciosSeleccionado.nombreServicio)
-                            {
-                                itemModificacionDeLista.Remove(ListasEnItem);
-                                listServicios.Remove(serviciosSeleccionado);
+                        itemModificacionDeLista.Remove(ListasEnItem);
+                        listServicios.Remove(serviciosSeleccionado);
 
-                                Lista_ServiciosSolicitados.ItemsSource = null;
-                                Lista_ServiciosSolicitados.ItemsSource = listServicios;
+                        Lista_ServiciosSolicitados.ItemsSource = null;
+                        Lista_ServiciosSolicitados.ItemsSource = listServicios;
 
-                                PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-                                return;
-                            }
-
-
-                        }
-
+                        PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+                        return;
                     }
+
+
                 }
 
-                
+
             }
 
+
+
+
         }
+
 
         private void EliminarTodoDeLista_Click(object sender, RoutedEventArgs e)
         {
@@ -121,41 +166,83 @@ namespace PRO_1.Ventanas
             Lista_ServiciosSolicitados.ItemsSource = null;
             Lista_ServiciosSolicitados.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
-            PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(),acceso_Cliente);
+            PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
 
-        private void Lista_Cliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListaReciboCliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var SelectedItem = (Clientes)Lista_ClienteRecibo.SelectedItem;
 
-            if (SelectedItem != null)
+            if (SelectedItem == null) return;
+
+            Label_UsuarioSeleccionado.Content = $"{SelectedItem.Nombre} {SelectedItem.Apellido} {SelectedItem.Telefono} ";
+            Label_MatriculaUsuarioSeleccionado.Content = SelectedItem.Matricula;
+
+            Lista_ServiciosSolicitados.ItemsSource = null;
+
+            foreach (var item in acceso_Cliente.ListaGlobalClientes)
             {
-                Label_UsuarioSeleccionado.Content = $"{SelectedItem.Nombre} {SelectedItem.Apellido} {SelectedItem.Telefono} ";
-                Label_MatriculaUsuarioSeleccionado.Content = SelectedItem.Matricula;
-                Lista_ServiciosSolicitados.ItemsSource = null;
-                Lista_ServiciosSolicitados.ItemsSource = acceso_Cliente.ListaGlobalClientes;
-
-                foreach (var item in acceso_Cliente.ListaGlobalClientes)
+                if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
                 {
-                    if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                    listServicios.Clear();
+                    foreach (var itemModificacionDeLista in item.ListaDeServicios)
                     {
-                        listServicios.Clear();
-                        foreach (var itemModificacionDeLista in item.ListaDeServicios)
-                        {
-                            listServicios.Add(new ListServicios(itemModificacionDeLista.NombreServicio,itemModificacionDeLista.PrecioServicio));
-                        }
-                        
-                        Lista_ServiciosSolicitados.ItemsSource = listServicios;
-                        PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+                        listServicios.Add(new ListServicios(itemModificacionDeLista.NombreServicio, itemModificacionDeLista.PrecioServicio));
                     }
-                }
 
+                    Lista_ServiciosSolicitados.ItemsSource = listServicios;
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+                }
             }
+
+
         }
 
         private void EntregarVehiculo_Click(object sender, RoutedEventArgs e)
         {
-            FuncionesEjecutivo.EntregarVehiculo(Lista_ClienteRecibo, acceso_Cliente);
+            var SelectedItem = (Clientes)Lista_ClienteRecibo.SelectedItem;
+
+            if (SelectedItem == null)
+            { MessageBox.Show("ERROR: Se debe seleccionar un usuario"); return; }
+
+            if (SelectedItem.Autorizado == false)
+            {
+                MessageBoxButton buttons = MessageBoxButton.YesNo;
+                MessageBoxImage icon = MessageBoxImage.Question;
+                string caption = "Confirmar.";
+                string message = "La entrega de este vehiculo no fue autorizada. ¿Estas seguro de esto?";
+                MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon);
+
+                if (result == MessageBoxResult.No) return;
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
+
+                    MessageBox.Show("Entregado. Vehiculo removido del sistema.");
+                }
+
+            }
+            else
+            {
+                MessageBoxButton buttons = MessageBoxButton.YesNo;
+                MessageBoxImage icon = MessageBoxImage.Question;
+                string caption = "Confirmar.";
+                string message = "¿Entregar vehiculo? Sera eliminado del sistema.";
+                MessageBoxResult result = MessageBox.Show(message, caption, buttons, icon);
+
+                if (result == MessageBoxResult.No) return;
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
+
+
+
+                    MessageBox.Show("Entregado. Vehiculo removido del sistema.");
+                }
+            }
+
         }
 
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
@@ -191,36 +278,31 @@ namespace PRO_1.Ventanas
 
         private void SeccionDeCobranza(object sender, RoutedEventArgs e)
         {
-            Alineacion_Stack.Visibility = Visibility.Collapsed;
-            Lavado_stack.Visibility = Visibility.Collapsed;
-            Balanceo_Stack.Visibility = Visibility.Collapsed;
-            Neumatico_stack.Visibility = Visibility.Collapsed;
-            Parking_Stack.Visibility = Visibility.Collapsed;
             switch (sender)
             {
                 case Button button when button == SeccionAlineacion_Button:
 
-                    Alineacion_Stack.Visibility = Visibility.Visible;
+                    CollapseAllStackPanelsExcept(Alineacion_Stack, Grid_Ventas);
                     
                     break;
                 case Button button when button == SeccionBalanceo_Button:
 
-                    Balanceo_Stack.Visibility = Visibility.Visible;
+                    CollapseAllStackPanelsExcept(Balanceo_Stack, Grid_Ventas);
 
                     break;
                 case Button button when button == SeccionLavado_Button:
 
-                    Lavado_stack.Visibility = Visibility.Visible;
+                    CollapseAllStackPanelsExcept(Lavado_stack, Grid_Ventas);
 
                     break;
                 case Button button when button == SeccionNeumatico_Button:
 
-                    Neumatico_stack.Visibility = Visibility.Visible;
+                    CollapseAllStackPanelsExcept(Neumatico_stack, Grid_Ventas);
 
                     break;
                 case Button button when button == SeccionParking_Button:
 
-                    Parking_Stack.Visibility = Visibility.Visible;
+                    CollapseAllStackPanelsExcept(Parking_Stack, Grid_Ventas);
 
                     break;
             }
@@ -237,64 +319,56 @@ namespace PRO_1.Ventanas
                 case Button button when button == CobrarAlineacion1Tren_Button:
 
                     AgregarServicioALista("Alineacion para 1 tren", Precios.alineacion1Tren);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
 
                     break;
                 case Button button when button == CobrarAlineacion2Tren_Button:
 
                     AgregarServicioALista("Alineacion para 2 trenes", Precios.alineacion2Tren);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoAuto_Button:
 
                     AgregarServicioALista("Lavado de Auto", Precios.lavadoauto);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoCamioneta_Button:
 
                     AgregarServicioALista("Lavado de Camioneta", Precios.lavadocamioneta);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoCamionUtil_Button:
 
                     AgregarServicioALista("Lavado de Camion Utilitario", Precios.lavadocamionutilitario);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoCamion_Button:
 
                     AgregarServicioALista("Lavado de Camion Chico", Precios.lavadocamionchico);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoMoto_Button:
 
                     AgregarServicioALista("Lavado de Moto", Precios.lavadomoto);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarBalanceoAutoConValvula:
 
                     AgregarServicioALista("Balanceo de Auto", Precios.balanceoauto);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarBalanceoCamionetaConValvula:
 
                     AgregarServicioALista("Balanceo de Camioneta", Precios.balanceoamioneta);
-                    PrecioTotal_Label.Content = FuncionesEjecutivo.UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString(), acceso_Cliente);
-
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
 

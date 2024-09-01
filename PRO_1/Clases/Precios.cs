@@ -87,7 +87,7 @@ namespace PRO_1.Clases
         {
             get
             {
-                return _BalanceoAuto;
+                return _BalanceoCamioneta;
             }
         }
 

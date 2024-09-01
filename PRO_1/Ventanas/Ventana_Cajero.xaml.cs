@@ -35,67 +35,20 @@ namespace PRO_1.Ventanas
 
         }
 
-        public void UpdatePrecioTotal()
-        {
-            int x = 0;
-            if (listServicios.Count > 0)
-            {
-                foreach (var item in listServicios)
-                {
-                    x = x + item.precioServicio;
-                }
-            }
-            else { x = 0; }
-            PrecioTotal_Label.Content ="Total: "+ x;
-        }
-
-        public void AgregarServicioALista(string nombre, int precio)
-        {
-            if (Combobos_Clientes.SelectedItem != null)
-            {
-                listServicios.Add(new ListServicios(nombre,precio));
-
-                ListView_Servicios.ItemsSource = null;
-                ListView_Servicios.ItemsSource = listServicios;
-            }
-            else
-            {
-                MessageBox.Show("ERROR: Seleccionar un cliente!");
-            }
-        }
-
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
-        private void CerrarSesion(object sender, RoutedEventArgs e)
+        private void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
             this.Close();
         }
 
         //Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login
-        private void IniciarSesion(object sender, RoutedEventArgs e)
+        private void IniciarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
-        }
-
-        //Actualiza la lista de Clientes
-        private void Actualizar_Click(object sender, RoutedEventArgs e)
-        {
-            Lista_Cliente.ItemsSource = null;
-            Lista_Cliente.ItemsSource = acceso_Cliente.ListaGlobalClientes;
-
-        }
-
-        private void Autorizar_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

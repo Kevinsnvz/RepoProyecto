@@ -164,9 +164,10 @@
             </Grid>
 
             <Grid Name="grid_SeccionFacturacion" Visibility="Visible">
+                
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
 
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -174,6 +175,7 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
+
                 <StackPanel Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Name="OrdenarPantallaDerecha">
 
                     <Label Content="Cliente seleccionado" HorizontalContentAlignment="Center" FontSize="20" Width="500" Background="MediumPurple" />
@@ -239,7 +241,7 @@
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding nombreServicio}" Header="Servicio:" Width="auto"></GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding precioServicio}" Header="Costo:" Width="auto"></GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding Servicio_ID}" Header="Costo:" Width="auto"></GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Servicio_ID}" Header="ID:" Width="auto"></GridViewColumn>
 
                             </GridView>
                         </ListView.View>
@@ -274,7 +276,7 @@
 
                         <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="2" Name="OrdenarListView" Background="FloralWhite" >
 
-                            <ListView FontSize="15" MinHeight="100" MaxHeight="240" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="Lista_Cliente_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=15}">
+                            <ListView FontSize="15" MinHeight="100" MaxHeight="240" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="ListaReciboCliente_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=15}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
