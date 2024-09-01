@@ -50,5 +50,26 @@ namespace PRO_1.Ventanas
             mainWindow.Show();
             this.Close();
         }
+
+        private void Actualizar_Click(object sender, RoutedEventArgs e)
+        {
+            Lista_ClientesACobrar.ItemsSource = null;
+            Lista_ClientesACobrar.ItemsSource = acceso_Cliente.ListaGlobalClientes;
+        }
+
+        private void Lista_ClientesACobrar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var SelectedItem = (Clientes)Lista_ClientesACobrar.SelectedItem;
+
+            if (SelectedItem == null) return;
+
+            NombreCliente_Label.Content = SelectedItem.Nombre;
+            ApellidoCliente_Label.Content = SelectedItem.Apellido;
+            TelefonoCliente_Label.Content = SelectedItem.Telefono.ToString();
+            ModeloCliente_Label.Content = SelectedItem.Modelo;
+            MarcaCliente_Label.Content = SelectedItem.Marca;
+            MatriculaCliente_label.Content = SelectedItem.Matricula;
+
+        }
     }
 }
