@@ -101,7 +101,7 @@ namespace PRO_1.Ventanas
 
             if(NombreCliente_Label == null ) return;
 
-            String dest = "C:/Users/kevin/Desktop/recibo";
+            String dest = "C:/Users/ksnvz/Desktop/recibo.pdf";
 
 
 
