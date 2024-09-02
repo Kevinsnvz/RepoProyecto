@@ -48,14 +48,14 @@ namespace PRO_1.Ventanas
         }
 
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
-        private void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
+        public void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
             this.Close();
         }
 
         //Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login
-        private void IniciarSesionMenu_Click(object sender, RoutedEventArgs e)
+        public void IniciarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
             MainWindow mainWindow = new MainWindow();
@@ -63,13 +63,13 @@ namespace PRO_1.Ventanas
             this.Close();
         }
 
-        private void Actualizar_Click(object sender, RoutedEventArgs e)
+        public void Actualizar_Click(object sender, RoutedEventArgs e)
         {
             Lista_ClientesACobrar.ItemsSource = null;
             Lista_ClientesACobrar.ItemsSource = acceso_Cliente.ListaGlobalClientes;
         }
 
-        private void Lista_ClientesACobrar_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void Lista_ClientesACobrar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var SelectedItem = (Clientes)Lista_ClientesACobrar.SelectedItem;
 
@@ -96,7 +96,7 @@ namespace PRO_1.Ventanas
 
         }
 
-        private void ImprimirRecibo(object sender, RoutedEventArgs e)
+        public void ImprimirRecibo(object sender, RoutedEventArgs e)
         {
 
             if(NombreCliente_Label == null ) return;

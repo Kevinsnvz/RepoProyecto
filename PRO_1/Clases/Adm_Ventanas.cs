@@ -12,7 +12,7 @@ namespace PRO_1.Clases
     
     public class Adm_Ventanas
     {
-        static ListaDeClientes deClientes = new ListaDeClientes();
+        private static ListaDeClientes Clientes = new ListaDeClientes();
 
         //Abrir una ventana dependiendo del rol en string que se le ingrese
         public static void AbrirVentanaPorRol(string rol)
@@ -20,14 +20,20 @@ namespace PRO_1.Clases
             switch (rol)
             {
                 case "Cajero":
-                    Ventana_Cajero ventana_Cajero = new Ventana_Cajero(deClientes);
+                    Ventana_Cajero ventana_Cajero = new Ventana_Cajero(Clientes);
                     ventana_Cajero.Show();
                     Application.Current.MainWindow?.Close();
                     break;
                 case "Ej_serv":
-                    Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(deClientes);
+                    Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(Clientes);
                     ventana_ejecutivo.Show();
                     Application.Current.MainWindow?.Close();
+                    break;
+                case "Gerente":
+                    Ventana_Gerente ventana_Gerente = new Ventana_Gerente();
+                    ventana_Gerente.Show();
+                    Application.Current.MainWindow?.Close();
+
                     break;
                 default:
                     MessageBox.Show("No se dio un rol valido");
@@ -44,11 +50,11 @@ namespace PRO_1.Clases
                     mainWindow.Show();
                     break;
                 case "Ventana_Cajero":
-                    Ventana_Cajero ventana_Cajero = new Ventana_Cajero(deClientes);
+                    Ventana_Cajero ventana_Cajero = new Ventana_Cajero(Clientes);
                     ventana_Cajero.Show();
                     break;
                 case "Ventana_EjecutivodeServicio":
-                    Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(deClientes);
+                    Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(Clientes);
                     ventana_ejecutivo.Show();
                     break;
                 default:
