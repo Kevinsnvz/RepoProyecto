@@ -174,6 +174,7 @@
     <Compile Include="Clases\ListaDeClientes.cs" />
     <Compile Include="Clases\ListServicios.cs" />
     <Compile Include="Clases\Precios.cs" />
+    <Compile Include="Clases\Usuarios.cs" />
     <Compile Include="Ventanas\Ventana_Cajero.xaml.cs">
       <DependentUpon>Ventana_Cajero.xaml</DependentUpon>
     </Compile>

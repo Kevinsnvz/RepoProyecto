@@ -101,8 +101,9 @@ namespace PRO_1.Ventanas
 
             if(NombreCliente_Label == null ) return;
 
-            String dest = "C:/Users/ksnvz/Desktop/recibo.pdf";
-            
+            String dest = "C:/Users/kevin/Desktop/recibo";
+
+
 
             using (PdfWriter writer = new PdfWriter(dest))
             using (PdfDocument pdfDocument = new PdfDocument(writer))
@@ -148,7 +149,7 @@ namespace PRO_1.Ventanas
                         
             }
             
-    }
+        }
         
     }
 }

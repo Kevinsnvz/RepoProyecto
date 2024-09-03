@@ -26,25 +26,28 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
+                <StackPanel>
 
-                <ListView FontSize="15" MinHeight="100" MaxHeight="240" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClientesACobrar" SelectionMode="Single" SelectionChanged="Lista_ClientesACobrar_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=15}">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Apellido}" Header="Apellido" Width="auto"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="Marca" Width="auto"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Autorizado}" Header="Entregar?" Width="auto"/>
+                    <ListView FontSize="15" MinHeight="100" MaxHeight="240" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClientesACobrar" SelectionMode="Single" SelectionChanged="Lista_ClientesACobrar_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=15}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Apellido}" Header="Apellido" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Telefono}" Header="Telefono" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="Marca" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Autorizado}" Header="Entregar?" Width="auto"/>
 
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
+
+                    <Button Grid.Row="0" Grid.Column="0" Content="Actualizar" Width="100" HorizontalAlignment="Center" Click="Actualizar_Click"></Button>
+
+                </StackPanel>
                 
-                <Button Grid.Row="1" Grid.Column="0" Content="Actualizar" Width="100" HorizontalAlignment="Center" Click="Actualizar_Click"></Button>
-
                 <StackPanel Grid.Row="0" Grid.Column="1" Background="GhostWhite">
                     <Label FontSize="20" Content="Seccion FACTURACION" HorizontalContentAlignment="Center" Background="MediumPurple"></Label>
 
