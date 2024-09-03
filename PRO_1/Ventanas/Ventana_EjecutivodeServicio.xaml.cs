@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
+using System.Collections.ObjectModel;
 
 
 namespace PRO_1.Ventanas
