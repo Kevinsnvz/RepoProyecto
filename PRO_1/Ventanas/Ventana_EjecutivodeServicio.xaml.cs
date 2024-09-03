@@ -262,6 +262,8 @@ namespace PRO_1.Ventanas
         public void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
 
+            DataBase.CargarClientesDeBD(acceso_Cliente);
+
             Lista_BajaClientes.ItemsSource = null;
             Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
@@ -409,10 +411,10 @@ namespace PRO_1.Ventanas
 
                 string patron = @"^[A-Z]{3}\d{4}$"; Regex regex = new Regex(patron);
                 if(!regex.IsMatch(MatriculaVehiculoCliente_TextBox.Text)) { MessageBox.Show("ERROR: Debe de ingresar una matricula valida. EJ: 'ABC1234'"); return; }
-
-                Clientes Cliente = new Clientes(NombreCliente_TextBox.Text, ApellidoCliente_TextBox.Text, MarcaVehiculoCliente_TextBox.Text, ModeloVehiculoCliente_TextBox.Text, MatriculaVehiculoCliente_TextBox.Text, Convert.ToInt32(TelefonoCliente_TextBox.Text));
-                acceso_Cliente.ListaGlobalClientes.Add(Cliente);
+                
                 MessageBox.Show($"Usuario {MatriculaVehiculoCliente_TextBox.Text}, creado.");
+
+                DataBase.AgregarClienteABDYAPP(NombreCliente_TextBox.Text,ApellidoCliente_TextBox.Text,int.Parse(TelefonoCliente_TextBox.Text),MarcaVehiculoCliente_TextBox.Text,ModeloVehiculoCliente_TextBox.Text,MatriculaVehiculoCliente_TextBox.Text, acceso_Cliente);
             }
             else MessageBox.Show("ERROR: Esta matrícula ya está ingresada en el sistema. Modificar o Eliminar el respectivo.");
             
@@ -444,11 +446,8 @@ namespace PRO_1.Ventanas
                 ///Si no es la matricula que buscamos, cancela la iteracion actual del for loop y salta a la siguiente sin ejecutar el codigo que lo procede.
                 if (item.Matricula != MatriculaVehiculoActualCliente_TextBox.Content.ToString()) continue;
 
-                acceso_Cliente.ListaGlobalClientes.Remove(item);
-
-                Clientes clientes = new Clientes(NombreActualCliente_TextBox.Text, ApellidoActualCliente_TextBox.Text, MarcaVehiculoActualCliente_TextBox.Text, ModeloVehiculoActualCliente_TextBox.Text, MatriculaVehiculoActualCliente_TextBox.Content.ToString(), int.Parse(TelefonoActualCliente_TextBox.Text));
-
-                acceso_Cliente.ListaGlobalClientes.Add(clientes);
+                DataBase.ModificarClienteDeBDYAPP(NombreActualCliente_TextBox.Text,ApellidoActualCliente_TextBox.Text,Convert.ToInt32(TelefonoActualCliente_TextBox.Text),MarcaVehiculoActualCliente_TextBox.Text
+                    ,ModeloVehiculoActualCliente_TextBox.Text,MatriculaVehiculoActualCliente_TextBox.Content.ToString(),item.ClienteID,acceso_Cliente);
 
                 MessageBox.Show("Usuario modificado!");
 

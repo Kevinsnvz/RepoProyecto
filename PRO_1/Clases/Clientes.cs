@@ -63,6 +63,14 @@ namespace PRO_1.Clases
             set { _autorizado = value; }
         }
 
+        private int _clienteID;
+
+        public int ClienteID
+        {
+            get { return _clienteID; }
+            set { _clienteID = value; }
+        }
+
 
         private List<(string NombreServicio, int PrecioServicio)> _listadeservicios;
 
@@ -73,7 +81,7 @@ namespace PRO_1.Clases
         }
 
         //Constructor de la clase Clientes
-        public  Clientes(string nombre, string apellido, string marca, string modelo, string matricula, int telefono)
+        public  Clientes(string nombre, string apellido, string marca, string modelo, string matricula, int telefono, int id)
         {
             this.Nombre = nombre;
             this.Apellido = apellido;
@@ -83,6 +91,20 @@ namespace PRO_1.Clases
             this.Telefono = telefono;
             this.ListaDeServicios = new List<(string NombreServicio, int PrecioServicio)>();
             this.Autorizado = false;
+            this.ClienteID = id;
+        }
+        //Constructor sobrecarga
+        public Clientes(string nombre, string apellido, string marca, string modelo, string matricula, int telefono, int id,List<(string NombreServicio, int PrecioServicio)> lista, bool autorizado)
+        {
+            this.Nombre = nombre;
+            this.Apellido = apellido;
+            this.Marca = marca;
+            this.Modelo = modelo;
+            this.Matricula = matricula;
+            this.Telefono = telefono;
+            this.ListaDeServicios = lista;
+            this.Autorizado = autorizado;
+            this.ClienteID = id;
         }
     }   
 }

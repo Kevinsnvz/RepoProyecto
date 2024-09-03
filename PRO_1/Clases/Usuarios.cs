@@ -30,7 +30,9 @@ namespace PRO_1.Clases
 
         public Usuarios(string username,string password,string rol)
         {
-            
+            this.Username = username;
+            this.Password = password;
+            this.Rol = rol;
         }
     }
 }

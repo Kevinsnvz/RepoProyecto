@@ -8,12 +8,14 @@ namespace PRO_1.Clases
 {
     public class ListaDeClientes
     {
-        private List<Clientes> _listaglobalclientes= new List<Clientes>();
-
-        public List<Clientes> ListaGlobalClientes 
+        private static List<Clientes> _listaglobalclientes= new List<Clientes>();
+        public List<Clientes> ListaGlobalClientes
         {
             get { return _listaglobalclientes; }
-            set {  _listaglobalclientes = value;}
+            set { _listaglobalclientes = value; }
+            
         }
+
+
     }
 }

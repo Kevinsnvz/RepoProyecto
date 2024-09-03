@@ -30,7 +30,7 @@ namespace PRO_1.Ventanas
 
     public partial class Ventana_Cajero : Window
     {
-        private List<ListServicios> listServicios = new List<ListServicios>();
+        private ObservableCollection<ListServicios> listServicios = new ObservableCollection<ListServicios>();
         private ListaDeClientes acceso_Cliente;
         
 
@@ -63,12 +63,14 @@ namespace PRO_1.Ventanas
             this.Close();
         }
 
+        //Actualiza la lista.
         public void Actualizar_Click(object sender, RoutedEventArgs e)
         {
             Lista_ClientesACobrar.ItemsSource = null;
             Lista_ClientesACobrar.ItemsSource = acceso_Cliente.ListaGlobalClientes;
         }
 
+        //Cuando se selecciona un item de esta lista se ejecuta el codigo. Establece los datos del cliente en la seccion factura de la ventana.
         public void Lista_ClientesACobrar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var SelectedItem = (Clientes)Lista_ClientesACobrar.SelectedItem;
@@ -81,6 +83,7 @@ namespace PRO_1.Ventanas
             ModeloCliente_Label.Content = SelectedItem.Modelo;
             MarcaCliente_Label.Content = SelectedItem.Marca;
             MatriculaCliente_label.Content = SelectedItem.Matricula;
+            IDCliente_label.Content = SelectedItem.ClienteID;
 
             
 
@@ -95,7 +98,7 @@ namespace PRO_1.Ventanas
             ServiciosACobrar_Label.Content += "\n";
 
         }
-
+        //Toma los datos del Cliente al igual que los servicios que solicito y los imprime en un recibo de formato PDF
         public void ImprimirRecibo(object sender, RoutedEventArgs e)
         {
 
@@ -121,6 +124,7 @@ namespace PRO_1.Ventanas
                 document.Add(new Paragraph(ApellidoCliente_Label.Content.ToString()));
                 document.Add(new Paragraph(TelefonoCliente_Label.Content.ToString()));
                 document.Add(new Paragraph(MatriculaCliente_label.Content.ToString()));
+                document.Add(new Paragraph(IDCliente_label.Content.ToString()));
 
                 iText.Layout.Element.Table table = new iText.Layout.Element.Table(new float[] { 3, 7 });
                 table.AddCell("Servicio");
@@ -129,13 +133,20 @@ namespace PRO_1.Ventanas
                 int TOTAL = 0;
                 foreach(var CLIENTES in acceso_Cliente.ListaGlobalClientes)
                 {
-                    if (CLIENTES.Matricula != MatriculaCliente_label.Content.ToString())
-                        break;
-                    foreach(var SERVICIOSENCLIENTES in CLIENTES.ListaDeServicios)
+                    if (CLIENTES.ClienteID == Convert.ToInt32(IDCliente_label.Content))
                     {
-                        table.AddCell(SERVICIOSENCLIENTES.NombreServicio);
-                        table.AddCell(SERVICIOSENCLIENTES.PrecioServicio.ToString());
-                        TOTAL += SERVICIOSENCLIENTES.PrecioServicio;
+                        foreach (var SERVICIOSENCLIENTES in CLIENTES.ListaDeServicios)
+                        {
+                            table.AddCell(SERVICIOSENCLIENTES.NombreServicio);
+                            table.AddCell(SERVICIOSENCLIENTES.PrecioServicio.ToString());
+                            TOTAL += SERVICIOSENCLIENTES.PrecioServicio;
+                        }
+                        if (Autorizar_CheckBox.IsEnabled == true)
+                        {
+                            CLIENTES.Autorizado = true;
+                        }
+                        else CLIENTES.Autorizado = false;
+
                     }
                 }
                 table.AddCell("TOTAL:");
@@ -146,6 +157,8 @@ namespace PRO_1.Ventanas
                 document.Add(SPACING);
                 document.Add(new Paragraph("Kibe APPS")).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.LEFT);
                 document.Close();
+
+                
                         
             }
             

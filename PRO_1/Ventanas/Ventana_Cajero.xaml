@@ -75,8 +75,12 @@
                         <Label Content="Matricula: "></Label>
                         <Label Name="MatriculaCliente_label" Content=""></Label>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <Label Content="ID Cliente: "></Label>
+                        <Label Name="IDCliente_label" Content=""></Label>
+                    </StackPanel>
 
-                    <CheckBox HorizontalAlignment="Center" Content="Autorizar entrega?" IsChecked="True"></CheckBox>
+                    <CheckBox Name="Autorizar_CheckBox" HorizontalAlignment="Center" Content="Autorizar entrega?" IsChecked="True"></CheckBox>
 
                     <Label Background="MediumPurple"></Label>
 
