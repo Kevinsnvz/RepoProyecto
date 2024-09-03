@@ -17,7 +17,7 @@ namespace PRO_1.Ventanas
     /// </summary>
     public partial class Ventana_EjecutivodeServicio : Window
     {
-        private List<ListServicios> listServicios = new List<ListServicios>();
+        private ObservableCollection<ListServicios> listServicios = new ObservableCollection<ListServicios>();
         private ListaDeClientes acceso_Cliente;
 
         public Ventana_EjecutivodeServicio(ListaDeClientes objetocliente)
@@ -260,6 +260,7 @@ namespace PRO_1.Ventanas
         //Actualiza la lista de Clientes
         public void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
+
             Lista_BajaClientes.ItemsSource = null;
             Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 

@@ -253,7 +253,6 @@
                     </StackPanel>
 
                     <Label Background="MediumPurple"></Label>
-                    <Button Content="Enviar a Cajero" FontSize="20" Width="150"></Button>
 
                 </StackPanel>
 
