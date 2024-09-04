@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using MySql.Data.MySqlClient;
+using Mysqlx;
 using PRO_1.Ventanas;
 
 namespace PRO_1.Clases
@@ -14,6 +15,50 @@ namespace PRO_1.Clases
     public class DataBase
     {
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
+
+        public static bool BorrarClienteDeBDYAPP(int id,ListaDeClientes lista)
+        {
+            using(MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+
+                try
+                {
+                    connection.Open();
+
+                    string sqlquery = $"DELETE FROM Clientes WHERE id = {id}";
+                    MySqlCommand comm = new MySqlCommand(sqlquery,connection);
+
+                    int FilasAfectadas = comm.ExecuteNonQuery();
+
+                    if(FilasAfectadas > 0)
+                    {
+                        Console.WriteLine($"Cliente ID:{id} eliminado exitosamente de BD");
+
+                        foreach (var cliente in lista.ListaGlobalClientes)
+                        {
+                            if (cliente.ClienteID == id) { continue; }
+
+                            Clientes ClienteABorrar = new Clientes(cliente.Nombre, cliente.Apellido, cliente.Marca, cliente.Modelo, cliente.Matricula, cliente.Telefono, cliente.ClienteID,cliente.ListaDeServicios,cliente.Autorizado);
+                            lista.ListaGlobalClientes.Remove(ClienteABorrar);
+                            Console.WriteLine($"Cliente {id} eliminado exitosamente de LISTA");
+                            break;
+                        }
+                        
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"ERROR: Cliente {id} no fue eliminado. Error desconocido.");
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("MySQL ERROR: " + ex.ToString());
+                }
+
+            }
+            return false;
+        }
 
         //Crea un cliente para la Lista de clientes en la app como en la BD.
         public static bool AgregarClienteABDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, ListaDeClientes lista)
@@ -25,7 +70,7 @@ namespace PRO_1.Clases
                 {
                     connection.Open();
 
-                    string sql = $"INSERT INTO Clientes (nombre,apellido,telefono,marca,modelo,matricula) VALUES ('{nombre}','{apellido}','{telefono}','{marca}','{modelo}','{matricula}'); SELECT LAST_INSERT_ID();";
+                    string sql = $"INSERT INTO Clientes (nombre,apellido,telefono,marca,modelo,matricula,autorizacion) VALUES ('{nombre}','{apellido}','{telefono}','{marca}','{modelo}','{matricula}',false); SELECT LAST_INSERT_ID();";
                     MySqlCommand cmd = new MySqlCommand(sql, connection);
 
                     int FilasAfectadas = cmd.ExecuteNonQuery();
@@ -50,17 +95,17 @@ namespace PRO_1.Clases
         }
 
         //Toma todos los datos para la modificacion del cliente nuevo, borrando el viejo en base a la id, QUE ES UNICA, y crea el cliente nuevo en la lista de la app asi como en la base de datos.
-        public static bool ModificarClienteDeBDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula,int id, ListaDeClientes lista)
+        public static bool ModificarClienteDeBDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, int id, bool autorizacion, ListaDeClientes lista)
         {
 
             List<(string nombreServicio, int precioServicio)> copiadelista = null;
-            bool copiadeAutorizacion = false;
+
             foreach (var Cliente in lista.ListaGlobalClientes)
             {
                 if (Cliente.ClienteID == id) { continue; }
 
                 copiadelista = Cliente.ListaDeServicios;
-                copiadeAutorizacion = Cliente.Autorizado;
+
             }
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -86,7 +131,7 @@ namespace PRO_1.Clases
                         Console.WriteLine("Cliente eliminado exitosamente de LISTA.");
 
 
-                        string sql1 = $"INSERT INTO Clientes (nombre,apellido,telefono,marca,modelo,matricula) VALUES ('{nombre}','{apellido}','{telefono}','{marca}','{modelo}','{matricula}'); SELECT LAST_INSERT_ID();";
+                        string sql1 = $"INSERT INTO Clientes (nombre,apellido,telefono,marca,modelo,matricula,autorizacion) VALUES ('{nombre}','{apellido}','{telefono}','{marca}','{modelo}','{matricula}',{autorizacion}); SELECT LAST_INSERT_ID();";
                         MySqlCommand cmd1 = new MySqlCommand(sql1, connection);
 
                         int FilasAgregadas = cmd1.ExecuteNonQuery();
@@ -95,7 +140,7 @@ namespace PRO_1.Clases
                         {
                             Console.WriteLine("Cliente creado exitosamente a BD.");
 
-                            Clientes clienteagregar = new Clientes(nombre, apellido, marca, modelo, matricula, telefono, Convert.ToInt32(cmd.LastInsertedId),copiadelista,copiadeAutorizacion);
+                            Clientes clienteagregar = new Clientes(nombre, apellido, marca, modelo, matricula, telefono, Convert.ToInt32(cmd.LastInsertedId),copiadelista,autorizacion);
                             lista.ListaGlobalClientes.Add(clienteagregar);
 
                             Console.WriteLine("Cliente creado exitosamente en LISTA");
@@ -116,7 +161,7 @@ namespace PRO_1.Clases
 
             }
         }
-        //HAY QUE AGREGAR OTRO ATRIBUTO A LA FILA DE CLIENTES (AUTORIZADO) ASI EN CARGA SE CONSERVA ESTE DATO. ES IMPORTANTE CONSERVAR. ESTE METODO ESTA HECHO PARA SER CARGADO UNA VEZ EN ARRANQUE! Se esta usando de forma incorrecta!
+
         public static void CargarClientesDeBD(ListaDeClientes lista)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -125,7 +170,7 @@ namespace PRO_1.Clases
                 {
                     connection.Open();
 
-                    string sql = "SELECT id,nombre,apellido,telefono,marca,modelo,matricula FROM clientes";
+                    string sql = "SELECT id,nombre,apellido,telefono,marca,modelo,matricula,autorizacion FROM clientes";
                     using (MySqlCommand cmd = new MySqlCommand(sql, connection))
                     {
                         using (MySqlDataReader reader = cmd.ExecuteReader())
@@ -135,7 +180,7 @@ namespace PRO_1.Clases
                             while (reader.Read())
                             {
 
-                                Clientes cliente = new Clientes(reader.GetString(1), reader.GetString(2), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetInt32(3), reader.GetInt32(0));
+                                Clientes cliente = new Clientes(reader.GetString(1), reader.GetString(2), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetInt32(3), reader.GetInt32(0), reader.GetBoolean(7));
                                 lista.ListaGlobalClientes.Add(cliente);
                             }
                         }

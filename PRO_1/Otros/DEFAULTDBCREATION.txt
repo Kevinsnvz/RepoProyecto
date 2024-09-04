@@ -1,0 +1,34 @@
+CREATE TABLE Clientes
+(
+	ID int AUTO_INCREMENT PRIMARY KEY,
+	nombre VARCHAR(100),
+	apellido VARCHAR(100),
+	marca VARCHAR(100),
+	modelo VARCHAR(100),
+	matricula VARCHAR(100),
+	autorizacion BOOLEAN,
+	telefono INT
+);
+
+INSERT INTO Clientes (nombre,apellido,marca,modelo,matricula,autorizacion,telefono)
+VALUES
+  ('Juan', 'Pérez', 'Toyota', 'Corolla', 'ABC1234', TRUE, 123456789),
+  ('Ana', 'García', 'Ford', 'Fiesta', 'XYZ5678', FALSE, 987654321),
+  ('Pedro', 'López', 'Renault', 'Clio', 'LMN9876', TRUE, 555444333);
+
+CREATE TABLE Users_
+(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	username VARCHAR(50),
+	passowrd VARCHAR(50),
+	job_role VARCHAR(15)
+	
+);
+
+INSERT INTO Users_ (username,password,job_role)
+VALUES
+	('usergerente','password123','gerente'),
+	('userjefe','password123','jefe_servicio'),
+	('userejecutivo','password123','ejecutivo_servicio'),
+	('usercajero','password123','cajero'),
+	('useroperativo','password123','operativo');

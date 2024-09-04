@@ -214,7 +214,7 @@ namespace PRO_1.Ventanas
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
+                    DataBase.BorrarClienteDeBDYAPP(SelectedItem.ClienteID, acceso_Cliente);
 
                     MessageBox.Show("Entregado. Vehiculo removido del sistema.");
                 }
@@ -232,7 +232,7 @@ namespace PRO_1.Ventanas
 
                 if (result == MessageBoxResult.Yes)
                 {
-                    acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
+                    DataBase.BorrarClienteDeBDYAPP(SelectedItem.ClienteID, acceso_Cliente);
 
 
 
@@ -261,16 +261,15 @@ namespace PRO_1.Ventanas
         //Actualiza la lista de Clientes
         public void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
+            Lista_BajaClientes.ItemsSource = null;
+            Lista_ClientesParaModificar.ItemsSource = null;
+            Lista_ClienteRecibo.ItemsSource = null;
 
             DataBase.CargarClientesDeBD(acceso_Cliente);
 
-            Lista_BajaClientes.ItemsSource = null;
-            Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;
-
-            Lista_ClientesParaModificar.ItemsSource = null;
-            Lista_ClientesParaModificar.ItemsSource = acceso_Cliente.ListaGlobalClientes;
-
-            Lista_ClienteRecibo.ItemsSource = null;
+            
+            Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;      
+            Lista_ClientesParaModificar.ItemsSource = acceso_Cliente.ListaGlobalClientes;           
             Lista_ClienteRecibo.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
 
@@ -447,7 +446,7 @@ namespace PRO_1.Ventanas
                 if (item.Matricula != MatriculaVehiculoActualCliente_TextBox.Content.ToString()) continue;
 
                 DataBase.ModificarClienteDeBDYAPP(NombreActualCliente_TextBox.Text,ApellidoActualCliente_TextBox.Text,Convert.ToInt32(TelefonoActualCliente_TextBox.Text),MarcaVehiculoActualCliente_TextBox.Text
-                    ,ModeloVehiculoActualCliente_TextBox.Text,MatriculaVehiculoActualCliente_TextBox.Content.ToString(),item.ClienteID,acceso_Cliente);
+                    ,ModeloVehiculoActualCliente_TextBox.Text,MatriculaVehiculoActualCliente_TextBox.Content.ToString(),item.ClienteID,item.Autorizado,acceso_Cliente);
 
                 MessageBox.Show("Usuario modificado!");
 
@@ -483,7 +482,8 @@ namespace PRO_1.Ventanas
 
             if(SelectedItem != null)
             {
-                acceso_Cliente.ListaGlobalClientes.Remove(SelectedItem);
+                DataBase.BorrarClienteDeBDYAPP(SelectedItem.ClienteID, acceso_Cliente);
+                
                 
             }
                

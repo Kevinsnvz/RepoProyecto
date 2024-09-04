@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PRO_1.Ventanas"
         mc:Ignorable="d"
-        Title="Ventana de Cajero" Height="800" Width="1000">
+        Title="Ventana de Cajero" Height="700" Width="1000">
     <Grid>
         <StackPanel>
+            
             <Menu>
                 <Menu Height="auto" HorizontalAlignment="Stretch" >
                     <MenuItem FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
@@ -79,6 +80,10 @@
                         <Label Content="ID Cliente: "></Label>
                         <Label Name="IDCliente_label" Content=""></Label>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" >
+                        <Label Content="Autorizado a entrega: "></Label>
+                        <Label Name="Autorizado_label" Content=""></Label>
+                    </StackPanel>
 
                     <CheckBox Name="Autorizar_CheckBox" HorizontalAlignment="Center" Content="Autorizar entrega?" IsChecked="True"></CheckBox>
 
@@ -94,6 +99,8 @@
 
                 </StackPanel>
             </Grid>
+            
         </StackPanel>
+        <Label Background="MediumPurple" Height="15" VerticalAlignment="Bottom"></Label>
     </Grid>
 </Window>

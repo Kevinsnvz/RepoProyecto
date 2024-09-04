@@ -19,21 +19,20 @@ namespace PRO_1.Clases
         {
             switch (rol)
             {
-                case "Cajero":
+                case "cajero":
                     Ventana_Cajero ventana_Cajero = new Ventana_Cajero(Clientes);
                     ventana_Cajero.Show();
                     Application.Current.MainWindow?.Close();
                     break;
-                case "Ej_serv":
+                case "ejecutivo_servicio":
                     Ventana_EjecutivodeServicio ventana_ejecutivo = new Ventana_EjecutivodeServicio(Clientes);
                     ventana_ejecutivo.Show();
                     Application.Current.MainWindow?.Close();
                     break;
-                case "Gerente":
+                case "gerente":
                     Ventana_Gerente ventana_Gerente = new Ventana_Gerente();
                     ventana_Gerente.Show();
                     Application.Current.MainWindow?.Close();
-
                     break;
                 default:
                     MessageBox.Show("No se dio un rol valido");

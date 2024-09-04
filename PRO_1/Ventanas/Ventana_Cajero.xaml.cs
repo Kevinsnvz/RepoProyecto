@@ -66,6 +66,8 @@ namespace PRO_1.Ventanas
         //Actualiza la lista.
         public void Actualizar_Click(object sender, RoutedEventArgs e)
         {
+            DataBase.CargarClientesDeBD(acceso_Cliente);
+
             Lista_ClientesACobrar.ItemsSource = null;
             Lista_ClientesACobrar.ItemsSource = acceso_Cliente.ListaGlobalClientes;
         }
@@ -83,6 +85,7 @@ namespace PRO_1.Ventanas
             ModeloCliente_Label.Content = SelectedItem.Modelo;
             MarcaCliente_Label.Content = SelectedItem.Marca;
             MatriculaCliente_label.Content = SelectedItem.Matricula;
+            Autorizado_label.Content = SelectedItem.Autorizado.ToString();
             IDCliente_label.Content = SelectedItem.ClienteID;
 
             
@@ -104,7 +107,7 @@ namespace PRO_1.Ventanas
 
             if(NombreCliente_Label == null ) return;
 
-            String dest = "C:/Users/ksnvz/Desktop/recibo.pdf";
+            String dest = "C:/Users/kevin/Desktop/recibo/recibo.pdf";
 
 
 
@@ -131,24 +134,38 @@ namespace PRO_1.Ventanas
                 table.AddCell("Precio");
 
                 int TOTAL = 0;
-                foreach(var CLIENTES in acceso_Cliente.ListaGlobalClientes)
+                
+                if(Autorizar_CheckBox.IsChecked == true)
                 {
-                    if (CLIENTES.ClienteID == Convert.ToInt32(IDCliente_label.Content))
-                    {
-                        foreach (var SERVICIOSENCLIENTES in CLIENTES.ListaDeServicios)
-                        {
-                            table.AddCell(SERVICIOSENCLIENTES.NombreServicio);
-                            table.AddCell(SERVICIOSENCLIENTES.PrecioServicio.ToString());
-                            TOTAL += SERVICIOSENCLIENTES.PrecioServicio;
-                        }
-                        if (Autorizar_CheckBox.IsEnabled == true)
-                        {
-                            CLIENTES.Autorizado = true;
-                        }
-                        else CLIENTES.Autorizado = false;
-
-                    }
+                    DataBase.ModificarClienteDeBDYAPP
+                        (
+                        NombreCliente_Label.Content.ToString(),
+                        ApellidoCliente_Label.Content.ToString(),
+                        Convert.ToInt32(TelefonoCliente_Label.Content),
+                        MarcaCliente_Label.Content.ToString(),
+                        ModeloCliente_Label.Content.ToString(),
+                        MatriculaCliente_label.Content.ToString(),
+                        Convert.ToInt32(IDCliente_label.Content),
+                        true,
+                        acceso_Cliente
+                        );
                 }
+                else
+                {
+                    DataBase.ModificarClienteDeBDYAPP
+                        (
+                        NombreCliente_Label.Content.ToString(),
+                        ApellidoCliente_Label.Content.ToString(),
+                        Convert.ToInt32(TelefonoCliente_Label.Content),
+                        MarcaCliente_Label.Content.ToString(),
+                        ModeloCliente_Label.Content.ToString(),
+                        MatriculaCliente_label.Content.ToString(),
+                        Convert.ToInt32(IDCliente_label.Content),
+                        Convert.ToBoolean(Autorizado_label.Content),
+                        acceso_Cliente
+                        );
+                }
+
                 table.AddCell("TOTAL:");
                 table.AddCell(TOTAL.ToString());
                 document.Add(table);
@@ -158,7 +175,7 @@ namespace PRO_1.Ventanas
                 document.Add(new Paragraph("Kibe APPS")).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.LEFT);
                 document.Close();
 
-                
+                MessageBox.Show("Impreso con exito.");
                         
             }
             

@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="Ventana_EjecutivodeServicio" Height="700" Width="1100">
     <Grid Background="FloralWhite">
+        <Label Background="MediumPurple" VerticalAlignment="Bottom"></Label>
         <StackPanel>
             <Menu Height="auto" HorizontalAlignment="Stretch" >
                 <MenuItem FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
@@ -38,6 +39,7 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="Marca" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="Modelo" Width="auto"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Matricula}" Header="Matricula" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ClienteID}" Header="ID" Width="auto"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -275,7 +277,7 @@
 
                         <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="2" Name="OrdenarListView" Background="FloralWhite" >
 
-                            <ListView FontSize="15" MinHeight="100" MaxHeight="240" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="ListaReciboCliente_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=15}">
+                            <ListView FontSize="15" MinHeight="100" MaxHeight="217" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_ClienteRecibo" SelectionMode="Single" SelectionChanged="ListaReciboCliente_SelectionChanged" d:ItemsSource="{d:SampleData ItemCount=15}">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding Nombre}" Header="Nombre" Width="auto"/>
