@@ -28,11 +28,19 @@ namespace PRO_1.Clases
             set { _rol = value; }
         }
 
-        public Usuarios(string username,string password,string rol)
+        private int _usuarioid;
+        public int UsuarioID
+        {
+            get { return _usuarioid; }
+            set { _usuarioid = value; }
+        }
+
+        public Usuarios(string username,string password,string rol,int id)
         {
             this.Username = username;
             this.Password = password;
             this.Rol = rol;
+            this.UsuarioID = id;
         }
     }
 }

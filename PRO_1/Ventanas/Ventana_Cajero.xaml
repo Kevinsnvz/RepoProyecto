@@ -8,6 +8,7 @@
         Title="Ventana de Cajero" Height="700" Width="1000">
     <Grid>
         <StackPanel>
+            <Label Background="MediumPurple"></Label>
             
             <Menu>
                 <Menu Height="auto" HorizontalAlignment="Stretch" >
@@ -101,6 +102,6 @@
             </Grid>
             
         </StackPanel>
-        <Label Background="MediumPurple" Height="15" VerticalAlignment="Bottom"></Label>
+        <Label Background="MediumPurple" VerticalAlignment="Bottom"></Label>
     </Grid>
 </Window>

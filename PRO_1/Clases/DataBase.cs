@@ -16,7 +16,111 @@ namespace PRO_1.Clases
     {
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
 
-        public static bool BorrarClienteDeBDYAPP(int id,ListaDeClientes lista)
+        /// <summary>
+        /// Metodo <c>AgregarUsuarioDeBDYAPP</c> Agrega usuarios a la base de datos y a su vez, la lista de la app.
+        /// </summary>
+        /// <param name="username">Nombre del usuario.</param>
+        /// <param name="password">Contraseña del usuario.</param>
+        /// <param name="job_role">Rol del trabajador.
+        /// <para>
+        /// Debe elegir uno de los roles predeterminados:
+        /// 0 - cajero / 1 - ejecutivo_servicio / 2 - gerente
+        /// </para>
+        /// </param>
+        /// <param name="ListaDeUsuarios">Lista al cual agregar el usuario</param>
+
+        public static bool AgregarUsuarioDeBDYAPP(string username,string password,int job_role,ListaDeUsuarios ListaDeUsuarios)
+        {
+            string rolSeleccionado = string.Empty;
+
+            switch(job_role)
+            {
+                case 0:
+                    rolSeleccionado = "cajero";
+                    break;
+                case 1:
+                    rolSeleccionado = "ejecutivo_servicio";
+                    break;
+                case 2:
+                    rolSeleccionado = "gerente";
+                    break;
+            }
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = $"INSERT INTO users_ (username,password,job_role) VALUES ('{username}','{password}','{rolSeleccionado}'); SELECT LAST_INSERT_ID();";
+
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+
+                    if ( FilasAfectadas > 0 )
+                    {
+                        Console.WriteLine("Usuario creado exitosamente en BD");
+
+                        Usuarios usuario = new Usuarios(username, password, rolSeleccionado, Convert.ToInt32(cmd.LastInsertedId));
+                        ListaDeUsuarios.ListaGlobalUsuarios.Add(usuario);
+
+                        Console.WriteLine("Usuario creado exitosamente en LISTA");
+                        return true;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("ERROR: No se creo el usuario. Error desconocido.");
+                        return false;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+
+
+        }
+        public static bool CargarUsuariosDeBD(ListaDeUsuarios ListaUsuarios)
+        {
+
+            using(MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = $"SELECT username,password,job_role,id FROM users_ ";
+
+                    using(MySqlCommand cmd = new MySqlCommand(query, connection))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            ListaUsuarios.ListaGlobalUsuarios.Clear();
+
+                            while (reader.Read())
+                            {
+                                Usuarios Usuario = new Usuarios(reader.GetString(0), reader.GetString(1), reader.GetString(2),reader.GetInt32(3));
+                                ListaUsuarios.ListaGlobalUsuarios.Add(Usuario);
+                                Console.WriteLine("Usuario creado exitosamente.");
+
+                            }
+                            return true;
+                        }
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+
+        }
+        public static bool BorrarClienteDeBDYAPP(int id,ListaDeClientes ListaClientes)
         {
             using(MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -34,12 +138,12 @@ namespace PRO_1.Clases
                     {
                         Console.WriteLine($"Cliente ID:{id} eliminado exitosamente de BD");
 
-                        foreach (var cliente in lista.ListaGlobalClientes)
+                        foreach (var cliente in ListaClientes.ListaGlobalClientes)
                         {
                             if (cliente.ClienteID == id) { continue; }
 
                             Clientes ClienteABorrar = new Clientes(cliente.Nombre, cliente.Apellido, cliente.Marca, cliente.Modelo, cliente.Matricula, cliente.Telefono, cliente.ClienteID,cliente.ListaDeServicios,cliente.Autorizado);
-                            lista.ListaGlobalClientes.Remove(ClienteABorrar);
+                            ListaClientes.ListaGlobalClientes.Remove(ClienteABorrar);
                             Console.WriteLine($"Cliente {id} eliminado exitosamente de LISTA");
                             break;
                         }
@@ -61,7 +165,7 @@ namespace PRO_1.Clases
         }
 
         //Crea un cliente para la Lista de clientes en la app como en la BD.
-        public static bool AgregarClienteABDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, ListaDeClientes lista)
+        public static bool AgregarClienteABDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, ListaDeClientes ListaClientes)
         {
             
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -80,7 +184,7 @@ namespace PRO_1.Clases
                         cmd = new MySqlCommand(sql, connection);
                         Console.WriteLine("Usuario creado exitosamente.");
                         Clientes Cliente = new Clientes(nombre, apellido, marca, modelo, matricula,telefono,Convert.ToInt32(cmd.LastInsertedId));
-                        lista.ListaGlobalClientes.Add(Cliente);
+                        ListaClientes.ListaGlobalClientes.Add(Cliente);
                         return true;
                     }
                     else { Console.WriteLine("ERROR: Usuario no creado. Error desconocido."); return false; }
@@ -95,12 +199,12 @@ namespace PRO_1.Clases
         }
 
         //Toma todos los datos para la modificacion del cliente nuevo, borrando el viejo en base a la id, QUE ES UNICA, y crea el cliente nuevo en la lista de la app asi como en la base de datos.
-        public static bool ModificarClienteDeBDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, int id, bool autorizacion, ListaDeClientes lista)
+        public static bool ModificarClienteDeBDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, int id, bool autorizacion, ListaDeClientes ListaClientes)
         {
 
             List<(string nombreServicio, int precioServicio)> copiadelista = null;
 
-            foreach (var Cliente in lista.ListaGlobalClientes)
+            foreach (var Cliente in ListaClientes.ListaGlobalClientes)
             {
                 if (Cliente.ClienteID == id) { continue; }
 
@@ -126,7 +230,7 @@ namespace PRO_1.Clases
                         Console.WriteLine("Cliente eliminado exitosamente de BD.");
 
                         Clientes clienteaborrar = new Clientes(nombre, apellido, marca, modelo, matricula, telefono, id);
-                        lista.ListaGlobalClientes.Remove(clienteaborrar);
+                        ListaClientes.ListaGlobalClientes.Remove(clienteaborrar);
 
                         Console.WriteLine("Cliente eliminado exitosamente de LISTA.");
 
@@ -141,7 +245,7 @@ namespace PRO_1.Clases
                             Console.WriteLine("Cliente creado exitosamente a BD.");
 
                             Clientes clienteagregar = new Clientes(nombre, apellido, marca, modelo, matricula, telefono, Convert.ToInt32(cmd.LastInsertedId),copiadelista,autorizacion);
-                            lista.ListaGlobalClientes.Add(clienteagregar);
+                            ListaClientes.ListaGlobalClientes.Add(clienteagregar);
 
                             Console.WriteLine("Cliente creado exitosamente en LISTA");
                             return true;
@@ -162,7 +266,7 @@ namespace PRO_1.Clases
             }
         }
 
-        public static void CargarClientesDeBD(ListaDeClientes lista)
+        public static void CargarClientesDeBD(ListaDeClientes ListaClientes)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -175,13 +279,13 @@ namespace PRO_1.Clases
                     {
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            lista.ListaGlobalClientes.Clear();
+                            ListaClientes.ListaGlobalClientes.Clear();
 
                             while (reader.Read())
                             {
 
                                 Clientes cliente = new Clientes(reader.GetString(1), reader.GetString(2), reader.GetString(4), reader.GetString(5), reader.GetString(6), reader.GetInt32(3), reader.GetInt32(0), reader.GetBoolean(7));
-                                lista.ListaGlobalClientes.Add(cliente);
+                                ListaClientes.ListaGlobalClientes.Add(cliente);
                             }
                         }
                     }

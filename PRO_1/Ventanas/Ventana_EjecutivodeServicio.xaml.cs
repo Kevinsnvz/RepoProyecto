@@ -20,12 +20,18 @@ namespace PRO_1.Ventanas
     {
         private ObservableCollection<ListServicios> listServicios = new ObservableCollection<ListServicios>();
         private ListaDeClientes acceso_Cliente;
+        private bool AbiertoPorOtraVentana;
 
-        public Ventana_EjecutivodeServicio(ListaDeClientes objetocliente)
+        public Ventana_EjecutivodeServicio(ListaDeClientes objetocliente,bool AbiertoPorOtraVentana)
         {
+            this.AbiertoPorOtraVentana = AbiertoPorOtraVentana;
             this.acceso_Cliente = objetocliente;
             DataContext = acceso_Cliente;
+
+ 
             InitializeComponent();
+
+            if (AbiertoPorOtraVentana == true) { Sesion_MenuItem.IsEnabled = false; }
         }
 
         public void CollapseAllStackPanelsExcept(StackPanel visibleStackPanel, Grid gridContainer)
@@ -252,10 +258,12 @@ namespace PRO_1.Ventanas
         //Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login
         public void IniciarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow?.Close();
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Close();
+                Application.Current.MainWindow?.Close();
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            
+
         }
 
         //Actualiza la lista de Clientes

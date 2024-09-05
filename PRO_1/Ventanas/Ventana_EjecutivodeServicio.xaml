@@ -9,8 +9,9 @@
     <Grid Background="FloralWhite">
         <Label Background="MediumPurple" VerticalAlignment="Bottom"></Label>
         <StackPanel>
+            <Label Background="MediumPurple"></Label>
             <Menu Height="auto" HorizontalAlignment="Stretch" >
-                <MenuItem FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
+                <MenuItem Name="Sesion_MenuItem" FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
                     <MenuItem FontSize="15" Header="Cerrar Sesion" Click="CerrarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
                     <MenuItem FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
                 </MenuItem>

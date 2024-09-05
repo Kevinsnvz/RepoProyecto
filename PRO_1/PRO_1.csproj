@@ -172,6 +172,7 @@
     </ApplicationDefinition>
     <Compile Include="Clases\Adm_Ventanas.cs" />
     <Compile Include="Clases\ListaDeClientes.cs" />
+    <Compile Include="Clases\ListaDeUsuarios.cs" />
     <Compile Include="Clases\ListServicios.cs" />
     <Compile Include="Clases\Precios.cs" />
     <Compile Include="Clases\Usuarios.cs" />
@@ -183,6 +184,9 @@
     </Compile>
     <Compile Include="Ventanas\Ventana_Gerente.xaml.cs">
       <DependentUpon>Ventana_Gerente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ventanas\Ventana_Jefe.xaml.cs">
+      <DependentUpon>Ventana_Jefe.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -207,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\Ventana_Gerente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\Ventana_Jefe.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

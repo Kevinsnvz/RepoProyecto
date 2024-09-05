@@ -1,0 +1,116 @@
+﻿<Window x:Class="PRO_1.Ventanas.Ventana_Jefe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PRO_1.Ventanas"
+        mc:Ignorable="d"
+        Title="Ventana_Jefe" Height="700" Width="1100">
+    <Grid>
+        <StackPanel>
+            <Label Background="MediumPurple"></Label>
+            <Menu>
+                <Menu Height="auto" HorizontalAlignment="Stretch" >
+                    <MenuItem FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
+                        <MenuItem FontSize="15" Header="Cerrar Sesion" Click="CerrarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                        <MenuItem FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Funciones EJ." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeEJ_Click"></MenuItem>
+                    
+                </Menu>
+            </Menu>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="GhostWhite" >
+
+                    <Label FontSize="20" Content="Baja Ejecutivos de Servicio" Background="DarkKhaki" HorizontalContentAlignment="Center"></Label>
+                    <ListView FontSize="15" MaxHeight="150" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_BajaEjecutivos" SelectionMode="Single" SelectionChanged="ListaEjecutivosParaModificar_SelectionChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Username}" Header="Username" Width="auto"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Password}" Header="Password" Width="auto"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding UsuarioID}" Header="Cliente ID" Width="auto"/>
+                            </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <Label Background="Khaki"></Label>
+                        <Button Margin="10,0,0,0" Content="Dar Baja de Ejecutivo" FontSize="19" Width="180" Background="BlanchedAlmond" BorderThickness="0" Click="BajaAEjecutivo_Click" ></Button>
+
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+
+                    <Label FontSize="20" Content="Modificacion Ejecutivos de Servicio" Background="BurlyWood"></Label>
+                        <ListView FontSize="15" MaxHeight="50" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_EjecutivosParaModificar" SelectionMode="Single" SelectionChanged="ListaEjecutivosParaModificar_SelectionChanged">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Username}" Header="Username" Width="auto"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Password}" Header="Password" Width="auto"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding UsuarioID}" Header="ID" Width="auto"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Nombre Ejecutivo:"></Label>
+                        <TextBox x:Name="NombreEjecutivoModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                    </StackPanel>
+
+                    <Label Background="NavajoWhite"></Label>
+                        
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Password Ejecutivo:"></Label>
+                        <TextBox x:Name="PasswordEjecutivoModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                    </StackPanel>
+
+                    <Label Background="NavajoWhite"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Guardar Ejecutivo" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="GuardarEjecutivo_Click"></Button>
+                        <Button Margin="10,0,0,0" Content="Actualizar Ejecutivos" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="ActualizarListas_Click"></Button>
+
+                        </StackPanel>
+
+
+                    </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Background="GhostWhite">
+                    <Label FontSize="20" Background="Aquamarine" Content="Alta Ejecutivos de Servicio"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Username Ejecutivo:"></Label>
+                        <TextBox x:Name="UsernameEjecutivo_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
+                    </StackPanel>
+
+                    <Label Background="NavajoWhite"></Label>
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Password Ejecutivo:"></Label>
+                        <TextBox x:Name="PasswordEjecutivo_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                    </StackPanel>
+
+                    <Label Background="NavajoWhite"></Label>
+                    
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Rol: Ejecutivo"></Label>
+                    </StackPanel>
+
+                    <Label Background="NavajoWhite"></Label>
+
+                    <Button Content="Crear Ejecutivo" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="CrearEjecutivo_Click"></Button>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        <Label Background="MediumPurple" VerticalAlignment="Bottom"></Label>
+    </Grid>
+</Window>
