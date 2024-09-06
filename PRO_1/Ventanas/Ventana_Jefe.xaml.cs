@@ -21,22 +21,24 @@ namespace PRO_1.Ventanas
     /// </summary>
     public partial class Ventana_Jefe : Window
     {
-        private ObservableCollection<ListServicios> listServicios = new ObservableCollection<ListServicios> ();
         private ListaDeClientes acceso_cliente;
         private ListaDeUsuarios acceso_usuarios;
 
-        public Ventana_Jefe(ListaDeUsuarios usuarios, ListaDeClientes clientes)
+        public Ventana_Jefe(ListaDeUsuarios usuarios, ListaDeClientes clientes,bool AbiertoPorOtraVentana)
         {
             this.acceso_cliente = clientes;
             this.acceso_usuarios = usuarios;
 
             InitializeComponent();
+
+            if(AbiertoPorOtraVentana == true) { NuevaSesion_MenuItem.IsEnabled = false; FuncionesEJ_MenuItem.IsEnabled = false; }
         }
 
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
         public void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
+
             this.Close();
         }
 
@@ -88,9 +90,13 @@ namespace PRO_1.Ventanas
 
         private void CrearEjecutivo_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrEmpty(UsernameEjecutivo_TextBox.Text) ||
+                string.IsNullOrEmpty(PasswordEjecutivo_TextBox.Text)  )
+                { return; }
             string username = UsernameEjecutivo_TextBox.Text;
             string password = PasswordEjecutivo_TextBox.Text.Trim();
             DataBase.AgregarUsuarioABDYAPP(username, password,1,acceso_usuarios);
+
         }
 
         private void ListaEjecutivosParaModificar_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -98,7 +104,7 @@ namespace PRO_1.Ventanas
             var UsuarioSeleccionado = (Usuarios)Lista_EjecutivosParaModificar.SelectedItem;
 
             if(UsuarioSeleccionado == null)
-            { return; }
+            { MessageBox.Show("Debe seleccionar un usuario de la lista."); return; }
 
             UsernameEjecutivoModificacion_TextBox.Text = UsuarioSeleccionado.Username;
             PasswordEjecutivoModificacion_TextBox.Text = UsuarioSeleccionado.Password;

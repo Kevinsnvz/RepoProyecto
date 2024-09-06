@@ -19,6 +19,7 @@ namespace PRO_1.Clases
     {
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
 
+
         /// <summary>
         /// Obtiene el usuario a modificar mediante su id, lo borra, y crea el nuevo con los parametros dados.
         /// </summary>
@@ -150,7 +151,7 @@ namespace PRO_1.Clases
         /// <param name="job_role">Rol del trabajador.
         /// <para>
         /// Debe elegir uno de los roles predeterminados:
-        /// 0 - cajero / 1 - ejecutivo_servicio / 2 - gerente
+        /// 0 - cajero / 1 - ejecutivo_servicio / 2 - jefe_servicio
         /// </para>
         /// </param>
         /// <param name="ListaDeUsuarios">Lista al cual aplicar el cambio.</param>
@@ -168,7 +169,7 @@ namespace PRO_1.Clases
                     rolSeleccionado = "ejecutivo_servicio";
                     break;
                 case 2:
-                    rolSeleccionado = "gerente";
+                    rolSeleccionado = "jefe_servicio";
                     break;
             }
 

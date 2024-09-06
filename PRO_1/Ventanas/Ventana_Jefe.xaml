@@ -13,9 +13,9 @@
                 <Menu Height="auto" HorizontalAlignment="Stretch" >
                     <MenuItem FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
                         <MenuItem FontSize="15" Header="Cerrar Sesion" Click="CerrarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
-                        <MenuItem FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
-                    </MenuItem>
-                    <MenuItem Header="Funciones EJ." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeEJ_Click"></MenuItem>
+                        <MenuItem Name="NuevaSesion_MenuItem" FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                    </MenuItem> 
+                    <MenuItem Name="FuncionesEJ_MenuItem" Header="Funciones EJ." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeEJ_Click"></MenuItem>
                     
                 </Menu>
             </Menu>

@@ -5,8 +5,234 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PRO_1.Ventanas"
         mc:Ignorable="d"
-        Title="Ventana_Gerente" Height="450" Width="800">
+        Title="Ventana_Gerente" Height="700" Width="1100">
     <Grid>
-        
+        <Label Background="MediumPurple" VerticalAlignment="Bottom" Height="15"></Label>
+        <StackPanel>
+            <Label Background="MediumPurple"></Label>
+            
+            <Menu>
+                <Menu Height="auto" HorizontalAlignment="Stretch" >
+                    <MenuItem FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
+                        <MenuItem FontSize="15" Header="Cerrar Sesion" Click="CerrarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                        <MenuItem Name="NuevaSesion_MenuItem" FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                    </MenuItem>
+                    <MenuItem Name="FuncionesEJ_MenuItem" Header="Funciones EJ." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeEJ_Click"></MenuItem>
+                    <MenuItem Header="Funciones Jefe Ser." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeJefe_Click"></MenuItem>
+                    <MenuItem Header="ABM Jefes" BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="Precios" BorderThickness="1" BorderBrush="DarkGray" FontSize="15"></MenuItem>
+                </Menu>
+            </Menu>
+
+            <Grid Name="grid_ModificacionPrecios" Visibility="Collapsed">
+                <StackPanel>
+                    <Label FontSize="20" Background="MediumPurple" Content="SECCION Modificacion de precios" HorizontalContentAlignment="Center"></Label>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1">
+                            <Label FontSize="15" HorizontalContentAlignment="Center" Background="MediumPurple" Content="Precios de Neumatico"></Label>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label FontSize="15" Content="Montaje Neumatico: "></Label>
+                                <TextBox Name="PrecioMontajeNeumatico_TextBox" Margin="0,5" Width="100"></TextBox>
+                            </StackPanel>
+
+                            <Label Background="MediumPurple" Content="Michelin" FontSize="15"></Label>
+                            
+                            <StackPanel Orientation="Horizontal">
+                                
+                                <Label FontSize="15" Content=" Michelin R17: "></Label>
+                                <TextBox Name="PrecioNeumatico_TextBox" Margin="0,5" Width="100"></TextBox>
+                            </StackPanel>
+
+
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="0" Grid.Row="1">
+                            <Label Content="Precios de Alineacion" FontSize="15" HorizontalContentAlignment="Center" Background="MediumPurple"></Label>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label FontSize="15" Content="Alineacion 1 Tren Desde R17: "></Label>
+                                <TextBox Name="PrecioAlineacionR17_TextBox" Margin="0,5" Width="100"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label FontSize="15" Content="Alineacion 1 Tren: "></Label>
+                                <TextBox Name="PrecioAlineacion_TextBox" Margin="0,5" Width="100"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label FontSize="15" Content="Alineacion 2 Trenes: "></Label>
+                                <TextBox Name="PrecioAlineacion2Trenes_TextBox" Margin="0,5" Width="100"></TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="1" Grid.Row="0">
+                            <Label FontSize="15" Background="MediumPurple" Content="Precios de Balanceo" HorizontalContentAlignment="Center" ></Label>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label FontSize="15" Content="Balanceo de Auto + Valvula: "></Label>
+                                <TextBox Name="PrecioBalanceoAuto_TextBox" Margin="0,5" Width="100"></TextBox>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label FontSize="15" Content="Balanceo de Camioneta + Valvula: "></Label>
+                                <TextBox Name="PrecioBalanceoCamioneta_TextBox" Margin="0,5" Width="100"></TextBox>
+                            </StackPanel>
+
+
+                            <Button Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black"></Button>
+                        </StackPanel>
+                        
+                        <StackPanel Grid.Column="0" Grid.Row="0" >
+                            <Label FontSize="15" Content="Precios De Lavado" HorizontalContentAlignment="Center" Background="MediumPurple"></Label>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Lavado de auto: " FontSize="15"></Label>
+                                <TextBox Name="PrecioLavadoAuto_TextBox" Margin="0,5" Width="100"></TextBox>
+                                
+                            </StackPanel>
+                            
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Lavado de Moto: " FontSize="15"></Label>
+                                <TextBox Name="PrecioLavadoMoto_TextBox" Margin="0,5" Width="100"></TextBox>
+                                
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Lavado de Camioneta: " FontSize="15"></Label>
+                                <TextBox Name="PrecioLavadoCamioneta_TextBox" Margin="0,5" Width="100"></TextBox>
+                                
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Lavado de Camion: " FontSize="15"></Label>
+                                <TextBox Name="PrecioLavadoCamion_TextBox" Margin="0,5" Width="100"></TextBox>
+                                
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label Content="Lavado de Camion Utilitario: " FontSize="15"></Label>
+                                <TextBox Name="PrecioLavadoCamionUtil_TextBox" Margin="0,5" Width="100"></TextBox>
+
+                            </StackPanel>
+
+                            <Button Margin="0,5" Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black"></Button>
+                        </StackPanel>
+                    </Grid>
+                    
+                </StackPanel>
+            </Grid>
+            
+            <Grid Name="grid_ABMJefes" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="GhostWhite" >
+
+                    <Label FontSize="20" Content="Baja Jefe de Servicio" Background="MediumPurple" HorizontalContentAlignment="Center"></Label>
+                    <ListView FontSize="15" MaxHeight="150" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_BajaJefes" SelectionMode="Single">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Username}" Header="Username" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Password}" Header="Password" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding UsuarioID}" Header="Cliente ID" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Label Background="MediumPurple"></Label>
+                    <Button Margin="10,5,0,0" Content="Dar Baja de Jefe" FontSize="19" Width="180" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="BajaAJefe_Click" ></Button>
+
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+
+                    <Label FontSize="20" Content="Modificacion Jefe de Servicio" Background="MediumPurple"></Label>
+                    <ListView FontSize="15" MaxHeight="50" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_JefesParaModificar" SelectionMode="Single" SelectionChanged="ListaJefesParaModificar_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Username}" Header="Username" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Password}" Header="Password" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding UsuarioID}" Header="ID" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Nombre Jefe:"></Label>
+                        <TextBox x:Name="UsernameJefeModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Password Jefe:"></Label>
+                        <TextBox x:Name="PasswordJefeModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="ID del Jefe:"></Label>
+                        <TextBox x:Name="IDJefeModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Rol del Jefe:"></Label>
+                        <Label x:Name="RolJefeModificacion_TextBox" BorderThickness="1" BorderBrush="DarkGray"  Width="250" Margin="15,3,0,3"></Label>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="0,5" Content="Modificar Jefe" FontSize="17" Width="150" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="ModificarJefe_Click"></Button>
+                        <Button Margin="10,5,0,5" Content="Actualizar Listas" FontSize="17" Width="170" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="ActualizarListas_Click"></Button>
+
+                    </StackPanel>
+
+
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Background="GhostWhite">
+                    <Label FontSize="20" Background="MediumPurple" Content="Alta Jefe de Servicio"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Username Jefe:"></Label>
+                        <TextBox x:Name="UsernameJefe_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Password Jefe:"></Label>
+                        <TextBox x:Name="PasswordJefe_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Rol: Jefe De Servicio"></Label>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <Button Margin="0,5" Content="Crear Jefe" FontSize="17" Width="150" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="CrearJefe_Click"></Button>
+                </StackPanel>
+            </Grid>
+
+        </StackPanel>
     </Grid>
 </Window>

@@ -34,12 +34,12 @@ namespace PRO_1.Clases
                     Application.Current.MainWindow?.Close();
                     break;
                 case "gerente":
-                    Ventana_Gerente ventana_Gerente = new Ventana_Gerente();
+                    Ventana_Gerente ventana_Gerente = new Ventana_Gerente(Usuarios,Clientes);
                     ventana_Gerente.Show();
                     Application.Current.MainWindow?.Close();
                     break;
                 case "jefe_servicio":
-                    Ventana_Jefe ventana_Jefe = new Ventana_Jefe(Usuarios,Clientes);
+                    Ventana_Jefe ventana_Jefe = new Ventana_Jefe(Usuarios,Clientes,false);
                     ventana_Jefe.Show();
                     Application.Current.MainWindow?.Close();
                     break;
@@ -73,7 +73,12 @@ namespace PRO_1.Clases
                     ventana_ejecutivo.Show();
                     break;
                 case 3:
-                    Ventana_Jefe ventana_Jefe = new Ventana_Jefe(Usuarios,Clientes);
+                    Ventana_Jefe ventana_Jefe = new Ventana_Jefe(Usuarios, Clientes, true);
+                    ventana_Jefe.Show();
+                    break;
+                case 4:
+                    Ventana_Gerente ventana_Gerente = new Ventana_Gerente(Usuarios, Clientes);
+                    ventana_Gerente.Show();
                     break;
                 default:
                     Console.WriteLine("ERROR: No se dio una opcion valida, proporcionar un num valido. Referirse a descripcion de parametro.");
@@ -97,8 +102,10 @@ namespace PRO_1.Clases
                     ventana_ejecutivo.Show();
                     break;
                 case 3:
-                    Ventana_Jefe ventana_Jefe = new Ventana_Jefe(Usuarios, Clientes);
-                    break;
+                    Ventana_Jefe ventana_Jefe = new Ventana_Jefe(Usuarios, Clientes,abiertoPorOtraVentana);
+                    ventana_Jefe.Show();
+
+                        break;
                 default:
                     Console.WriteLine("ERROR: No se dio una opcion valida, proporcionar un num valido. Referirse a descripcion de parametro.");
                     break;
