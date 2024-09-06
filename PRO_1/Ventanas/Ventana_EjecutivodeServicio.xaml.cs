@@ -31,7 +31,7 @@ namespace PRO_1.Ventanas
  
             InitializeComponent();
 
-            if (AbiertoPorOtraVentana == true) { Sesion_MenuItem.IsEnabled = false; }
+            if (AbiertoPorOtraVentana == true) { NuevaSesion_MenuItem.IsEnabled = false; }
         }
 
         public void CollapseAllStackPanelsExcept(StackPanel visibleStackPanel, Grid gridContainer)
@@ -430,7 +430,7 @@ namespace PRO_1.Ventanas
 
         
 
-        public void GuardarCliente_Click(object sender, RoutedEventArgs e)
+        public void ModificarCliente_Click(object sender, RoutedEventArgs e)
         {
             //Si los campos (Donde se inserta el parametro) esta vacio, corta la ejecucion del resto de la funcion y muestra el mensaje error correspondiente.
             if (string.IsNullOrEmpty(NombreActualCliente_TextBox.Text) ||

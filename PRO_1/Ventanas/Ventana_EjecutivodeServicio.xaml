@@ -13,10 +13,10 @@
             <Menu Height="auto" HorizontalAlignment="Stretch" >
                 <MenuItem Name="Sesion_MenuItem" FontSize="15" Header="Sesion" BorderBrush="DarkGray" BorderThickness="1">
                     <MenuItem FontSize="15" Header="Cerrar Sesion" Click="CerrarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
-                    <MenuItem FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                    <MenuItem Name="NuevaSesion_MenuItem" FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
                 </MenuItem>
-                <MenuItem Header="ABM Cliente" FontSize="15" Click="ABMClienteMenu_Click"></MenuItem>
-                <MenuItem Header="Recibo De Cliente" FontSize="15" Click="ReciboDeClienteMenu_Click"></MenuItem>
+                <MenuItem Header="ABM Cliente" FontSize="15" Click="ABMClienteMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
+                <MenuItem Header="Recibo De Cliente" FontSize="15" Click="ReciboDeClienteMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
             </Menu>
             <Grid Name="grid_SeccionABMCliente" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
@@ -109,7 +109,7 @@
                     <Label Background="NavajoWhite"></Label>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Guardar Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="GuardarCliente_Click"></Button>
+                        <Button Content="Modificar Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="ModificarCliente_Click"></Button>
                         <Button Margin="10,0,0,0" Content="Actualizar Clientes" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="ActualizarListas_Click"></Button>
 
                     </StackPanel>

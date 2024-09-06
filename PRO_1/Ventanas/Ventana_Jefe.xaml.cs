@@ -56,34 +56,68 @@ namespace PRO_1.Ventanas
 
         private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
+            ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
             DataBase.CargarUsuariosDeBD(acceso_usuarios);
 
+            foreach (var usuario in acceso_usuarios.ListaGlobalUsuarios)
+            {
+               if(usuario.Rol == "ejecutivo_servicio")
+                    listaMuestra.ListaGlobalUsuarios.Add(usuario);
+            }
+
+            
+
             Lista_BajaEjecutivos.ItemsSource = null;
-            Lista_BajaEjecutivos.ItemsSource = acceso_usuarios.ListaGlobalUsuarios;
+            Lista_BajaEjecutivos.ItemsSource = listaMuestra.ListaGlobalUsuarios;
 
             Lista_EjecutivosParaModificar.ItemsSource = null;
-            Lista_EjecutivosParaModificar.ItemsSource = acceso_usuarios.ListaGlobalUsuarios;
+            Lista_EjecutivosParaModificar.ItemsSource = listaMuestra.ListaGlobalUsuarios;
 
         }
 
         private void BajaAEjecutivo_Click(object sender, RoutedEventArgs e)
         {
-           
+            var UsuarioSeleccionado = (Usuarios)Lista_BajaEjecutivos.SelectedItem;
+
+            if(UsuarioSeleccionado == null) 
+            { return; }
+
+            DataBase.BorrarUsuarioDeBDYAPP(UsuarioSeleccionado.UsuarioID, acceso_usuarios);
+            
         }
 
         private void CrearEjecutivo_Click(object sender, RoutedEventArgs e)
         {
-
+            string username = UsernameEjecutivo_TextBox.Text;
+            string password = PasswordEjecutivo_TextBox.Text.Trim();
+            DataBase.AgregarUsuarioABDYAPP(username, password,1,acceso_usuarios);
         }
 
         private void ListaEjecutivosParaModificar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var UsuarioSeleccionado = (Usuarios)Lista_EjecutivosParaModificar.SelectedItem;
 
+            if(UsuarioSeleccionado == null)
+            { return; }
+
+            UsernameEjecutivoModificacion_TextBox.Text = UsuarioSeleccionado.Username;
+            PasswordEjecutivoModificacion_TextBox.Text = UsuarioSeleccionado.Password;
+            IDEjecutivoModificacion_TextBox.Text = UsuarioSeleccionado.UsuarioID.ToString();
+            RolEjecutivoModificacion_TextBox.Content = UsuarioSeleccionado.Rol;
         }
 
-        private void GuardarEjecutivo_Click(object sender, RoutedEventArgs e)
+        private void ModificarEjecutivo_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrEmpty(UsernameEjecutivoModificacion_TextBox.Text) ||
+               string.IsNullOrEmpty(PasswordEjecutivoModificacion_TextBox.Text) ||
+               string.IsNullOrEmpty(IDEjecutivoModificacion_TextBox.Text) ||
+               string.IsNullOrEmpty(RolEjecutivoModificacion_TextBox.Content.ToString()))
+            { MessageBox.Show("ERROR: Ningun campo debe estar vacio."); return; }
 
+            DataBase.ModificarUsuarioDeBDYAPP(UsernameEjecutivoModificacion_TextBox.Text, PasswordEjecutivoModificacion_TextBox.Text
+                                              , RolEjecutivoModificacion_TextBox.Content.ToString()
+                                              , Convert.ToInt32(IDEjecutivoModificacion_TextBox.Text)
+                                              , acceso_usuarios);
         }
     }
 }

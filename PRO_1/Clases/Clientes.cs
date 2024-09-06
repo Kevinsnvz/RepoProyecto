@@ -106,7 +106,7 @@ namespace PRO_1.Clases
             this.Autorizado = autorizado;
             this.ClienteID = id;
         }
-
+        //Constructor sobrecarga
         public Clientes(string nombre, string apellido, string marca, string modelo, string matricula, int telefono, int id, bool autorizado)
         {
             this.Nombre = nombre;

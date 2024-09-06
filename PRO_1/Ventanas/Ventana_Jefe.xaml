@@ -33,7 +33,7 @@
 
                 <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="GhostWhite" >
 
-                    <Label FontSize="20" Content="Baja Ejecutivos de Servicio" Background="DarkKhaki" HorizontalContentAlignment="Center"></Label>
+                    <Label FontSize="20" Content="Baja Ejecutivos de Servicio" Background="MediumPurple" HorizontalContentAlignment="Center"></Label>
                     <ListView FontSize="15" MaxHeight="150" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_BajaEjecutivos" SelectionMode="Single" SelectionChanged="ListaEjecutivosParaModificar_SelectionChanged">
                             <ListView.View>
                                 <GridView>
@@ -43,14 +43,14 @@
                             </GridView>
                             </ListView.View>
                         </ListView>
-                        <Label Background="Khaki"></Label>
-                        <Button Margin="10,0,0,0" Content="Dar Baja de Ejecutivo" FontSize="19" Width="180" Background="BlanchedAlmond" BorderThickness="0" Click="BajaAEjecutivo_Click" ></Button>
+                        <Label Background="MediumPurple"></Label>
+                    <Button Margin="10,5,0,0" Content="Dar Baja de Ejecutivo" FontSize="19" Width="180" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="BajaAEjecutivo_Click" ></Button>
 
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
 
-                    <Label FontSize="20" Content="Modificacion Ejecutivos de Servicio" Background="BurlyWood"></Label>
+                    <Label FontSize="20" Content="Modificacion Ejecutivos de Servicio" Background="MediumPurple"></Label>
                         <ListView FontSize="15" MaxHeight="50" Grid.Column="0" Grid.ColumnSpan="1" Grid.Row="0" Grid.RowSpan="1" BorderBrush="DarkGray" Name="Lista_EjecutivosParaModificar" SelectionMode="Single" SelectionChanged="ListaEjecutivosParaModificar_SelectionChanged">
                             <ListView.View>
                                 <GridView>
@@ -63,21 +63,35 @@
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label FontSize="17" Content="Nombre Ejecutivo:"></Label>
-                        <TextBox x:Name="NombreEjecutivoModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                        <TextBox x:Name="UsernameEjecutivoModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
                     </StackPanel>
 
-                    <Label Background="NavajoWhite"></Label>
+                    <Label Background="MediumPurple"></Label>
                         
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label FontSize="17" Content="Password Ejecutivo:"></Label>
                         <TextBox x:Name="PasswordEjecutivoModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
                     </StackPanel>
 
-                    <Label Background="NavajoWhite"></Label>
+                    <Label Background="MediumPurple"></Label>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Guardar Ejecutivo" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="GuardarEjecutivo_Click"></Button>
-                        <Button Margin="10,0,0,0" Content="Actualizar Ejecutivos" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="ActualizarListas_Click"></Button>
+                        <Label FontSize="17" Content="ID del Ejecutivo:"></Label>
+                        <TextBox x:Name="IDEjecutivoModificacion_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Label FontSize="17" Content="Rol del Ejecutivo:"></Label>
+                        <Label x:Name="RolEjecutivoModificacion_TextBox" BorderThickness="1" BorderBrush="DarkGray"  Width="250" Margin="15,3,0,3"></Label>
+                    </StackPanel>
+
+                    <Label Background="MediumPurple"></Label>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Margin="0,5" Content="Modificar Ejecutivo" FontSize="17" Width="150" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="ModificarEjecutivo_Click"></Button>
+                        <Button Margin="10,5,0,5" Content="Actualizar Ejecutivos" FontSize="17" Width="170" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="ActualizarListas_Click"></Button>
 
                         </StackPanel>
 
@@ -85,29 +99,29 @@
                     </StackPanel>
 
                 <StackPanel Grid.Column="0" Grid.ColumnSpan="1" Background="GhostWhite">
-                    <Label FontSize="20" Background="Aquamarine" Content="Alta Ejecutivos de Servicio"></Label>
+                    <Label FontSize="20" Background="MediumPurple" Content="Alta Ejecutivos de Servicio"></Label>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label FontSize="17" Content="Username Ejecutivo:"></Label>
                         <TextBox x:Name="UsernameEjecutivo_TextBox" Width="250" Margin="15,3,0,3" ></TextBox>
                     </StackPanel>
 
-                    <Label Background="NavajoWhite"></Label>
+                    <Label Background="MediumPurple"></Label>
                     
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label FontSize="17" Content="Password Ejecutivo:"></Label>
                         <TextBox x:Name="PasswordEjecutivo_TextBox" Width="250" Margin="15,3,0,3"></TextBox>
                     </StackPanel>
 
-                    <Label Background="NavajoWhite"></Label>
+                    <Label Background="MediumPurple"></Label>
                     
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Label FontSize="17" Content="Rol: Ejecutivo"></Label>
                     </StackPanel>
 
-                    <Label Background="NavajoWhite"></Label>
+                    <Label Background="MediumPurple"></Label>
 
-                    <Button Content="Crear Ejecutivo" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="CrearEjecutivo_Click"></Button>
+                    <Button Margin="0,5" Content="Crear Ejecutivo" FontSize="17" Width="150" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="CrearEjecutivo_Click"></Button>
                 </StackPanel>
             </Grid>
         </StackPanel>

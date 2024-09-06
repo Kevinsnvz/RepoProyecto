@@ -8,13 +8,139 @@ using System.Threading.Tasks;
 using System.Windows;
 using MySql.Data.MySqlClient;
 using Mysqlx;
+using MySqlX.XDevAPI;
+using Org.BouncyCastle.Asn1.Mozilla;
 using PRO_1.Ventanas;
+using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace PRO_1.Clases
 {
     public class DataBase
     {
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
+
+        /// <summary>
+        /// Obtiene el usuario a modificar mediante su id, lo borra, y crea el nuevo con los parametros dados.
+        /// </summary>
+        /// <param name="idUsuario"> ID del Usuario</param>
+        /// <param name="listaUsuarios"> Lista de usuarios al cual aplicar los cambios.</param>
+        /// <returns></returns>
+        public static bool ModificarUsuarioDeBDYAPP(string username, string password,string rol, int idUsuario, ListaDeUsuarios listaUsuarios)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    //Como el id es unico, tomamos los campos nuevos borrando en base a la id vieja y tomando los nuevos valores de atributo para el nuevo cliente.
+                    string sql = $"DELETE FROM users_ WHERE id = {idUsuario};";
+                    MySqlCommand cmd = new MySqlCommand(sql, connection);
+
+                    int FilasBorradas = cmd.ExecuteNonQuery();
+
+                    if (FilasBorradas > 0)
+                    {
+                        
+                        Console.WriteLine("Cliente eliminado exitosamente de BD.");
+
+                        for(int i = 0; i <= listaUsuarios.ListaGlobalUsuarios.Count; i++)
+                        {
+                            var usuario = listaUsuarios.ListaGlobalUsuarios[i];
+                            if(usuario.UsuarioID == idUsuario)
+                            { continue;  }
+
+                            listaUsuarios.ListaGlobalUsuarios.Remove(usuario);
+
+                            break;
+                        }
+                        
+
+                        Console.WriteLine("Cliente eliminado exitosamente de LISTA.");
+
+
+                        string sql1 = $"INSERT INTO users_ (username,password,job_role) VALUES ('{username}','{password}','{rol}'); SELECT LAST_INSERT_ID();";
+                        MySqlCommand cmd1 = new MySqlCommand(sql1, connection);
+
+                        int FilasAgregadas = cmd1.ExecuteNonQuery();
+
+                        if (FilasAgregadas > 0)
+                        {
+                            Console.WriteLine("Usuario creado exitosamente a BD.");
+
+                            Usuarios usuarioAagregar = new Usuarios(username,password,rol,Convert.ToInt32(cmd1.LastInsertedId));
+                            listaUsuarios.ListaGlobalUsuarios.Add(usuarioAagregar);
+
+                            Console.WriteLine("Usuario creado exitosamente en LISTA");
+
+                            MessageBox.Show("Usuario modificado exitosamente");
+                            return true;
+                        }
+                        else { MessageBox.Show("ERROR: Usuario no creado. Error desconocido."); return false; }
+
+
+
+                    }
+                    else { MessageBox.Show("ERROR: Usuario no creado. Error desconocido."); return false; }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("MySqL ERROR:" + ex.Message);
+                    return false;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Borra el usuario de la Base de datos asi como de la lista dada.
+        /// </summary>
+        /// <param name="id_usuario"> ID del Usuario</param>
+        /// <param name="listaDeUsuarios">Lista al cual aplicar el cambio.</param>
+        /// <returns></returns>
+        public static bool BorrarUsuarioDeBDYAPP(int id_usuario,ListaDeUsuarios listaDeUsuarios)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+
+                try
+                {
+                    connection.Open();
+
+                    string sqlquery = $"DELETE FROM users_ WHERE id = {id_usuario}";
+                    MySqlCommand comm = new MySqlCommand(sqlquery, connection);
+
+                    int FilasAfectadas = comm.ExecuteNonQuery();
+
+                    if (FilasAfectadas > 0)
+                    {
+                        Console.WriteLine($"Usuario ID:{id_usuario} eliminado exitosamente de BD");
+
+                        foreach (var usuario in listaDeUsuarios.ListaGlobalUsuarios)
+                        {
+                            if (usuario.UsuarioID == id_usuario) { continue; }
+
+                            Usuarios usuarioABorrar = new Usuarios(usuario.Username, usuario.Password,usuario.Rol, usuario.UsuarioID);
+                            listaDeUsuarios.ListaGlobalUsuarios.Remove(usuarioABorrar);
+                            MessageBox.Show($"Cliente {id_usuario} eliminado exitosamente de LISTA");
+                            break;
+                        }
+
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"ERROR: Cliente {id_usuario} no fue eliminado. Error desconocido.");
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("MySQL ERROR: " + ex.ToString());
+                }
+
+            }
+            return false;
+        }
 
         /// <summary>
         /// Metodo <c>AgregarUsuarioDeBDYAPP</c> Agrega usuarios a la base de datos y a su vez, la lista de la app.
@@ -27,9 +153,9 @@ namespace PRO_1.Clases
         /// 0 - cajero / 1 - ejecutivo_servicio / 2 - gerente
         /// </para>
         /// </param>
-        /// <param name="ListaDeUsuarios">Lista al cual agregar el usuario</param>
-
-        public static bool AgregarUsuarioDeBDYAPP(string username,string password,int job_role,ListaDeUsuarios ListaDeUsuarios)
+        /// <param name="ListaDeUsuarios">Lista al cual aplicar el cambio.</param>
+        /// <returns></returns>
+        public static bool AgregarUsuarioABDYAPP(string username,string password,int job_role,ListaDeUsuarios ListaDeUsuarios)
         {
             string rolSeleccionado = string.Empty;
 
@@ -64,8 +190,9 @@ namespace PRO_1.Clases
 
                         Usuarios usuario = new Usuarios(username, password, rolSeleccionado, Convert.ToInt32(cmd.LastInsertedId));
                         ListaDeUsuarios.ListaGlobalUsuarios.Add(usuario);
-
                         Console.WriteLine("Usuario creado exitosamente en LISTA");
+
+                        MessageBox.Show("Usuario creado exitosamente.");
                         return true;
 
                     }
@@ -84,6 +211,12 @@ namespace PRO_1.Clases
 
 
         }
+
+        /// <summary>
+        /// Solicita los usuarios de la base de datos y los inserta a la lista dada, borrando los usuarios actuales de ella en el proceso.
+        /// </summary>
+        /// <param name="ListaUsuarios">Lista al cual aplicar el cambio.</param>
+        /// <returns></returns>
         public static bool CargarUsuariosDeBD(ListaDeUsuarios ListaUsuarios)
         {
 
@@ -99,6 +232,7 @@ namespace PRO_1.Clases
                     {
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
+
                             ListaUsuarios.ListaGlobalUsuarios.Clear();
 
                             while (reader.Read())
@@ -120,6 +254,13 @@ namespace PRO_1.Clases
             }
 
         }
+
+        /// <summary>
+        /// Borra el cliente de la Base de Datos asi como de la lista dada.
+        /// </summary>
+        /// <param name="id"> ID del Cliente</param>
+        /// <param name="ListaClientes"> Lista al cual aplicar el cambio.</param>
+        /// <returns></returns>
         public static bool BorrarClienteDeBDYAPP(int id,ListaDeClientes ListaClientes)
         {
             using(MySqlConnection connection = new MySqlConnection(connectionString))
@@ -164,7 +305,11 @@ namespace PRO_1.Clases
             return false;
         }
 
-        //Crea un cliente para la Lista de clientes en la app como en la BD.
+        /// <summary>
+        /// Crea un cliente para la Lista dada y a la Base de Datos.
+        /// </summary>
+        /// <param name="ListaClientes"> Lista al cual aplicar el cambio.</param>
+        /// <returns></returns>
         public static bool AgregarClienteABDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, ListaDeClientes ListaClientes)
         {
             
@@ -198,19 +343,16 @@ namespace PRO_1.Clases
             }
         }
 
-        //Toma todos los datos para la modificacion del cliente nuevo, borrando el viejo en base a la id, QUE ES UNICA, y crea el cliente nuevo en la lista de la app asi como en la base de datos.
-        public static bool ModificarClienteDeBDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, int id, bool autorizacion, ListaDeClientes ListaClientes)
+        /// <summary>
+        /// Toma todos los datos para la modificacion del cliente nuevo, borrando el viejo en base a la id, QUE ES UNICA, y crea el cliente nuevo en la lista de la app asi como en la base de datos.
+        /// </summary>
+        /// <param name="id"> ID del Cliente</param>
+        /// <param name="ListaClientes"> Lista del cual obtener y modificar al cliente</param>
+        /// <returns></returns>
+        public static bool ModificarClienteDeBDYAPP(string nombre, string apellido, int telefono, string marca, string modelo, string matricula, int idCliente, bool autorizacion, ListaDeClientes ListaClientes)
         {
 
             List<(string nombreServicio, int precioServicio)> copiadelista = null;
-
-            foreach (var Cliente in ListaClientes.ListaGlobalClientes)
-            {
-                if (Cliente.ClienteID == id) { continue; }
-
-                copiadelista = Cliente.ListaDeServicios;
-
-            }
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -219,7 +361,7 @@ namespace PRO_1.Clases
                     connection.Open();
 
                     //Como el id es unico, tomamos los campos nuevos borrando en base a la id vieja y tomando los nuevos valores de atributo para el nuevo cliente.
-                    string sql = $"DELETE FROM Clientes WHERE id = {id};";
+                    string sql = $"DELETE FROM Clientes WHERE id = {idCliente};";
                     MySqlCommand cmd = new MySqlCommand(sql, connection);
 
                     int FilasBorradas = cmd.ExecuteNonQuery();
@@ -229,8 +371,15 @@ namespace PRO_1.Clases
                         ;
                         Console.WriteLine("Cliente eliminado exitosamente de BD.");
 
-                        Clientes clienteaborrar = new Clientes(nombre, apellido, marca, modelo, matricula, telefono, id);
-                        ListaClientes.ListaGlobalClientes.Remove(clienteaborrar);
+                        foreach (var Cliente in ListaClientes.ListaGlobalClientes)
+                        {
+                            if (Cliente.ClienteID == idCliente)
+                            { continue; }
+
+                            ListaClientes.ListaGlobalClientes.Remove(Cliente);
+                            copiadelista = Cliente.ListaDeServicios;
+
+                        }
 
                         Console.WriteLine("Cliente eliminado exitosamente de LISTA.");
 
@@ -265,7 +414,10 @@ namespace PRO_1.Clases
 
             }
         }
-
+        /// <summary>
+        /// Solicita los Clientes existentes en la Base de Datos y los carga a la lista dada.
+        /// </summary>
+        /// <param name="ListaClientes">Lista al cual aplicar el cambio.</param>
         public static void CargarClientesDeBD(ListaDeClientes ListaClientes)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -300,7 +452,11 @@ namespace PRO_1.Clases
             }
         }
 
-        //Funcion para conseguir el rol de un usuario
+        /// <summary>
+        /// Metodo para obtener el rol de un usuario
+        /// </summary>
+        /// <param name="username">Nombre de Usuario del cual obtener el dato.</param>
+        /// <returns></returns>
         public static string GetJobRole(string username)
         {
             string jobRole = string.Empty;
@@ -338,8 +494,13 @@ namespace PRO_1.Clases
             return jobRole;
         }
 
-        //Funcion para ver si el ingreso de un usuario es correcto o no, si es correcto se ingresa a la ventana acorde al rol.
-        public static bool isLogin(string username, string password)
+        /// <summary>
+        /// Metodo para ver si el ingreso de un usuario es correcto o no, verificado contra la Base de Datos, si es correcto se ingresa a la ventana acorde al rol.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static bool VerificacionLogin(string username, string password)
         {
 
             
@@ -396,7 +557,10 @@ namespace PRO_1.Clases
             }
         }
 
-        //Abre la conexion entre la base y el programa.
+        /// <summary>
+        /// Abre la conexion a la base.
+        /// </summary>
+        /// <returns></returns>
         public static bool openConnection()
         {
 

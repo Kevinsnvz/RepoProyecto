@@ -32,7 +32,7 @@ namespace PRO_1
         private void IniciarSesion(object sender, RoutedEventArgs e)
         {
 
-            DataBase.isLogin(Username_TextBox.Text, Password_PasswordBox.Password);
+            DataBase.VerificacionLogin(Username_TextBox.Text, Password_PasswordBox.Password);
             
         }
     }

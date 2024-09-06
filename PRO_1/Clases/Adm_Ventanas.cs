@@ -12,8 +12,11 @@ namespace PRO_1.Clases
     
     public class Adm_Ventanas
     {
+
         private static ListaDeClientes Clientes = new ListaDeClientes();
         private static ListaDeUsuarios Usuarios = new ListaDeUsuarios();
+
+      
 
         //Abrir una ventana dependiendo del rol en string que se le ingrese
         public static void AbrirVentanaPorRol(string rol)

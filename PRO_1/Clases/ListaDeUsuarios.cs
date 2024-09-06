@@ -8,7 +8,7 @@ namespace PRO_1.Clases
 {
     public class ListaDeUsuarios
     {
-        private  List<Usuarios> _listadeusuarios;
+        private List<Usuarios> _listadeusuarios = new List<Usuarios>();
 
         public  List<Usuarios> ListaGlobalUsuarios
             {
@@ -17,4 +17,6 @@ namespace PRO_1.Clases
             }
 
     }
+
+
 }
