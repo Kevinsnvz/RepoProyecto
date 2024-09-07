@@ -325,56 +325,56 @@ namespace PRO_1.Ventanas
             {
                 case Button button when button == CobrarAlineacion1Tren_Button:
 
-                    AgregarServicioALista("Alineacion para 1 tren", Precios.alineacion1Tren);
+                    AgregarServicioALista("Alineacion para 1 tren", Precios.Alineacion1Tren);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
 
                     break;
                 case Button button when button == CobrarAlineacion2Tren_Button:
 
-                    AgregarServicioALista("Alineacion para 2 trenes", Precios.alineacion2Tren);
+                    AgregarServicioALista("Alineacion para 2 trenes", Precios.Alineacion2Tren);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoAuto_Button:
 
-                    AgregarServicioALista("Lavado de Auto", Precios.lavadoauto);
+                    AgregarServicioALista("Lavado de Auto", Precios.LavadoAuto);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoCamioneta_Button:
 
-                    AgregarServicioALista("Lavado de Camioneta", Precios.lavadocamioneta);
+                    AgregarServicioALista("Lavado de Camioneta", Precios.LavadoCamioneta);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoCamionUtil_Button:
 
-                    AgregarServicioALista("Lavado de Camion Utilitario", Precios.lavadocamionutilitario);
+                    AgregarServicioALista("Lavado de Camion Utilitario", Precios.LavadoCamionUtilitario);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoCamion_Button:
 
-                    AgregarServicioALista("Lavado de Camion Chico", Precios.lavadocamionchico);
+                    AgregarServicioALista("Lavado de Camion Chico", Precios.LavadoCamionChico);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarLavadoMoto_Button:
 
-                    AgregarServicioALista("Lavado de Moto", Precios.lavadomoto);
+                    AgregarServicioALista("Lavado de Moto", Precios.LavadoMoto);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarBalanceoAutoConValvula:
 
-                    AgregarServicioALista("Balanceo de Auto", Precios.balanceoauto);
+                    AgregarServicioALista("Balanceo de Auto", Precios.BalanceoAuto);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;
                 case Button button when button == CobrarBalanceoCamionetaConValvula:
 
-                    AgregarServicioALista("Balanceo de Camioneta", Precios.balanceoamioneta);
+                    AgregarServicioALista("Balanceo de Camioneta", Precios.BalanceoCamioneta);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
 
                     break;

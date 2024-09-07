@@ -20,6 +20,24 @@ namespace PRO_1.Clases
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
 
 
+        public static bool CargarNeumaticosDeBDaAPP(List<Neumatico> ListaDeNeumatico)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    return true;
+                }
+                catch(MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+
+        }
+
         /// <summary>
         /// Obtiene el usuario a modificar mediante su id, lo borra, y crea el nuevo con los parametros dados.
         /// </summary>

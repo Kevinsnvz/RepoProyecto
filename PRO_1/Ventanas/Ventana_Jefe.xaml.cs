@@ -31,7 +31,7 @@ namespace PRO_1.Ventanas
 
             InitializeComponent();
 
-            if(AbiertoPorOtraVentana == true) { NuevaSesion_MenuItem.IsEnabled = false; FuncionesEJ_MenuItem.IsEnabled = false; }
+            if(AbiertoPorOtraVentana == true) { NuevaSesion_MenuItem.IsEnabled = false; FuncionesEJ_MenuItem.Visibility = Visibility.Hidden; }
         }
 
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente

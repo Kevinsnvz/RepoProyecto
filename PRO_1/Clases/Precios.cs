@@ -6,99 +6,143 @@ using System.Threading.Tasks;
 
 namespace PRO_1.Clases
 {
-    public static class Precios
+    public class Precios
     {
-        private static int _Alineacion1Tren = 5;
-        public static int alineacion1Tren
+        private static int _alineacion1trendesdeR17 = 5;
+        public static int Alineacion1TrenDesdeR17
         {
             get
             {
-                return _Alineacion1Tren;
+                return _alineacion1trendesdeR17;
             }
+            set { _alineacion1trendesdeR17 = value; }
 
         }
 
-        private static int _Alineacion2Tren = 10;
-        public static int alineacion2Tren
+        private static int _alineacion1tren = 5;
+        public static int Alineacion1Tren
         {
             get
             {
-                return _Alineacion2Tren;
+                return _alineacion1tren;
             }
+            set { _alineacion1tren = value; }
 
         }
 
-        private static int _LavadoMoto = 20;
-        public static int lavadomoto
+        private static int _alineacion2tren = 10;
+        public static int Alineacion2Tren
         {
             get
             {
-                return _LavadoMoto;
+                return _alineacion2tren;
             }
+            set { _alineacion2tren= value; }
+
         }
 
-        private static int _LavadoAuto = 25;
-        public static int lavadoauto
+        private static int _lavadomoto = 20;
+        public static int LavadoMoto
         {
             get
             {
-                return _LavadoAuto;
+                return _lavadomoto;
             }
+            set { _lavadomoto =  value; }
         }
 
-        private static int _LavadoCamioneta = 30;
-        public static int lavadocamioneta
+        private static int _lavadoauto = 25;
+        public static int LavadoAuto
         {
             get
             {
-                return _LavadoCamioneta;
+                return _lavadoauto;
             }
+            set { _lavadoauto = value; }
         }
 
-        private static int _LavadoCamionChico = 35;
-        public static int lavadocamionchico
+        private static int _lavadocamioneta = 30;
+        public static int LavadoCamioneta
         {
             get
             {
-                return _LavadoCamionChico;
+                return _lavadocamioneta;
             }
+            set { _lavadocamioneta = value; }
         }
 
-        private static int _LavadoCamionUtilitario = 40;
-        public static int lavadocamionutilitario
+        private static int _lavadocamionchico = 35;
+        public static int LavadoCamionChico
         {
             get
             {
-                return _LavadoCamionUtilitario;
+                return _lavadocamionchico;
             }
+            set { _lavadocamionchico = value; }
         }
 
-        private static int _BalanceoAuto = 40;
-        public static int balanceoauto
+        private static int _lavadocamionutilitario = 40;
+        public static int LavadoCamionUtilitario
         {
             get
             {
-                return _BalanceoAuto;
+                return _lavadocamionutilitario;
             }
+            set { _lavadocamionutilitario = value; }
         }
 
-        private static int _BalanceoCamioneta = 40;
-        public static int balanceoamioneta
+        private static int _balanceoauto = 40;
+        public static int BalanceoAuto
         {
             get
             {
-                return _BalanceoCamioneta;
+                return _balanceoauto;
             }
+            set { _balanceoauto = value; }
         }
 
-        private static int _MontajeNeumatico = 40;
-        public static int montajeneumatico
+        private static int _balanceocamioneta = 40;
+        public static int BalanceoCamioneta
         {
             get
             {
-                return _MontajeNeumatico;
+                return _balanceocamioneta;
             }
+            set { _balanceocamioneta = value; }
         }
 
+        private static int _montajeneumatico = 40;
+        public static int MontajeNeumatico
+        {
+            get
+            {
+                return _montajeneumatico;
+            }
+            set { _montajeneumatico =  value; }
+        }
+
+        private static List<Neumatico> _neumaticosmichelin = new List<Neumatico>();
+        public static List<Neumatico> NeumaticosMichelin
+        {
+            get { return _neumaticosmichelin; }
+            set { _neumaticosmichelin = value; }
+        }
+
+        private static List<Neumatico> _neumaticosbridgestone = new List<Neumatico>();
+        public static List<Neumatico> NeumaticosBridgestone
+        {
+            get { return _neumaticosbridgestone; }
+            set { _neumaticosbridgestone = value; }
+        }
+
+        private static List<Neumatico> _neumaticosPirelli = new List<Neumatico>();
+        public static List<Neumatico> NeumaticosPirelli
+        {
+            get { return _neumaticosPirelli; }
+            set { _neumaticosPirelli = value; }
+        }
     }
 }
+
+
+

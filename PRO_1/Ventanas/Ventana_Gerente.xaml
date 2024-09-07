@@ -19,12 +19,12 @@
                     </MenuItem>
                     <MenuItem Name="FuncionesEJ_MenuItem" Header="Funciones EJ." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeEJ_Click"></MenuItem>
                     <MenuItem Header="Funciones Jefe Ser." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeJefe_Click"></MenuItem>
-                    <MenuItem Header="ABM Jefes" BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="MenuItem_Click"></MenuItem>
-                    <MenuItem Header="Precios" BorderThickness="1" BorderBrush="DarkGray" FontSize="15"></MenuItem>
+                    <MenuItem Header="ABM Jefes" BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="ABMJefes_MenuClick"></MenuItem>
+                    <MenuItem Header="Precios" BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="Precios_MenuClick"></MenuItem>
                 </Menu>
             </Menu>
 
-            <Grid Name="grid_ModificacionPrecios" Visibility="Collapsed">
+            <Grid Name="grid_ModificacionPrecios" Visibility="Visible">
                 <StackPanel>
                     <Label FontSize="20" Background="MediumPurple" Content="SECCION Modificacion de precios" HorizontalContentAlignment="Center"></Label>
                     <Grid>
@@ -42,17 +42,69 @@
                             <Label FontSize="15" HorizontalContentAlignment="Center" Background="MediumPurple" Content="Precios de Neumatico"></Label>
 
                             <StackPanel Orientation="Horizontal">
-                                <Label FontSize="15" Content="Montaje Neumatico: "></Label>
+                                <Label FontSize="15" Content="Montaje de Neumatico: "></Label>
                                 <TextBox Name="PrecioMontajeNeumatico_TextBox" Margin="0,5" Width="100"></TextBox>
+
                             </StackPanel>
 
+                            <StackPanel>
+                                <Label Background="MediumPurple" FontSize="15" Content="Nuevo Neumatico"></Label>
+                                <StackPanel Orientation="Horizontal">
+                                    
+                                    <Label Content="Marca: "></Label>
+                                    <ComboBox Name="MarcaNeumatico_ComboBox" Width="auto"></ComboBox>
+
+                                    <Label Content="Modelo: "></Label>
+                                    <TextBox Name="ModeloNeumatico_TextBox" MinWidth="50" MaxWidth="70" Margin="0,5"></TextBox>
+                                    
+                                    <Label Content="Ancho: mm"></Label>
+                                    <TextBox Name="AnchoNeumatico_TextBox" Width="40" Margin="0,5"></TextBox>
+                                    
+                                    <Label Content="Perfil: "></Label>
+                                    <TextBox Name="PerfilNeumatico_TextBox" Width="40" Margin="0,5"></TextBox>
+                                    
+                                    <Label Content="Rodado"></Label>
+                                    <TextBox Name="RodadoNeumatico_TextBox" Width="40" Margin="0,5"></TextBox>
+
+                                    <Button Content="Crear" Margin="5,5" Background="MediumPurple" BorderBrush="Black" Click="CrearNeumatico_Click"></Button>
+                                </StackPanel>
+                            </StackPanel>
+                            
                             <Label Background="MediumPurple" Content="Michelin" FontSize="15"></Label>
                             
                             <StackPanel Orientation="Horizontal">
                                 
-                                <Label FontSize="15" Content=" Michelin R17: "></Label>
-                                <TextBox Name="PrecioNeumatico_TextBox" Margin="0,5" Width="100"></TextBox>
+                                <Label FontSize="15" Content=" Michelin: "></Label>
+                                <ComboBox Name="NeumaticoMichelin_ComboBox" Margin="0,5" Width="100"></ComboBox>
+                                <Label Content="Precio: "></Label>
+                                <TextBox Name="PrecioNeumaticoMichelin_TextBox" Width="50" Margin="0,5"></TextBox>
+
                             </StackPanel>
+
+                            <Label Background="MediumPurple" Content="Bridgestone" FontSize="15"></Label>
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Label FontSize="15" Content=" Bridgestone: "></Label>
+                                <ComboBox Name="NeumaticoBridgestone_ComboBox" Margin="0,5" Width="100"></ComboBox>
+                                <Label Content="Precio: "></Label>
+                                <TextBox Name="PrecioNeumaticoBridgestone_TextBox" Width="50" Margin="0,5"></TextBox>
+
+                            </StackPanel>
+
+                            <Label Background="MediumPurple" Content="Pirelli" FontSize="15"></Label>
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <Label FontSize="15" Content=" Pirelli: "></Label>
+                                <ComboBox Name="NeumaticoPirelli_ComboBox" Margin="0,5" Width="100"></ComboBox>
+                                <Label Content="Precio: "></Label>
+                                <TextBox Name="PrecioNeumaticoPirelli_TextBox" Width="50" Margin="0,5"></TextBox>
+
+                            </StackPanel>
+                            <Label Background="MediumPurple"></Label>
+                            
+                            <Button Margin="0,5" Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black" Click="GuardarPreciosNeumatico_Click"></Button>
 
 
                         </StackPanel>
@@ -73,6 +125,8 @@
                                 <Label FontSize="15" Content="Alineacion 2 Trenes: "></Label>
                                 <TextBox Name="PrecioAlineacion2Trenes_TextBox" Margin="0,5" Width="100"></TextBox>
                             </StackPanel>
+
+                            <Button Margin="0,5" Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black" Click="GuardarPreciosAlineacion_Click"></Button>
                         </StackPanel>
                         
                         <StackPanel Grid.Column="1" Grid.Row="0">
@@ -89,7 +143,8 @@
                             </StackPanel>
 
 
-                            <Button Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black"></Button>
+                            <Button Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black" Click="GuarderPreciosBalanceo_Click"></Button>
+                            
                         </StackPanel>
                         
                         <StackPanel Grid.Column="0" Grid.Row="0" >
@@ -121,7 +176,7 @@
 
                             </StackPanel>
 
-                            <Button Margin="0,5" Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black"></Button>
+                            <Button Margin="0,5" Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black" Click="GuardarPreciosLavado_Click"></Button>
                         </StackPanel>
                     </Grid>
                     
