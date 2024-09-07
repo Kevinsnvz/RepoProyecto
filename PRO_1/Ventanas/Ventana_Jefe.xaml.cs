@@ -59,7 +59,7 @@ namespace PRO_1.Ventanas
         private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
             ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
-            DataBase.CargarUsuariosDeBD(acceso_usuarios);
+            DataBase.CargarUsuariosDeBDaAPP(acceso_usuarios);
 
             foreach (var usuario in acceso_usuarios.ListaGlobalUsuarios)
             {

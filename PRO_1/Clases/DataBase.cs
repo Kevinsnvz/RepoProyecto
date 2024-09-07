@@ -19,15 +19,62 @@ namespace PRO_1.Clases
     {
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
 
-
-        public static bool CargarNeumaticosDeBDaAPP(List<Neumatico> ListaDeNeumatico)
+        public static bool ModificarPrecioNeumaticoBD(int ID,int precioCambiado)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
-                    return true;
+
+                    string sql = $"UPDATE neumaticos SET precio = {precioCambiado} where id = {ID};";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, connection);
+
+                    int FilasAfectadas = cmd.ExecuteNonQuery();
+
+                    if(FilasAfectadas > 0)
+                    {
+                        Console.WriteLine("Precio de neumatico modificado exitosamente");
+                        return true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR: No se modifico el precio de neumatico. Error desconocido");
+                        return false;
+                    }
+                }
+                catch(MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+        }
+        public static bool CargarNeumaticosDeBDaAPP()
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string sql = "SELECT id,marca,modelo,ancho,perfil,rodado,stock,precio FROM neumaticos;";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, connection);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        while(reader.Read())
+                        {
+                            Neumatico nuevoNeumatico = new Neumatico(reader.GetString(1),reader.GetString(2),reader.GetInt32(3),reader.GetInt32(4),reader.GetInt32(5),reader.GetInt32(6),reader.GetInt32(0),reader.GetInt32(7));
+                            if (reader.GetString(1) == "Michelin") Precios.NeumaticosMichelin.Add(nuevoNeumatico);
+                            if (reader.GetString(1) == "Bridgestone") Precios.NeumaticosBridgestone.Add(nuevoNeumatico);
+                            if (reader.GetString(1) == "Pirelli") Precios.NeumaticosPirelli.Add(nuevoNeumatico);
+                        }
+                        MessageBox.Show("Neumaticos cargados exitosamente.");
+                        return true;
+                    }
                 }
                 catch(MySqlException ex)
                 {
@@ -236,7 +283,7 @@ namespace PRO_1.Clases
         /// </summary>
         /// <param name="ListaUsuarios">Lista al cual aplicar el cambio.</param>
         /// <returns></returns>
-        public static bool CargarUsuariosDeBD(ListaDeUsuarios ListaUsuarios)
+        public static bool CargarUsuariosDeBDaAPP(ListaDeUsuarios ListaUsuarios)
         {
 
             using(MySqlConnection connection = new MySqlConnection(connectionString))
@@ -437,7 +484,7 @@ namespace PRO_1.Clases
         /// Solicita los Clientes existentes en la Base de Datos y los carga a la lista dada.
         /// </summary>
         /// <param name="ListaClientes">Lista al cual aplicar el cambio.</param>
-        public static void CargarClientesDeBD(ListaDeClientes ListaClientes)
+        public static void CargarClientesDeBDaAPP(ListaDeClientes ListaClientes)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {

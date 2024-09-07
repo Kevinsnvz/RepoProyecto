@@ -46,9 +46,18 @@ namespace PRO_1.Ventanas
         public void ActualizarComboBox()
         {
 
-            foreach(var neumatico in Precios.NeumaticosMichelin)
+            foreach (var neumatico in Precios.NeumaticosMichelin)
             {
-                NeumaticoMichelin_ComboBox.Items.Add($"{}");
+                MessageBox.Show($"ID:{neumatico.IDNeumatico} Ancho: {neumatico.Ancho}/{neumatico.Perfil}R{neumatico.Rodado}");
+                NeumaticoMichelin_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}{neumatico.Rodado}");
+            }
+            foreach (var neumatico in Precios.NeumaticosBridgestone)
+            {
+                NeumaticoBridgestone_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}{neumatico.Rodado}");
+            }
+            foreach (var neumatico in Precios.NeumaticosPirelli)
+            {
+                NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}{neumatico.Rodado}");
             }
         }
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -103,8 +112,10 @@ namespace PRO_1.Ventanas
 
         private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
+            ActualizarComboBox();
+
             ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
-            DataBase.CargarUsuariosDeBD(acceso_usuarios);
+            DataBase.CargarUsuariosDeBDaAPP(acceso_usuarios);
 
             foreach (var usuario in acceso_usuarios.ListaGlobalUsuarios)
             {
@@ -200,6 +211,8 @@ namespace PRO_1.Ventanas
         private void GuardarPreciosNeumatico_Click(object sender, RoutedEventArgs e)
         {
 
+           
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -221,13 +234,13 @@ namespace PRO_1.Ventanas
             int Perfil = Convert.ToInt32(PerfilNeumatico_TextBox.Text);
             int Rodado = Convert.ToInt32(RodadoNeumatico_TextBox.Text);
 
-            Neumatico nuevoNeumatico = new Neumatico(Marca, Ancho, Perfil, Rodado);
+            
 
             switch (Marca)
             {
                 case "Michelin":
 
-                    Precios.NeumaticosMichelin.Add(nuevoNeumatico);
+                    
                     MessageBox.Show($"Neumatico {Marca} creado exitosamente");
 
                     
@@ -235,13 +248,12 @@ namespace PRO_1.Ventanas
                     break;
                 case "Bridgestone":
 
-                    Precios.NeumaticosBridgestone.Add(nuevoNeumatico);
+                    
                     MessageBox.Show($"Neumatico {Marca} creado exitosamente");
 
                     break;
                 case "Pirelli":
 
-                    Precios.NeumaticosPirelli.Add(nuevoNeumatico);
                     MessageBox.Show($"Neumatico {Marca} creado exitosamente");
 
                     break;

@@ -103,9 +103,13 @@
 
                             </StackPanel>
                             <Label Background="MediumPurple"></Label>
-                            
-                            <Button Margin="0,5" Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black" Click="GuardarPreciosNeumatico_Click"></Button>
 
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Margin="0,5" Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black" Click="GuardarPreciosNeumatico_Click"></Button>
+                                <Button Margin="10,5" Content="Actualizar Listas" Width="100" Background="MediumPurple" BorderBrush="Black" Click="ActualizarListas_Click"></Button>
+
+                            </StackPanel>
+                            
 
                         </StackPanel>
                         

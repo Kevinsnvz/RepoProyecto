@@ -52,9 +52,21 @@ namespace PRO_1.Clases
             set { _precio = value; }
         }
 
+        private int _idneumatico;
+        public int IDNeumatico
+        {
+            get { return _idneumatico; }
+            set { _idneumatico = value; }
+        }
 
+        private int _stock;
+        public int Stock
+        {
+            get { return _stock; }
+            set { _stock = value; }
+        }
 
-        public Neumatico(string marca, string modelo, int ancho, int perfil, int rodado)
+        public Neumatico(string marca, string modelo, int ancho, int perfil, int rodado,int stock, int IDNeumatico)
         {
 
             this.Marca = marca;
@@ -63,10 +75,11 @@ namespace PRO_1.Clases
             this.Perfil = perfil;
             this.Rodado = rodado;
             this.Precio = 0;
-
+            this.IDNeumatico = IDNeumatico;
+            this.Stock = stock;
         }
 
-        public Neumatico(string marca,string modelo,int ancho,int perfil,int rodado,int precio)
+        public Neumatico(string marca,string modelo,int ancho,int perfil,int rodado, int stock,int IDNeumatico,int precio)
         {
 
             this.Marca = marca;
@@ -75,6 +88,8 @@ namespace PRO_1.Clases
             this.Perfil = perfil;
             this.Rodado = rodado;
             this.Precio = precio;
+            this.Stock = stock;
+            this.IDNeumatico = IDNeumatico;
 
         }
     }

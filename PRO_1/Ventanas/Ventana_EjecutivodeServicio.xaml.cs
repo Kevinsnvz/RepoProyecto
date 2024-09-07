@@ -273,7 +273,7 @@ namespace PRO_1.Ventanas
             Lista_ClientesParaModificar.ItemsSource = null;
             Lista_ClienteRecibo.ItemsSource = null;
 
-            DataBase.CargarClientesDeBD(acceso_Cliente);
+            DataBase.CargarClientesDeBDaAPP(acceso_Cliente);
 
             
             Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;      

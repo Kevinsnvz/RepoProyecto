@@ -66,7 +66,7 @@ namespace PRO_1.Ventanas
         //Actualiza la lista.
         public void Actualizar_Click(object sender, RoutedEventArgs e)
         {
-            DataBase.CargarClientesDeBD(acceso_Cliente);
+            DataBase.CargarClientesDeBDaAPP(acceso_Cliente);
 
             Lista_ClientesACobrar.ItemsSource = null;
             Lista_ClientesACobrar.ItemsSource = acceso_Cliente.ListaGlobalClientes;

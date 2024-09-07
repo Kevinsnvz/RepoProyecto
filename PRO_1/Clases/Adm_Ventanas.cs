@@ -16,7 +16,6 @@ namespace PRO_1.Clases
         private static ListaDeClientes Clientes = new ListaDeClientes();
         private static ListaDeUsuarios Usuarios = new ListaDeUsuarios();
 
-      
 
         //Abrir una ventana dependiendo del rol en string que se le ingrese
         public static void AbrirVentanaPorRol(string rol)
@@ -37,6 +36,7 @@ namespace PRO_1.Clases
                     Ventana_Gerente ventana_Gerente = new Ventana_Gerente(Usuarios,Clientes);
                     ventana_Gerente.Show();
                     Application.Current.MainWindow?.Close();
+                    DataBase.CargarNeumaticosDeBDaAPP();
                     break;
                 case "jefe_servicio":
                     Ventana_Jefe ventana_Jefe = new Ventana_Jefe(Usuarios,Clientes,false);
