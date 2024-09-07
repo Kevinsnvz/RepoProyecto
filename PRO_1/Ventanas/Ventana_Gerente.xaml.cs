@@ -48,16 +48,15 @@ namespace PRO_1.Ventanas
 
             foreach (var neumatico in Precios.NeumaticosMichelin)
             {
-                MessageBox.Show($"ID:{neumatico.IDNeumatico} Ancho: {neumatico.Ancho}/{neumatico.Perfil}R{neumatico.Rodado}");
-                NeumaticoMichelin_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}{neumatico.Rodado}");
+                NeumaticoMichelin_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}");
             }
             foreach (var neumatico in Precios.NeumaticosBridgestone)
             {
-                NeumaticoBridgestone_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}{neumatico.Rodado}");
+                NeumaticoBridgestone_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}");
             }
             foreach (var neumatico in Precios.NeumaticosPirelli)
             {
-                NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}{neumatico.Rodado}");
+                NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}");
             }
         }
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -187,25 +186,51 @@ namespace PRO_1.Ventanas
 
         private void GuardarPreciosLavado_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(PrecioLavadoAuto_TextBox.Text)) Precios.LavadoAuto = Convert.ToInt32(PrecioLavadoAuto_TextBox.Text);
-            if (!string.IsNullOrEmpty(PrecioLavadoCamioneta_TextBox.Text)) Precios.LavadoCamioneta = Convert.ToInt32(PrecioLavadoCamioneta_TextBox.Text);
-            if (!string.IsNullOrEmpty(PrecioLavadoCamion_TextBox.Text)) Precios.LavadoCamionChico = Convert.ToInt32(PrecioLavadoCamion_TextBox.Text);
-            if (!string.IsNullOrEmpty(PrecioLavadoCamionUtil_TextBox.Text)) Precios.LavadoCamionUtilitario = Convert.ToInt32(PrecioLavadoCamionUtil_TextBox.Text);
-            if (!string.IsNullOrEmpty(PrecioLavadoMoto_TextBox.Text)) Precios.LavadoMoto = Convert.ToInt32(PrecioLavadoMoto_TextBox.Text);
+            string cambios = "Cambios Lavado: \n";
+            if (!string.IsNullOrEmpty(PrecioLavadoAuto_TextBox.Text)) 
+            { Precios.LavadoAuto = Convert.ToInt32(PrecioLavadoAuto_TextBox.Text); cambios += $"Auto- ${Precios.LavadoAuto}\n"; }
+
+            if (!string.IsNullOrEmpty(PrecioLavadoCamioneta_TextBox.Text)) 
+            { Precios.LavadoCamioneta = Convert.ToInt32(PrecioLavadoCamioneta_TextBox.Text); cambios += $"Camioneta - ${Precios.LavadoCamioneta}\n"; }
+
+            if (!string.IsNullOrEmpty(PrecioLavadoCamion_TextBox.Text)) 
+            { Precios.LavadoCamionChico = Convert.ToInt32(PrecioLavadoCamion_TextBox.Text); cambios += $"Camion - ${Precios.LavadoCamionChico}\n"; }
+
+            if (!string.IsNullOrEmpty(PrecioLavadoCamionUtil_TextBox.Text)) 
+            { Precios.LavadoCamionUtilitario = Convert.ToInt32(PrecioLavadoCamionUtil_TextBox.Text); cambios += $"Camion Util.- ${Precios.LavadoCamionUtilitario}\n"; }
+
+            if (!string.IsNullOrEmpty(PrecioLavadoMoto_TextBox.Text)) 
+            { Precios.LavadoMoto = Convert.ToInt32(PrecioLavadoMoto_TextBox.Text); cambios += $"Moto - ${Precios.LavadoMoto}\n"; }
+
+            MessageBox.Show(cambios);
 
         }
 
         private void GuarderPreciosBalanceo_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(PrecioBalanceoAuto_TextBox.Text)) Precios.BalanceoAuto = Convert.ToInt32(PrecioBalanceoAuto_TextBox.Text);
-            if (!string.IsNullOrEmpty(PrecioBalanceoCamioneta_TextBox.Text)) Precios.BalanceoCamioneta = Convert.ToInt32(PrecioBalanceoCamioneta_TextBox.Text);
+            string cambios = "Cambios Balanceo: \n";
+            if (!string.IsNullOrEmpty(PrecioBalanceoAuto_TextBox.Text)) 
+            { Precios.BalanceoAuto = Convert.ToInt32(PrecioBalanceoAuto_TextBox.Text); cambios += $"Auto- ${Precios.BalanceoAuto}\n"; }
+
+            if (!string.IsNullOrEmpty(PrecioBalanceoCamioneta_TextBox.Text)) 
+            { Precios.BalanceoCamioneta = Convert.ToInt32(PrecioBalanceoCamioneta_TextBox.Text); cambios += $"Camioneta- ${Precios.BalanceoCamioneta}\n"; }
+
+            MessageBox.Show(cambios);
         }
 
         private void GuardarPreciosAlineacion_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(PrecioAlineacion_TextBox.Text)) Precios.Alineacion1Tren = Convert.ToInt32(PrecioAlineacion_TextBox.Text);
-            if (!string.IsNullOrEmpty(PrecioAlineacion2Trenes_TextBox.Text)) Precios.Alineacion2Tren = Convert.ToInt32(PrecioAlineacion2Trenes_TextBox.Text);
-            if (!string.IsNullOrEmpty(PrecioAlineacionR17_TextBox.Text)) Precios.Alineacion1TrenDesdeR17 = Convert.ToInt32(PrecioAlineacionR17_TextBox.Text);
+            string cambios = "Cambios Alineacion: \n";
+            if (!string.IsNullOrEmpty(PrecioAlineacion_TextBox.Text)) 
+            { Precios.Alineacion1Tren = Convert.ToInt32(PrecioAlineacion_TextBox.Text); cambios += $"Alineacion un tren - ${Precios.Alineacion1Tren}\n"; }
+
+            if (!string.IsNullOrEmpty(PrecioAlineacion2Trenes_TextBox.Text)) 
+            { Precios.Alineacion2Tren = Convert.ToInt32(PrecioAlineacion2Trenes_TextBox.Text); cambios += $"Alineacion 2 trenes - ${Precios.Alineacion2Tren}\n"; }
+
+            if (!string.IsNullOrEmpty(PrecioAlineacionR17_TextBox.Text)) 
+            { Precios.Alineacion1TrenDesdeR17 = Convert.ToInt32(PrecioAlineacionR17_TextBox.Text); cambios += $"Alieacion a partir R17- ${Precios.Alineacion1TrenDesdeR17}\n"; }
+
+            MessageBox.Show(cambios);
         }
 
         private void GuardarPreciosNeumatico_Click(object sender, RoutedEventArgs e)
@@ -261,6 +286,18 @@ namespace PRO_1.Ventanas
             }
             OnPropertyChanged();
 
+        }
+
+        private void MichelinComboBox_Selected(object sender, RoutedEventArgs e)
+        {
+            string NeumaticoSeleccionado = NeumaticoMichelin_ComboBox.SelectedItem.ToString();
+
+            string[] partes = NeumaticoSeleccionado.Split('/');
+
+            int ID = Convert.ToInt32(partes[3]);
+            MichelinIDNeumatico_Label.Content = ID;
+            
+                    
         }
     }
 }

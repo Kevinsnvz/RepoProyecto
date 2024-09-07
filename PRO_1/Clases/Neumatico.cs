@@ -28,7 +28,7 @@ namespace PRO_1.Clases
         public int Ancho
         {
             get { return _ancho; }
-            set { _ancho = Ancho; }
+            set { _ancho = value; }
         }
 
         private int _perfil;
