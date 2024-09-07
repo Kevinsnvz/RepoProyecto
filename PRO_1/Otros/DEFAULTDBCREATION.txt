@@ -34,3 +34,19 @@ VALUES
 	('userejecutivo','password123','ejecutivo_servicio'),
 	('usercajero','password123','cajero'),
 	('useroperativo','password123','operativo');
+
+CREATE TABLE Neumaticos
+(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	marca VARCHAR(25),
+	modelo VARCHAR(25),
+	ancho INT,
+	perfil INT,
+	rodado INT,
+	stock INT,
+	precio int
+)
+
+INSERT INTO Neumaticos (marca,modelo,ancho,perfil,rodado,stock,precio)
+VALUES
+	('Michelin','X-ICE SNOW',100,65,15,4,150);
