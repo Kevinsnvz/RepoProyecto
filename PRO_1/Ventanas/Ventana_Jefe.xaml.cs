@@ -35,7 +35,11 @@ namespace PRO_1.Ventanas
             if(AbiertoPorOtraVentana == true) { NuevaSesion_MenuItem.IsEnabled = false; FuncionesEJ_MenuItem.Visibility = Visibility.Hidden; }
         }
 
-        //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
+        /// <summary>
+        /// Al apretar el item de menu "Cerrar Sesion" cierra la sesion.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
@@ -43,7 +47,11 @@ namespace PRO_1.Ventanas
             this.Close();
         }
 
-        //Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login
+        /// <summary>
+        /// Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void IniciarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
@@ -51,12 +59,20 @@ namespace PRO_1.Ventanas
             mainWindow.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Abre la ventana de Ejecutivo de servicios.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FuncionesDeEJ_Click(object sender, RoutedEventArgs e)
         {
             Adm_Ventanas.AbrirVentana(2);
         }
-
+        /// <summary>
+        /// Actualiza las listas de la ventana actual.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
             ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
@@ -77,7 +93,11 @@ namespace PRO_1.Ventanas
             Lista_EjecutivosParaModificar.ItemsSource = listaMuestra.ListaGlobalUsuarios;
 
         }
-
+        /// <summary>
+        /// Elimina al Ejecutivo seleccionado de la lista local de usuarios y la base de datos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BajaAEjecutivo_Click(object sender, RoutedEventArgs e)
         {
             var UsuarioSeleccionado = (Usuarios)Lista_BajaEjecutivos.SelectedItem;
@@ -88,7 +108,11 @@ namespace PRO_1.Ventanas
             DataBase.BorrarUsuarioDeBDYAPP(UsuarioSeleccionado.UsuarioID, acceso_usuarios);
             
         }
-
+        /// <summary>
+        /// Crea un ejecutivo, añadiendolo a la lista local de usuarios y la base de datos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CrearEjecutivo_Click(object sender, RoutedEventArgs e)
         {
             if(string.IsNullOrEmpty(UsernameEjecutivo_TextBox.Text) ||
@@ -99,7 +123,11 @@ namespace PRO_1.Ventanas
             DataBase.AgregarUsuarioABDYAPP(username, password,1,acceso_usuarios);
 
         }
-
+        /// <summary>
+        /// Cuando se selecciona un ejecutivo de la lista "Lista_EjecutivosParaModificar", se ejecuta el codigo despliegando los datos a los labels correspondientes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListaEjecutivosParaModificar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var UsuarioSeleccionado = (Usuarios)Lista_EjecutivosParaModificar.SelectedItem;
@@ -112,7 +140,11 @@ namespace PRO_1.Ventanas
             IDEjecutivoModificacion_TextBox.Text = UsuarioSeleccionado.UsuarioID.ToString();
             RolEjecutivoModificacion_TextBox.Content = UsuarioSeleccionado.Rol;
         }
-
+        /// <summary>
+        /// Modifica al ejecutivo seleccionado mediante su ID con los campos dados.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ModificarEjecutivo_Click(object sender, RoutedEventArgs e)
         {
             try

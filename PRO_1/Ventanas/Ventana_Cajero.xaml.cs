@@ -101,6 +101,8 @@ namespace PRO_1.Ventanas
             ServiciosACobrar_Label.Content += "\n";
 
         }
+
+
         //Toma los datos del Cliente al igual que los servicios que solicito y los imprime en un recibo de formato PDF
         public void ImprimirRecibo(object sender, RoutedEventArgs e)
         {
@@ -135,6 +137,7 @@ namespace PRO_1.Ventanas
 
                 int TOTAL = 0;
                 
+                //Si el checkbox mostrado como "Autorizar Entregea?" es activado, modificar cliente a tener la autorizacion como TRUE si no, utilizar la autorizacion que contenga el cliente para la impresion.
                 if(Autorizar_CheckBox.IsChecked == true)
                 {
                     DataBase.ModificarClienteDeBDYAPP

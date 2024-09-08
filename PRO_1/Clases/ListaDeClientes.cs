@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PRO_1.Clases
 {
+    ///Clase que declara la una lista compuesta por los atributos de la clase Clientes.
     public class ListaDeClientes
     {
         private List<Clientes> _listaglobalclientes= new List<Clientes>();

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PRO_1.Clases
 {
+    /// Clase que posee todos los atributos necesarios para la creacion de un nuevo usuario, con su respectivo constructor.
     public class Usuarios
     {
         private string _username;
@@ -35,6 +36,7 @@ namespace PRO_1.Clases
             set { _usuarioid = value; }
         }
 
+        //Constructor base.
         public Usuarios(string username,string password,string rol,int id)
         {
             this.Username = username;

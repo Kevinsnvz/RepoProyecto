@@ -17,7 +17,15 @@ namespace PRO_1.Clases
         private static ListaDeUsuarios Usuarios = new ListaDeUsuarios();
 
 
-        //Abrir una ventana dependiendo del rol en string que se le ingrese
+        /// <summary>
+        /// Abre la ventana solicitada utilizando como parametro el rol que le corresponde a esa ventana.
+        /// </summary>
+        /// <param name="rol"> 
+        /// <para>
+        /// Roles correspondientes:
+        /// "cajero"-"ejecutivo_servicio"-"gerente"-"jefe_servicio"
+        /// </para>
+        /// </param>
         public static void AbrirVentanaPorRol(string rol)
         {
             switch (rol)
@@ -53,9 +61,13 @@ namespace PRO_1.Clases
         /// <summary>
         /// Abrir una ventana dependiendo del num que se ingrese, num que es asignado a una ventana especifica dentro del metodo.
         /// Mas informacion en parametro.
-        /// 0 - MainWindow / 1 - Ventana Cajero / 2 - Ventana Ejecutivo / 3 - Ventana Jefe
         /// </summary>
-        /// <param name="numVentana"></param>
+        /// <param name="numVentana">
+        /// <para>
+        /// Ventanas correspondientes:
+        /// 0: Mainwindow - 1: Ventana_Cajero - 2: Ventana_EjecutivodeServicio - 3: Ventana_Jefe - 4: Ventana_Gerente
+        /// </para>
+        /// </param>
         public static void AbrirVentana(int numVentana)
         {
             switch (numVentana)
@@ -85,6 +97,18 @@ namespace PRO_1.Clases
                     break;
             }
         }
+        /// <summary>
+        /// Abrir una ventana dependiendo del num que se ingrese, num que es asignado a una ventana especifica dentro del metodo. Esta sobrecarga agrega la posibilidad de aclarar si fue abierto o no por otra ventana.
+        /// Mas informacion en parametro.
+        /// </summary>
+        /// <param name="numVentana">
+        /// <para>
+        /// Ventanas correspondientes:
+        /// 0: Mainwindow - 1: Ventana_Cajero - 2: Ventana_EjecutivodeServicio - 3: Ventana_Jefe - 4: Ventana_Gerente
+        /// </para>
+        /// </param>
+        /// <param name="abiertoPorOtraVentana"> True o False; Aclara si esta abierto por otra ventana o no, esto tiene consecuencias en su GUI. 
+        /// </param>
         public static void AbrirVentana(int numVentana,bool abiertoPorOtraVentana)
         {
             switch (numVentana)

@@ -42,6 +42,9 @@ namespace PRO_1.Ventanas
           
         }
         
+        /// <summary>
+        /// Actualiza los combobox de la ventana actual con los neumaticos que contienen las listas.
+        /// </summary>
         public void ActualizarComboBox()
         {
             NeumaticoMichelin_ComboBox.Items.Clear();
@@ -64,7 +67,11 @@ namespace PRO_1.Ventanas
                 NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}/{neumatico.Modelo}");
             }
         }
-        //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
+        /// <summary>
+        /// Al apretar el item de menu "Cerrar Sesion" cierra la sesion.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
@@ -72,7 +79,11 @@ namespace PRO_1.Ventanas
             this.Close();
         }
 
-        //Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login
+        /// <summary>
+        /// Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void IniciarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
@@ -80,19 +91,31 @@ namespace PRO_1.Ventanas
             mainWindow.Show();
             this.Close();
         }
-
+        /// <summary>
+        /// Abre la ventana de Jefe de Servicios
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FuncionesDeJefe_Click(object sender, RoutedEventArgs e)
         {
             
             Adm_Ventanas.AbrirVentana(3);
 
         }
-
+        /// <summary>
+        /// Abre la ventana de Ejecutivo de Servicios
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void FuncionesDeEJ_Click(object sender, RoutedEventArgs e)
         {
             Adm_Ventanas.AbrirVentana(2);
         }
-
+        /// <summary>
+        /// Modifica al Jefe Seleccionado con los campos dados.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ModificarJefe_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -116,7 +139,11 @@ namespace PRO_1.Ventanas
             }
             
         }
-
+        /// <summary>
+        /// Actualiza las listas de la ventana actual, al igual que los combobox.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
 
@@ -154,7 +181,11 @@ namespace PRO_1.Ventanas
             Lista_JefesParaModificar.ItemsSource = null;
             Lista_JefesParaModificar.ItemsSource = listaMuestra.ListaGlobalUsuarios;
         }
-
+        /// <summary>
+        /// Crea un jefe a la base de datos y a la lista local de Usuarios, mediante los campos dados.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CrearJefe_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -177,7 +208,11 @@ namespace PRO_1.Ventanas
             
 
         }
-
+        /// <summary>
+        /// Elimina al jefe seleccionado de la base de datos y la lista local de usuarios.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BajaAJefe_Click(object sender, RoutedEventArgs e)
         {
             var usuarioSeleccionado = (Usuarios)Lista_BajaJefes.SelectedItem;
@@ -187,7 +222,11 @@ namespace PRO_1.Ventanas
 
             DataBase.BorrarUsuarioDeBDYAPP(usuarioSeleccionado.UsuarioID, acceso_usuarios);
         }
-
+        /// <summary>
+        /// Al seleccionar un Jefe de la lista "Lista_JefesParaModificar"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListaJefesParaModificar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var usuarioSeleccionado = (Usuarios)Lista_JefesParaModificar.SelectedItem;
@@ -200,7 +239,11 @@ namespace PRO_1.Ventanas
             RolJefeModificacion_TextBox.Content = usuarioSeleccionado.Rol;
             IDJefeModificacion_TextBox.Text = usuarioSeleccionado.UsuarioID.ToString();
         }
-
+        /// <summary>
+        /// Colapsa todos los grids excepto el de ABM Jefes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ABMJefes_MenuClick(object sender, RoutedEventArgs e)
         {
 
@@ -209,7 +252,11 @@ namespace PRO_1.Ventanas
             grid_ABNeumaticos.Visibility = Visibility.Collapsed;
 
         }
-
+        /// <summary>
+        /// Colapsa todos los grids excepto el de Modificacion de Precios
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Precios_MenuClick(object sender, RoutedEventArgs e)
         {
 
@@ -218,14 +265,22 @@ namespace PRO_1.Ventanas
             grid_ABNeumaticos.Visibility = Visibility.Collapsed;
 
         }
-
+        /// <summary>
+        /// Colapsa todos los grids excepto el de AB Neumaticos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ABNeumaticos_MenuClick(object sender, RoutedEventArgs e)
         {
             grid_ABMJefes.Visibility = Visibility.Collapsed;
             grid_ModificacionPrecios.Visibility = Visibility.Collapsed;
             grid_ABNeumaticos.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        /// Guarda los nuevos valores de precios de la seccion de lavado en todos los campos que esten llenos, el resto sera ignorado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GuardarPreciosLavado_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -256,7 +311,11 @@ namespace PRO_1.Ventanas
             
 
         }
-
+        /// <summary>
+        /// Guarda los nuevos valores de precios de la seccion de Balanceo en todos los campos que esten llenos, el resto sera ignorado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GuarderPreciosBalanceo_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -276,7 +335,11 @@ namespace PRO_1.Ventanas
             }
             
         }
-
+        /// <summary>
+        /// Guarda los nuevos valores de precios de la seccion de Alineacion en todos los campos que esten llenos, el resto sera ignorado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GuardarPreciosAlineacion_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -299,7 +362,11 @@ namespace PRO_1.Ventanas
             }
             
         }
-
+        /// <summary>
+        /// Guarda los nuevos valores de precios de la seccion de Neumaticos en todos los campos que esten llenos, el resto sera ignorado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GuardarPreciosNeumatico_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -337,12 +404,11 @@ namespace PRO_1.Ventanas
 
             
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Crea un neumatico el que sera añadido a la lista correspondiente dependiendo de su marca.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CrearNeumatico_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -398,7 +464,11 @@ namespace PRO_1.Ventanas
             
 
         }
-
+        /// <summary>
+        /// Cuando se seleccione un item del combobox de Neumaticos Michelin, se ejecuta el codigo que pasa el ID correspondiente a un label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MichelinComboBox_Selected(object sender, RoutedEventArgs e)
         {
             if (NeumaticoMichelin_ComboBox.Items.Count <= 0) return;
@@ -412,7 +482,11 @@ namespace PRO_1.Ventanas
             
                     
         }
-
+        /// <summary>
+        /// Cuando se seleccione un item del combobox de Neumaticos Bridgestone, se ejecuta el codigo que pasa el ID correspondiente a un label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NeumaticoBridgestoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (NeumaticoBridgestone_ComboBox.Items.Count <= 0) return;
@@ -424,7 +498,11 @@ namespace PRO_1.Ventanas
             int ID = Convert.ToInt32(partes[3]);
             BridgestoneIDNeumatico_Label.Content = ID;
         }
-
+        /// <summary>
+        /// Cuando se seleccione un item del combobox de Neumaticos Pirelli, se ejecuta el codigo que pasa el ID correspondiente a un label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NeumaticoPirelliComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (NeumaticoPirelli_ComboBox.Items.Count <= 0) return;
@@ -436,7 +514,11 @@ namespace PRO_1.Ventanas
             int ID = Convert.ToInt32(partes[3]);
             PirelliIDNeumatico_Label.Content = ID;
         }
-
+        /// <summary>
+        /// Se elimina al neumatico seleccionado de la lista y la base de datos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BajaNeumatico_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -470,7 +552,11 @@ namespace PRO_1.Ventanas
 
         
         }
-
+        /// <summary>
+        /// Cuando se selecciona un neumatico de la lista "ListaNeumaticosAB_ListView", se ejecuta el codigo que despliega los datos Marca, Modelo y ID a los labels correspondientes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListaNeumaticosABListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var NeumaticoSeleccionado = (Neumatico)ListaNeumaticosAB_ListView.SelectedItem;

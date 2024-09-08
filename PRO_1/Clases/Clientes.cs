@@ -93,7 +93,7 @@ namespace PRO_1.Clases
             this.Autorizado = false;
             this.ClienteID = id;
         }
-        //Constructor sobrecarga
+        //Constructor sobrecarga para cuando se posee la lista y la autorizacion.
         public Clientes(string nombre, string apellido, string marca, string modelo, string matricula, int telefono, int id,List<(string NombreServicio, int PrecioServicio)> lista, bool autorizado)
         {
             this.Nombre = nombre;
@@ -106,7 +106,7 @@ namespace PRO_1.Clases
             this.Autorizado = autorizado;
             this.ClienteID = id;
         }
-        //Constructor sobrecarga
+        //Constructor sobrecarga para cuando se posee la autorizacion.
         public Clientes(string nombre, string apellido, string marca, string modelo, string matricula, int telefono, int id, bool autorizado)
         {
             this.Nombre = nombre;

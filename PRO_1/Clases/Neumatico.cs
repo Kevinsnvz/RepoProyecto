@@ -8,6 +8,7 @@ using System.Windows.Markup;
 
 namespace PRO_1.Clases
 {
+    //Clase que posee todos los atributos necesarios para un neumatico y su correspondiente constructor.
     public class Neumatico
     {
         private string _marca;
@@ -66,6 +67,7 @@ namespace PRO_1.Clases
             set { _stock = value; }
         }
 
+        //Constructor base
         public Neumatico(string marca, string modelo, int ancho, int perfil, int rodado,int stock, int IDNeumatico)
         {
 
@@ -78,7 +80,7 @@ namespace PRO_1.Clases
             this.IDNeumatico = IDNeumatico;
             this.Stock = stock;
         }
-
+        //Constructor Sobrecarga para cuando se quiere definir el precio de arranque.
         public Neumatico(string marca,string modelo,int ancho,int perfil,int rodado, int stock,int IDNeumatico,int precio)
         {
 

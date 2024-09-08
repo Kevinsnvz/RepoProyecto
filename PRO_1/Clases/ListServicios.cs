@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PRO_1.Clases
 {
+    //Clase que declara los atributos de lo que compone un servicio, con su correspondiente constructor.
     public class ListServicios
     {
 
@@ -28,12 +29,11 @@ namespace PRO_1.Clases
             set { _servicioid = value; }
         }
 
-        int counter = 0;
+        //Constructor de la clase
         public ListServicios(string nombreServicio, int precioServicio)
         {
             this.nombreServicio = nombreServicio;
             this.precioServicio = precioServicio;
-            this.Servicio_ID = counter + 1;
         }
 
     }

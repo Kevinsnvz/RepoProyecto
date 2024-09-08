@@ -33,7 +33,11 @@ namespace PRO_1.Ventanas
 
             if (AbiertoPorOtraVentana == true) { NuevaSesion_MenuItem.IsEnabled = false; }
         }
-
+        /// <summary>
+        /// Colapsa todos los stackpanes "Child" de el grid proporcionado, excepto el dado.
+        /// </summary>
+        /// <param name="visibleStackPanel"></param>
+        /// <param name="gridContainer"></param>
         public void CollapseAllStackPanelsExcept(StackPanel visibleStackPanel, Grid gridContainer)
         {
             
@@ -50,7 +54,11 @@ namespace PRO_1.Ventanas
                 }
             }
         }
-
+        /// <summary>
+        /// Devuelve la suma de el valor de todos los servicios que contiene el cliente con la matricula dada. 
+        /// </summary>
+        /// <param name="matriculaUsuario"></param>
+        /// <returns></returns>
         public int UpdatePrecioTotal(string matriculaUsuario)
         {
             int x = 0;
@@ -75,7 +83,11 @@ namespace PRO_1.Ventanas
             }
             return x;
         }
-
+        /// <summary>
+        /// Agrega un servicio a la lista servicios que contiene el cliente actualmente seleccionado en la seccion facturacion.
+        /// </summary>
+        /// <param name="nombreServicio"></param>
+        /// <param name="precioServicio"></param>
         public void AgregarServicioALista(string nombreServicio, int precioServicio)
         {
             if (Label_UsuarioSeleccionado.Content != null)
@@ -102,7 +114,11 @@ namespace PRO_1.Ventanas
 
             Lista_ServiciosSolicitados.DataContext = acceso_Cliente.ListaGlobalClientes;
         }
-
+        /// <summary>
+        /// Elimina el servicio de la lista del cliente que esta actualmente seleccionado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void EliminarSeleccionadoDeLista_Click(object sender, RoutedEventArgs e)
         {
 
@@ -142,8 +158,11 @@ namespace PRO_1.Ventanas
 
 
         }
-
-
+        /// <summary>
+        /// Elimina todo de la lista del cliente actualmente seleccionado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void EliminarTodoDeLista_Click(object sender, RoutedEventArgs e)
         {
             if (Label_UsuarioSeleccionado.Content != null)
@@ -169,7 +188,11 @@ namespace PRO_1.Ventanas
 
             PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
         }
-
+        /// <summary>
+        /// Cada que se eliga un Cliente de la lista, se ejecuta este codigo.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ListaReciboCliente_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var SelectedItem = (Clientes)Lista_ClienteRecibo.SelectedItem;
@@ -200,7 +223,11 @@ namespace PRO_1.Ventanas
 
 
         }
-
+        /// <summary>
+        /// Se despliega un MessageBox distinto dependiendo de la autorizacion del cliente seleccionado, pidiendo una segunda confirmacion de entrega. Entregando el vehiculo y eliminando al cliente del sistema.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void EntregarVehiculo_Click(object sender, RoutedEventArgs e)
         {
             var SelectedItem = (Clientes)Lista_ClienteRecibo.SelectedItem;
@@ -248,14 +275,22 @@ namespace PRO_1.Ventanas
 
         }
 
-        //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
+        /// <summary>
+        /// Al apretar el item de menu "Cerrar Sesion" cierra la sesion actual.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow?.Close();
             this.Close();
         }
 
-        //Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login
+        /// <summary>
+        /// Al apretar el item de menu "Iniciar Sesion" Abrir nuevamente la ventana de login, cerrando la actual.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void IniciarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
                 Application.Current.MainWindow?.Close();
@@ -266,7 +301,11 @@ namespace PRO_1.Ventanas
 
         }
 
-        //Actualiza la lista de Clientes
+        /// <summary>
+        /// Actualiza las listas de Clientes en la ventana
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
             Lista_BajaClientes.ItemsSource = null;
@@ -282,7 +321,11 @@ namespace PRO_1.Ventanas
 
 
         }
-
+        /// <summary>
+        /// Despliega las distintas secciones para cobrar, utilizando el metodo "CollapseAllStackPanelsExcept" para colapsar el resto de secciones excepto la dada.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void SeccionDeCobranza(object sender, RoutedEventArgs e)
         {
             switch (sender)
@@ -315,7 +358,11 @@ namespace PRO_1.Ventanas
             }
 
         }
-
+        /// <summary>
+        /// Adjunta todos los botones que tengan el proposito de agregar un servicio a un usuario y agrega el correspondiente servicio al boton apretado.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void VentadeServicios(object sender, RoutedEventArgs e)
         {
             
@@ -384,18 +431,31 @@ namespace PRO_1.Ventanas
 
         }
 
+        /// <summary>
+        /// Colapsa las secciones que no sean ABM Clientes, dejando visible esta.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ABMClienteMenu_Click(object sender, RoutedEventArgs e)
         {
             grid_SeccionFacturacion.Visibility = Visibility.Collapsed;
             grid_SeccionABMCliente.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        /// Colapsa las secciones que no sean Facturacion, dejando visible esta.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ReciboDeClienteMenu_Click(object sender, RoutedEventArgs e)
         {
             grid_SeccionFacturacion.Visibility = Visibility.Visible;
             grid_SeccionABMCliente.Visibility = Visibility.Collapsed;
         }
-
+        /// <summary>
+        /// Crea el cliente con todos los parametros dados, creandolos en la lista local y en la base de datos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void CrearCliente_Click(object sender, RoutedEventArgs e)
         {
             bool existeMatricula = acceso_Cliente.ListaGlobalClientes.Any(item => item.Matricula == MatriculaVehiculoCliente_TextBox.Text);
@@ -429,7 +489,11 @@ namespace PRO_1.Ventanas
         }
 
         
-
+        /// <summary>
+        /// Modifica el cliente seleccionado con los campos dados.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ModificarCliente_Click(object sender, RoutedEventArgs e)
         {
             //Si los campos (Donde se inserta el parametro) esta vacio, corta la ejecucion del resto de la funcion y muestra el mensaje error correspondiente.
@@ -469,6 +533,11 @@ namespace PRO_1.Ventanas
             }
         }
 
+        /// <summary>
+        /// Cuando se selecciona un Cliente en la lista "Lista_ClientesParaModificar" se ejecuta el codigo que aplica los datos de el cliente seleccionado a los textBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Lista_ClientesParaModificar_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -488,7 +557,11 @@ namespace PRO_1.Ventanas
             
 
         }
-
+        /// <summary>
+        /// Elimina al cliente seleccionado de la lista local y de la base de datos.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void BajaACliente_Click(object sender, RoutedEventArgs e)
         {
             var SelectedItem = (Clientes)Lista_BajaClientes.SelectedItem;

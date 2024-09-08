@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PRO_1.Clases
 {
+    //Clase que posee todas las instancias de precios utilizados por el programa. En formato "Static" para tener una unica clase manejando los precios para el programa.
     public class Precios
     {
         private static int _alineacion1trendesdeR17 = 5;
