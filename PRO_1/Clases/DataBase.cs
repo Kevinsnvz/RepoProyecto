@@ -42,14 +42,14 @@ namespace PRO_1.Clases
 
                     if (FilasAfectadas > 0)
                     {
-                        Console.WriteLine($"Usuario ID:{ID_neumatico} eliminado exitosamente de BD");
+                        Console.WriteLine($"Neumatico ID:{ID_neumatico} eliminado exitosamente de BD");
 
                         foreach (var neumatico in listaDeNeumatico)
                         {
-                            if (neumatico.IDNeumatico == ID_neumatico) { continue; }
+                            if (neumatico.IDNeumatico != ID_neumatico) { continue; }
 
                             listaDeNeumatico.Remove(neumatico);
-                            MessageBox.Show($"Cliente {ID_neumatico} eliminado exitosamente de LISTA");
+                            MessageBox.Show($"Neumatico {ID_neumatico} eliminado exitosamente de Sistema");
                             break;
                         }
 
@@ -57,7 +57,7 @@ namespace PRO_1.Clases
                     }
                     else
                     {
-                        MessageBox.Show($"ERROR: Cliente {ID_neumatico} no fue eliminado. Error desconocido.");
+                        MessageBox.Show($"ERROR: Neumatico {ID_neumatico} no fue eliminado. Error desconocido.");
                     }
                 }
                 catch (MySqlException ex)
@@ -91,13 +91,13 @@ namespace PRO_1.Clases
 
                     using(MySqlCommand cmd = new MySqlCommand(sql, connection))
                     {
-                        int FilasAfectadas = cmd.ExecuteNonQuery();
+                        MySqlDataReader reader = cmd.ExecuteReader();
 
 
-                        if(FilasAfectadas > 0)
+                        if (reader.HasRows)
                         {
                             Console.WriteLine("Neumatico creado exitosamente en BD");
-                            MySqlDataReader reader = cmd.ExecuteReader();
+                            
 
                             Neumatico nuevoNeumatico = new Neumatico(marca, modelo, ancho, perfil, rodado, stock, Convert.ToInt32(cmd.LastInsertedId));
 
@@ -194,9 +194,14 @@ namespace PRO_1.Clases
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
+                        Precios.NeumaticosPirelli.Clear();
+                        Precios.NeumaticosBridgestone.Clear();
+                        Precios.NeumaticosMichelin.Clear();
 
-                        while(reader.Read())
+                        while (reader.Read())
                         {
+                            
+
                             Neumatico nuevoNeumatico = new Neumatico(reader.GetString(1),reader.GetString(2),reader.GetInt32(3),reader.GetInt32(4),reader.GetInt32(5),reader.GetInt32(6),reader.GetInt32(0),reader.GetInt32(7));
                             if (reader.GetString(1) == "Michelin") Precios.NeumaticosMichelin.Add(nuevoNeumatico);
                             if (reader.GetString(1) == "Bridgestone") Precios.NeumaticosBridgestone.Add(nuevoNeumatico);
@@ -230,7 +235,7 @@ namespace PRO_1.Clases
                     connection.Open();
 
                     //Como el id es unico, tomamos los campos nuevos borrando en base a la id vieja y tomando los nuevos valores de atributo para el nuevo cliente.
-                    string sql = $"DELETE FROM users_ WHERE id = {idUsuario};";
+                    string sql = $"UPDATE Users_ SET username = '{username}', password = '{password}', job_role = '{rol}' WHERE id = {idUsuario};";
                     MySqlCommand cmd = new MySqlCommand(sql, connection);
 
                     int FilasBorradas = cmd.ExecuteNonQuery();
@@ -238,43 +243,31 @@ namespace PRO_1.Clases
                     if (FilasBorradas > 0)
                     {
                         
-                        Console.WriteLine("Cliente eliminado exitosamente de BD.");
+                        Console.WriteLine("Cliente modificado exitosamente en BD.");
 
                         for(int i = 0; i <= listaUsuarios.ListaGlobalUsuarios.Count; i++)
                         {
                             var usuario = listaUsuarios.ListaGlobalUsuarios[i];
-                            if(usuario.UsuarioID == idUsuario)
+                            
+
+                            if(usuario.UsuarioID != idUsuario)
                             { continue;  }
 
                             listaUsuarios.ListaGlobalUsuarios.Remove(usuario);
+                            Console.WriteLine("Cliente eliminado exitosamente de LISTA.");
 
-                            break;
-                        }
-                        
-
-                        Console.WriteLine("Cliente eliminado exitosamente de LISTA.");
-
-
-                        string sql1 = $"INSERT INTO users_ (username,password,job_role) VALUES ('{username}','{password}','{rol}'); SELECT LAST_INSERT_ID();";
-                        MySqlCommand cmd1 = new MySqlCommand(sql1, connection);
-
-                        int FilasAgregadas = cmd1.ExecuteNonQuery();
-
-                        if (FilasAgregadas > 0)
-                        {
-                            Console.WriteLine("Usuario creado exitosamente a BD.");
-
-                            Usuarios usuarioAagregar = new Usuarios(username,password,rol,Convert.ToInt32(cmd1.LastInsertedId));
+                            Usuarios usuarioAagregar = new Usuarios(username, password, rol, idUsuario);
                             listaUsuarios.ListaGlobalUsuarios.Add(usuarioAagregar);
-
-                            Console.WriteLine("Usuario creado exitosamente en LISTA");
+                            Console.WriteLine("Cliente modificado agregado a LISTA exitosamente");
 
                             MessageBox.Show("Usuario modificado exitosamente");
+
+
                             return true;
                         }
-                        else { MessageBox.Show("ERROR: Usuario no creado. Error desconocido."); return false; }
 
-
+                        MessageBox.Show("ERROR: Usuario no creado. Error desconocido.");
+                        return false;
 
                     }
                     else { MessageBox.Show("ERROR: Usuario no creado. Error desconocido."); return false; }

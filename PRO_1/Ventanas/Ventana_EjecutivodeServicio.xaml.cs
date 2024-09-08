@@ -413,7 +413,7 @@ namespace PRO_1.Ventanas
                     MessageBox.Show("ERROR: Todos los campos deben estar llenos");
                     return;
                 }
-                if (!int.TryParse(TelefonoCliente_TextBox.Text, out int t) || TelefonoCliente_TextBox.Text.Length != 9) 
+                if (!int.TryParse(TelefonoCliente_TextBox.Text, out int _) || TelefonoCliente_TextBox.Text.Length != 9) 
                 { MessageBox.Show("ERROR: Ingresar un numero telefonico valido"); return; }
 
                 string patron = @"^[A-Z]{3}\d{4}$"; Regex regex = new Regex(patron);
@@ -452,6 +452,11 @@ namespace PRO_1.Ventanas
 
                 ///Si no es la matricula que buscamos, cancela la iteracion actual del for loop y salta a la siguiente sin ejecutar el codigo que lo procede.
                 if (item.Matricula != MatriculaVehiculoActualCliente_TextBox.Content.ToString()) continue;
+
+                if (!int.TryParse(TelefonoActualCliente_TextBox.Text, out int _) || TelefonoCliente_TextBox.Text.Length != 9)
+                { MessageBox.Show("ERROR: Ingresar un numero telefonico valido"); return; }
+                string patron = @"^[A-Z]{3}\d{4}$"; Regex regex = new Regex(patron);
+                if (!regex.IsMatch(MatriculaVehiculoActualCliente_TextBox.Content.ToString())) { MessageBox.Show("ERROR: Debe de ingresar una matricula valida. EJ: 'ABC1234'"); return; }
 
                 DataBase.ModificarClienteDeBDYAPP(NombreActualCliente_TextBox.Text,ApellidoActualCliente_TextBox.Text,Convert.ToInt32(TelefonoActualCliente_TextBox.Text),MarcaVehiculoActualCliente_TextBox.Text
                     ,ModeloVehiculoActualCliente_TextBox.Text,MatriculaVehiculoActualCliente_TextBox.Content.ToString(),item.ClienteID,item.Autorizado,acceso_Cliente);

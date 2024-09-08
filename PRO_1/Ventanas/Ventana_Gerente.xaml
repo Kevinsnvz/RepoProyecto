@@ -18,7 +18,7 @@
                         <MenuItem Name="NuevaSesion_MenuItem" FontSize="15" Header="Abrir nueva sesion Sesion" Click="IniciarSesionMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
                     </MenuItem>
                     <MenuItem Name="FuncionesEJ_MenuItem" Header="Funciones EJ." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeEJ_Click"></MenuItem>
-                    <MenuItem Header="Funciones Jefe Ser." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeJefe_Click"></MenuItem>
+                    <MenuItem Name="FuncionesJefeSer_MenuItem" Header="Funciones Jefe Ser." BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="FuncionesDeJefe_Click"></MenuItem>
                     <MenuItem Header="ABM Jefes" BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="ABMJefes_MenuClick"></MenuItem>
                     <MenuItem Header="Precios" BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="Precios_MenuClick"></MenuItem>
                     <MenuItem Header="AB Neumaticos" BorderThickness="1" BorderBrush="DarkGray" FontSize="15" Click="ABNeumaticos_MenuClick"></MenuItem>
@@ -118,7 +118,7 @@
                             <Label FontSize="15" Content="Lista de Neumaticos" HorizontalContentAlignment="Center" Background="MediumPurple"></Label>
                             
                             <Label Background="MediumPurple" Margin="0,15,0,0" Width="180"></Label>
-                            <ListView Name="ListaNeumaticosAB_ListView" FontSize="15" ItemsSource="{Binding ListaNeumatico}" Height="200" MaxHeight="200" HorizontalAlignment="Center">
+                            <ListView Name="ListaNeumaticosAB_ListView" FontSize="15" ItemsSource="{Binding ListaNeumatico}" Height="200" MaxHeight="200" HorizontalAlignment="Center" SelectionChanged="ListaNeumaticosABListView_SelectionChanged">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn DisplayMemberBinding="{Binding Marca}"  Header="Marca" Width="80"></GridViewColumn>

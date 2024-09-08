@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -114,16 +115,24 @@ namespace PRO_1.Ventanas
 
         private void ModificarEjecutivo_Click(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrEmpty(UsernameEjecutivoModificacion_TextBox.Text) ||
-               string.IsNullOrEmpty(PasswordEjecutivoModificacion_TextBox.Text) ||
-               string.IsNullOrEmpty(IDEjecutivoModificacion_TextBox.Text) ||
-               string.IsNullOrEmpty(RolEjecutivoModificacion_TextBox.Content.ToString()))
-            { MessageBox.Show("ERROR: Ningun campo debe estar vacio."); return; }
+            try
+            {
+                if (string.IsNullOrEmpty(UsernameEjecutivoModificacion_TextBox.Text) ||
+                   string.IsNullOrEmpty(PasswordEjecutivoModificacion_TextBox.Text) ||
+                   string.IsNullOrEmpty(IDEjecutivoModificacion_TextBox.Text) ||
+                   string.IsNullOrEmpty(RolEjecutivoModificacion_TextBox.Content.ToString()))
+                { MessageBox.Show("ERROR: Ningun campo debe estar vacio."); return; }
 
-            DataBase.ModificarUsuarioDeBDYAPP(UsernameEjecutivoModificacion_TextBox.Text, PasswordEjecutivoModificacion_TextBox.Text
-                                              , RolEjecutivoModificacion_TextBox.Content.ToString()
-                                              , Convert.ToInt32(IDEjecutivoModificacion_TextBox.Text)
-                                              , acceso_usuarios);
+                DataBase.ModificarUsuarioDeBDYAPP(UsernameEjecutivoModificacion_TextBox.Text, PasswordEjecutivoModificacion_TextBox.Text
+                                                  , RolEjecutivoModificacion_TextBox.Content.ToString()
+                                                  , Convert.ToInt32(IDEjecutivoModificacion_TextBox.Text)
+                                                  , acceso_usuarios);
+            }
+            catch(FormatException)
+            {
+                MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
+            }
+            
         }
     }
 }
