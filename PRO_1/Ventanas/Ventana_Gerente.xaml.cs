@@ -64,11 +64,6 @@ namespace PRO_1.Ventanas
                 NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}/{neumatico.Modelo}");
             }
         }
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
         //Al apretar el item de menu "Cerrar Sesion" cerrar la sesion, je re evidente
         public void CerrarSesionMenu_Click(object sender, RoutedEventArgs e)
         {
