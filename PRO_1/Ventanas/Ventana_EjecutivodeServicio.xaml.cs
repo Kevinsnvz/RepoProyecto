@@ -13,9 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace PRO_1.Ventanas
 {
-    /// <summary>
-    /// Lógica de interacción para Ventana_EjecutivodeServicio.xaml
-    /// </summary>
+
     public partial class Ventana_EjecutivodeServicio : Window
     {
         private ObservableCollection<ListServicios> listServicios = new ObservableCollection<ListServicios>();

@@ -18,9 +18,6 @@ using System.Windows.Shapes;
 
 namespace PRO_1.Ventanas
 {
-    /// <summary>
-    /// Lógica de interacción para Ventana_Gerente.xaml
-    /// </summary>
     public partial class Ventana_Gerente : Window,INotifyPropertyChanged
     {
         private ListaDeUsuarios acceso_usuarios;

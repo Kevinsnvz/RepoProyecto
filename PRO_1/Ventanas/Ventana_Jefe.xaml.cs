@@ -17,9 +17,7 @@ using System.Windows.Shapes;
 
 namespace PRO_1.Ventanas
 {
-    /// <summary>
-    /// Lógica de interacción para Ventana_Jefe.xaml
-    /// </summary>
+
     public partial class Ventana_Jefe : Window
     {
         private ListaDeClientes acceso_cliente;
