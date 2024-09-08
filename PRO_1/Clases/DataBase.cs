@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using MySql.Data.MySqlClient;
@@ -18,7 +20,131 @@ namespace PRO_1.Clases
     public class DataBase
     {
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
+        /// <summary>
+        /// Borra el neumatico identificado por el ID del param, de la lista dada en el param y de la base de datos.
+        /// </summary>
+        /// <param name="ID_neumatico"></param>
+        /// <param name="listaDeNeumatico"></param>
+        /// <returns></returns>
+        public static bool BorrarNeumaticoDeBDYAPP(int ID_neumatico, List<Neumatico> listaDeNeumatico)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
 
+                try
+                {
+                    connection.Open();
+
+                    string sqlquery = $"DELETE FROM Neumaticos WHERE id = {ID_neumatico}";
+                    MySqlCommand comm = new MySqlCommand(sqlquery, connection);
+
+                    int FilasAfectadas = comm.ExecuteNonQuery();
+
+                    if (FilasAfectadas > 0)
+                    {
+                        Console.WriteLine($"Usuario ID:{ID_neumatico} eliminado exitosamente de BD");
+
+                        foreach (var neumatico in listaDeNeumatico)
+                        {
+                            if (neumatico.IDNeumatico == ID_neumatico) { continue; }
+
+                            listaDeNeumatico.Remove(neumatico);
+                            MessageBox.Show($"Cliente {ID_neumatico} eliminado exitosamente de LISTA");
+                            break;
+                        }
+
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"ERROR: Cliente {ID_neumatico} no fue eliminado. Error desconocido.");
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show("MySQL ERROR: " + ex.ToString());
+                }
+
+            }
+            return false;
+        }
+        /// <summary>
+        /// Crea un neumatico en la base de datos y lo carga a las listas locales.
+        /// </summary>
+        /// <param name="marca"></param>
+        /// <param name="modelo"></param>
+        /// <param name="ancho"></param>
+        /// <param name="perfil"></param>
+        /// <param name="rodado"></param>
+        /// <param name="precio"></param>
+        /// <param name="stock"></param>
+        /// <returns></returns>
+        public static bool CrearNeumaticoenBDyAPP(string marca,string modelo, int ancho, int perfil, int rodado, int precio, int stock)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string sql = $"INSERT INTO Neumaticos (marca,modelo,ancho,perfil,rodado,stock,precio) VALUES ('{marca}','{modelo}',{ancho},{perfil},{rodado},{stock},{precio}); SELECT LAST_INSERT_ID();";
+
+                    using(MySqlCommand cmd = new MySqlCommand(sql, connection))
+                    {
+                        int FilasAfectadas = cmd.ExecuteNonQuery();
+
+
+                        if(FilasAfectadas > 0)
+                        {
+                            Console.WriteLine("Neumatico creado exitosamente en BD");
+                            MySqlDataReader reader = cmd.ExecuteReader();
+
+                            Neumatico nuevoNeumatico = new Neumatico(marca, modelo, ancho, perfil, rodado, stock, Convert.ToInt32(cmd.LastInsertedId));
+
+                            switch (marca)
+                            {
+                                case "Michelin":
+                                    Precios.NeumaticosMichelin.Add(nuevoNeumatico);
+                                    MessageBox.Show($"Neumatico {marca} creado exitosamente");
+
+                                    return true;
+
+                                case "Bridgestone":
+                                    Precios.NeumaticosBridgestone.Add(nuevoNeumatico);
+                                    MessageBox.Show($"Neumatico {marca} creado exitosamente");
+
+                                    return true;
+                                case "Pirelli":
+                                    Precios.NeumaticosPirelli.Add(nuevoNeumatico);
+                                    MessageBox.Show($"Neumatico {marca} creado exitosamente");
+
+                                    return true;
+                                default:
+                                    MessageBox.Show("ERROR: No se dio una marca valida.");
+                                    return false;
+                            }
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("ERROR: No se creo neumatico. Error desconocido.");
+                            return false;
+                        }
+                    }
+                }
+                catch(MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+        }
+        /// <summary>
+        /// Modifica el precio del neumatico dado mediante el ID y precio cambiado proporcionado por los params.
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="precioCambiado"></param>
+        /// <returns></returns>
         public static bool ModificarPrecioNeumaticoBD(int ID,int precioCambiado)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -51,6 +177,10 @@ namespace PRO_1.Clases
                 }
             }
         }
+        /// <summary>
+        /// Carga los neumaticos de la Base de datos a las listas locales de neumatico.
+        /// </summary>
+        /// <returns></returns>
         public static bool CargarNeumaticosDeBDaAPP()
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -186,8 +316,7 @@ namespace PRO_1.Clases
                         {
                             if (usuario.UsuarioID == id_usuario) { continue; }
 
-                            Usuarios usuarioABorrar = new Usuarios(usuario.Username, usuario.Password,usuario.Rol, usuario.UsuarioID);
-                            listaDeUsuarios.ListaGlobalUsuarios.Remove(usuarioABorrar);
+                            listaDeUsuarios.ListaGlobalUsuarios.Remove(usuario);
                             MessageBox.Show($"Cliente {id_usuario} eliminado exitosamente de LISTA");
                             break;
                         }
@@ -349,8 +478,7 @@ namespace PRO_1.Clases
                         {
                             if (cliente.ClienteID == id) { continue; }
 
-                            Clientes ClienteABorrar = new Clientes(cliente.Nombre, cliente.Apellido, cliente.Marca, cliente.Modelo, cliente.Matricula, cliente.Telefono, cliente.ClienteID,cliente.ListaDeServicios,cliente.Autorizado);
-                            ListaClientes.ListaGlobalClientes.Remove(ClienteABorrar);
+                            ListaClientes.ListaGlobalClientes.Remove(cliente);
                             Console.WriteLine($"Cliente {id} eliminado exitosamente de LISTA");
                             break;
                         }

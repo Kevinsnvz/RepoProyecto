@@ -36,27 +36,33 @@ namespace PRO_1.Ventanas
 
             List<string> Marcas = new List<string>() {"Michelin","Bridgestone","Pirelli" };
 
-            MarcaNeumatico_ComboBox.Items.Add(Marcas[0]);
-            MarcaNeumatico_ComboBox.Items.Add(Marcas[1]);
-            MarcaNeumatico_ComboBox.Items.Add(Marcas[2]);
+            SelecciondeMarcaNeumatico_ComboBox.Items.Add(Marcas[0]);
+            SelecciondeMarcaNeumatico_ComboBox.Items.Add(Marcas[1]);
+            SelecciondeMarcaNeumatico_ComboBox.Items.Add(Marcas[2]);
 
             
         }
         
         public void ActualizarComboBox()
         {
+            NeumaticoMichelin_ComboBox.Items.Clear();
+            NeumaticoBridgestone_ComboBox.Items.Clear();
+            NeumaticoPirelli_ComboBox.Items.Clear();
 
             foreach (var neumatico in Precios.NeumaticosMichelin)
             {
+                
                 NeumaticoMichelin_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}");
             }
             foreach (var neumatico in Precios.NeumaticosBridgestone)
             {
-                NeumaticoBridgestone_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}");
+                
+                NeumaticoBridgestone_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}");
             }
             foreach (var neumatico in Precios.NeumaticosPirelli)
             {
-                NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}");
+                
+                NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}");
             }
         }
         protected void OnPropertyChanged([CallerMemberName] string name = null)
@@ -112,6 +118,23 @@ namespace PRO_1.Ventanas
         private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
             ActualizarComboBox();
+
+            List<Neumatico> ListaNeumaticos = new List<Neumatico>();
+            foreach(var Neumatico in Precios.NeumaticosMichelin)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+            foreach (var Neumatico in Precios.NeumaticosBridgestone)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+            foreach (var Neumatico in Precios.NeumaticosPirelli)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+
+            ListaNeumaticosAB_ListView.ItemsSource = null;
+            ListaNeumaticosAB_ListView.ItemsSource = ListaNeumaticos;
 
             ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
             DataBase.CargarUsuariosDeBDaAPP(acceso_usuarios);
@@ -172,7 +195,7 @@ namespace PRO_1.Ventanas
 
             grid_ABMJefes.Visibility = Visibility.Visible;
             grid_ModificacionPrecios.Visibility = Visibility.Collapsed;
-
+            grid_ABNeumaticos.Visibility = Visibility.Collapsed;
 
         }
 
@@ -181,7 +204,15 @@ namespace PRO_1.Ventanas
 
             grid_ABMJefes.Visibility = Visibility.Collapsed;
             grid_ModificacionPrecios.Visibility = Visibility.Visible;
+            grid_ABNeumaticos.Visibility = Visibility.Collapsed;
 
+        }
+
+        private void ABNeumaticos_MenuClick(object sender, RoutedEventArgs e)
+        {
+            grid_ABMJefes.Visibility = Visibility.Collapsed;
+            grid_ModificacionPrecios.Visibility = Visibility.Collapsed;
+            grid_ABNeumaticos.Visibility = Visibility.Visible;
         }
 
         private void GuardarPreciosLavado_Click(object sender, RoutedEventArgs e)
@@ -250,41 +281,21 @@ namespace PRO_1.Ventanas
             if(string.IsNullOrEmpty(AnchoNeumatico_TextBox.Text) ||
                 string.IsNullOrEmpty(RodadoNeumatico_TextBox.Text) ||
                 string .IsNullOrEmpty(PerfilNeumatico_TextBox.Text) ||
-                MarcaNeumatico_ComboBox.SelectedItem == null)
+                SelecciondeMarcaNeumatico_ComboBox.SelectedItem == null ||
+                string.IsNullOrEmpty(ModeloNeumatico_TextBox.Text) ||
+                string.IsNullOrEmpty(PrecioNeumatico_TextBox.Text) ||
+                string.IsNullOrEmpty(StockNeumatico_TextBox.Text))
             { MessageBox.Show("ERROR: Todos los campos deben de estar completos y seleccionados para crear un nuevo Neumatico. "); return; }
 
-            string Marca = MarcaNeumatico_ComboBox.SelectedItem.ToString();
+            string Marca = SelecciondeMarcaNeumatico_ComboBox.SelectedItem.ToString();
             string Modelo = ModeloNeumatico_TextBox.Text;
             int Ancho = Convert.ToInt32(AnchoNeumatico_TextBox.Text);
             int Perfil = Convert.ToInt32(PerfilNeumatico_TextBox.Text);
             int Rodado = Convert.ToInt32(RodadoNeumatico_TextBox.Text);
+            int Precio = Convert.ToInt32(PrecioNeumatico_TextBox.Text);
+            int Stock = Convert.ToInt32(StockNeumatico_TextBox.Text);
 
-            
-
-            switch (Marca)
-            {
-                case "Michelin":
-
-                    
-                    MessageBox.Show($"Neumatico {Marca} creado exitosamente");
-
-                    
-
-                    break;
-                case "Bridgestone":
-
-                    
-                    MessageBox.Show($"Neumatico {Marca} creado exitosamente");
-
-                    break;
-                case "Pirelli":
-
-                    MessageBox.Show($"Neumatico {Marca} creado exitosamente");
-
-                    break;
-
-            }
-            OnPropertyChanged();
+            DataBase.CrearNeumaticoenBDyAPP(Marca, Modelo, Ancho, Perfil, Rodado, Precio, Stock);
 
         }
 
@@ -298,6 +309,53 @@ namespace PRO_1.Ventanas
             MichelinIDNeumatico_Label.Content = ID;
             
                     
+        }
+
+        private void NeumaticoBridgestoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string NeumaticoSeleccionado = NeumaticoBridgestone_ComboBox.SelectedItem.ToString();
+
+            string[] partes = NeumaticoSeleccionado.Split('/');
+
+            int ID = Convert.ToInt32(partes[3]);
+            BridgestoneIDNeumatico_Label.Content = ID;
+        }
+
+        private void NeumaticoPirelliComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string NeumaticoSeleccionado = NeumaticoPirelli_ComboBox.SelectedItem.ToString();
+
+            string[] partes = NeumaticoSeleccionado.Split('/');
+
+            int ID = Convert.ToInt32(partes[3]);
+            PirelliIDNeumatico_Label.Content = ID;
+        }
+
+        private void BajaNeumatico_Click(object sender, RoutedEventArgs e)
+        {
+            int ID = Convert.ToInt32(IDSeleccionado_TextBox.Content);
+
+            List<Neumatico> ListaNeumaticos = new List<Neumatico>();
+            foreach (var Neumatico in Precios.NeumaticosMichelin)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+            foreach (var Neumatico in Precios.NeumaticosBridgestone)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+            foreach (var Neumatico in Precios.NeumaticosPirelli)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+
+            foreach(var Neumatico in ListaNeumaticos)
+            {
+                if (ID == Neumatico.IDNeumatico)
+                {
+                    
+                }
+            }
         }
     }
 }
