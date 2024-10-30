@@ -128,7 +128,6 @@
                                 </ListView.View>
                             </ListView>
                             <Label Width="180" Background="MediumPurple"></Label>
-                            <Button Content="Actualizar Lista" Width="100" BorderBrush="Black" Background="MediumPurple" Margin="0,5,0,0" Click="ActualizarListas_Click"></Button>
 
                         </StackPanel>
                         
@@ -202,7 +201,6 @@
 
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Margin="0,5" Content="Guardar" Width="100" Background="MediumPurple" BorderBrush="Black" Click="GuardarPreciosNeumatico_Click"></Button>
-                                <Button Margin="10,5" Content="Actualizar Listas" Width="100" Background="MediumPurple" BorderBrush="Black" Click="ActualizarListas_Click"></Button>
 
                             </StackPanel>
                             
@@ -354,7 +352,6 @@
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button Margin="0,5" Content="Modificar Jefe" FontSize="17" Width="150" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="ModificarJefe_Click"></Button>
-                        <Button Margin="10,5,0,5" Content="Actualizar Listas" FontSize="17" Width="170" Background="MediumPurple" BorderThickness="1" BorderBrush="Black" Click="ActualizarListas_Click"></Button>
 
                     </StackPanel>
 

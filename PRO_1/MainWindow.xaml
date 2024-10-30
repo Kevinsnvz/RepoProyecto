@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PRO_1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="300">
+        Title="MainWindow" Height="600" Width="600">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="151*"/>
+            <RowDefinition Height="141*"/>
+        </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -14,16 +18,16 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Login a cuenta" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="0" Grid.ColumnSpan="3" Background="MediumPurple" Height="26" Width="300"></Label>
-        <StackPanel Grid.Column="1" VerticalAlignment="Center" >
-            <TextBox Name="Username_TextBox" Height="25" Grid.Column="1" Margin="0,0,0,15"></TextBox>
-            <PasswordBox Name="Password_PasswordBox" Height="25" Grid.Column="1" ></PasswordBox>
-            <Button Content="Iniciar Sesion" Margin="0,15,0,0" Click="IniciarSesion"></Button>
+        <Label Content="Login a cuenta" FontSize="25" HorizontalContentAlignment="Center"  HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1" Background="MediumPurple" Height="50" Width="600"/>
+        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="0,242,0,0" Grid.RowSpan="2" >
+            <TextBox x:Name="Username_TextBox" Height="40"/>
+            <PasswordBox x:Name="Password_PasswordBox" Height="40" Grid.Column="1" />
+            <Button Content="Iniciar Sesion" Margin="0,15,0,0" Click="IniciarSesion" FontSize="25"/>
         </StackPanel>
-        <StackPanel Grid.Column="0" VerticalAlignment="Center">
-            <Label Content="Usuario:" Margin="0,0,0,15"></Label>
-            <Label Content="Contraseña:" Margin="0,0,0,15"></Label>
-            <Label Content="KIBE Apps" Background="MediumPurple"></Label>
+        <StackPanel Grid.Column="0" VerticalAlignment="Top" Margin="0,212,0,0" Grid.RowSpan="2">
+            <Label Content="Usuario:" Margin="0,0,0,15" FontSize="25"></Label>
+            <Label Content="Contraseña:" Margin="0,0,0,15" FontSize="25"></Label>
+            <Label Content="KIBE Apps" Background="MediumPurple" FontSize="25"></Label>
         </StackPanel>
 
     </Grid>

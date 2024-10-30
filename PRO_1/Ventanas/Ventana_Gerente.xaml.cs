@@ -42,7 +42,7 @@ namespace PRO_1.Ventanas
         /// <summary>
         /// Actualiza los combobox de la ventana actual con los neumaticos que contienen las listas.
         /// </summary>
-        public void ActualizarComboBox()
+        public void ActualizarColecciones()
         {
             NeumaticoMichelin_ComboBox.Items.Clear();
             NeumaticoBridgestone_ComboBox.Items.Clear();
@@ -63,6 +63,38 @@ namespace PRO_1.Ventanas
                 
                 NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}/{neumatico.Modelo}");
             }
+
+            List<Neumatico> ListaNeumaticos = new List<Neumatico>();
+            foreach (var Neumatico in Precios.NeumaticosMichelin)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+            foreach (var Neumatico in Precios.NeumaticosBridgestone)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+            foreach (var Neumatico in Precios.NeumaticosPirelli)
+            {
+                ListaNeumaticos.Add(Neumatico);
+            }
+
+            ListaNeumaticosAB_ListView.ItemsSource = null;
+            ListaNeumaticosAB_ListView.ItemsSource = ListaNeumaticos;
+
+            ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
+            DataBase.CargarUsuariosDeBDaAPP(acceso_usuarios);
+
+            foreach (var usuario in acceso_usuarios.ListaGlobalUsuarios)
+            {
+                if (usuario.Rol == "jefe_servicio")
+                    listaMuestra.ListaGlobalUsuarios.Add(usuario);
+            }
+
+            Lista_BajaJefes.ItemsSource = null;
+            Lista_BajaJefes.ItemsSource = listaMuestra.ListaGlobalUsuarios;
+
+            Lista_JefesParaModificar.ItemsSource = null;
+            Lista_JefesParaModificar.ItemsSource = listaMuestra.ListaGlobalUsuarios;
         }
         /// <summary>
         /// Al apretar el item de menu "Cerrar Sesion" cierra la sesion.
@@ -134,7 +166,7 @@ namespace PRO_1.Ventanas
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
+            ActualizarColecciones();
         }
         /// <summary>
         /// Actualiza las listas de la ventana actual, al igual que los combobox.
@@ -144,39 +176,8 @@ namespace PRO_1.Ventanas
         private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
 
-            ActualizarComboBox();
+            ActualizarColecciones();
 
-            List<Neumatico> ListaNeumaticos = new List<Neumatico>();
-            foreach(var Neumatico in Precios.NeumaticosMichelin)
-            {
-                ListaNeumaticos.Add(Neumatico);
-            }
-            foreach (var Neumatico in Precios.NeumaticosBridgestone)
-            {
-                ListaNeumaticos.Add(Neumatico);
-            }
-            foreach (var Neumatico in Precios.NeumaticosPirelli)
-            {
-                ListaNeumaticos.Add(Neumatico);
-            }
-
-            ListaNeumaticosAB_ListView.ItemsSource = null;
-            ListaNeumaticosAB_ListView.ItemsSource = ListaNeumaticos;
-
-            ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
-            DataBase.CargarUsuariosDeBDaAPP(acceso_usuarios);
-
-            foreach (var usuario in acceso_usuarios.ListaGlobalUsuarios)
-            {
-                if (usuario.Rol == "jefe_servicio")
-                    listaMuestra.ListaGlobalUsuarios.Add(usuario);
-            }
-
-            Lista_BajaJefes.ItemsSource = null;
-            Lista_BajaJefes.ItemsSource = listaMuestra.ListaGlobalUsuarios;
-
-            Lista_JefesParaModificar.ItemsSource = null;
-            Lista_JefesParaModificar.ItemsSource = listaMuestra.ListaGlobalUsuarios;
         }
         /// <summary>
         /// Crea un jefe a la base de datos y a la lista local de Usuarios, mediante los campos dados.
@@ -200,9 +201,9 @@ namespace PRO_1.Ventanas
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
 
-            
+            ActualizarColecciones();
+
 
         }
         /// <summary>
@@ -218,6 +219,7 @@ namespace PRO_1.Ventanas
             {  return; }
 
             DataBase.BorrarUsuarioDeBDYAPP(usuarioSeleccionado.UsuarioID, acceso_usuarios);
+            ActualizarColecciones();
         }
         /// <summary>
         /// Al seleccionar un Jefe de la lista "Lista_JefesParaModificar"
@@ -247,6 +249,7 @@ namespace PRO_1.Ventanas
             grid_ABMJefes.Visibility = Visibility.Visible;
             grid_ModificacionPrecios.Visibility = Visibility.Collapsed;
             grid_ABNeumaticos.Visibility = Visibility.Collapsed;
+            ActualizarColecciones();
 
         }
         /// <summary>
@@ -260,6 +263,7 @@ namespace PRO_1.Ventanas
             grid_ABMJefes.Visibility = Visibility.Collapsed;
             grid_ModificacionPrecios.Visibility = Visibility.Visible;
             grid_ABNeumaticos.Visibility = Visibility.Collapsed;
+            ActualizarColecciones();
 
         }
         /// <summary>
@@ -272,6 +276,7 @@ namespace PRO_1.Ventanas
             grid_ABMJefes.Visibility = Visibility.Collapsed;
             grid_ModificacionPrecios.Visibility = Visibility.Collapsed;
             grid_ABNeumaticos.Visibility = Visibility.Visible;
+            ActualizarColecciones();
         }
         /// <summary>
         /// Guarda los nuevos valores de precios de la seccion de lavado en todos los campos que esten llenos, el resto sera ignorado.
@@ -305,7 +310,7 @@ namespace PRO_1.Ventanas
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
+            ActualizarColecciones();
 
         }
         /// <summary>
@@ -330,7 +335,7 @@ namespace PRO_1.Ventanas
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
+            ActualizarColecciones();
         }
         /// <summary>
         /// Guarda los nuevos valores de precios de la seccion de Alineacion en todos los campos que esten llenos, el resto sera ignorado.
@@ -357,7 +362,7 @@ namespace PRO_1.Ventanas
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
+            ActualizarColecciones();
         }
         /// <summary>
         /// Guarda los nuevos valores de precios de la seccion de Neumaticos en todos los campos que esten llenos, el resto sera ignorado.
@@ -388,7 +393,7 @@ namespace PRO_1.Ventanas
                 {
                     DataBase.ModificarPrecioNeumaticoBD(Convert.ToInt32(PirelliIDNeumatico_Label.Content), Convert.ToInt32(PrecioNeumaticoPirelli_TextBox.Text));
                     cambios += $"{NeumaticoPirelli_ComboBox.SelectedItem} - ${PrecioNeumaticoPirelli_TextBox.Text}\n";
-                    ActualizarComboBox();
+                    
                 }
 
                 MessageBox.Show(cambios);
@@ -397,9 +402,9 @@ namespace PRO_1.Ventanas
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
 
-            
+            ActualizarColecciones();
+
         }
         /// <summary>
         /// Crea un neumatico el que sera añadido a la lista correspondiente dependiendo de su marca.
@@ -457,8 +462,8 @@ namespace PRO_1.Ventanas
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
-            
+
+            ActualizarColecciones();
 
         }
         /// <summary>
@@ -476,8 +481,8 @@ namespace PRO_1.Ventanas
 
             int ID = Convert.ToInt32(partes[3]);
             MichelinIDNeumatico_Label.Content = ID;
-            
-                    
+
+            ActualizarColecciones();
         }
         /// <summary>
         /// Cuando se seleccione un item del combobox de Neumaticos Bridgestone, se ejecuta el codigo que pasa el ID correspondiente a un label.
@@ -528,26 +533,35 @@ namespace PRO_1.Ventanas
                 {
                     if (Neumatico.IDNeumatico == ID)
                     { DataBase.BorrarNeumaticoDeBDYAPP(ID, Precios.NeumaticosMichelin); break; }
+                    MarcaSeleccionada_TextBox.Content = string.Empty;
+                    ModeloSeleccionado_TextBox.Content = string.Empty;
+                    IDSeleccionado_TextBox.Content = string.Empty;
 
                 }
                 foreach (var Neumatico in Precios.NeumaticosBridgestone)
                 {
                     if (Neumatico.IDNeumatico == ID)
                     { DataBase.BorrarNeumaticoDeBDYAPP(ID, Precios.NeumaticosBridgestone); break; }
+                    MarcaSeleccionada_TextBox.Content = string.Empty;
+                    ModeloSeleccionado_TextBox.Content = string.Empty;
+                    IDSeleccionado_TextBox.Content = string.Empty;
                 }
                 foreach (var Neumatico in Precios.NeumaticosPirelli)
                 {
                     if (Neumatico.IDNeumatico == ID)
                     { DataBase.BorrarNeumaticoDeBDYAPP(ID, Precios.NeumaticosPirelli); break; }
+                    MarcaSeleccionada_TextBox.Content = string.Empty;
+                    ModeloSeleccionado_TextBox.Content = string.Empty;
+                    IDSeleccionado_TextBox.Content = string.Empty;
                 }
             }
             catch (FormatException)
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
 
-        
+            ActualizarColecciones();
+
         }
         /// <summary>
         /// Cuando se selecciona un neumatico de la lista "ListaNeumaticosAB_ListView", se ejecuta el codigo que despliega los datos Marca, Modelo y ID a los labels correspondientes.

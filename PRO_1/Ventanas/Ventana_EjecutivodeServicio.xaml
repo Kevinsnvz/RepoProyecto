@@ -18,7 +18,7 @@
                 <MenuItem Header="ABM Cliente" FontSize="15" Click="ABMClienteMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
                 <MenuItem Header="Recibo De Cliente" FontSize="15" Click="ReciboDeClienteMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
             </Menu>
-            <Grid Name="grid_SeccionABMCliente" Visibility="Collapsed">
+            <Grid Name="grid_SeccionABMCliente" Visibility="Visible">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -110,8 +110,7 @@
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button Content="Modificar Cliente" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="ModificarCliente_Click"></Button>
-                        <Button Margin="10,0,0,0" Content="Actualizar Clientes" FontSize="17" Width="150" Background="BlanchedAlmond" BorderThickness="0" Click="ActualizarListas_Click"></Button>
-
+                        
                     </StackPanel>
 
 
@@ -166,7 +165,7 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Name="grid_SeccionFacturacion" Visibility="Visible">
+            <Grid Name="grid_SeccionFacturacion" Visibility="Collapsed">
                 
                 <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -296,7 +295,6 @@
                             <StackPanel Orientation="Horizontal" Width="500" Name="OrdenarBotones"  >
 
                                 <Button Background="WhiteSmoke" Content="Entregar" Width="90" FontSize="15" Click="EntregarVehiculo_Click" />
-                                <Button Margin="15,0,0,0" Background="WhiteSmoke" Content="Actualizar" Width="90" FontSize="15" Click="ActualizarListas_Click" />
 
                             </StackPanel>
                         </StackPanel>

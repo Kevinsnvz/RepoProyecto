@@ -31,6 +31,8 @@ namespace PRO_1.Ventanas
 
             if (AbiertoPorOtraVentana == true) { NuevaSesion_MenuItem.IsEnabled = false; }
         }
+
+
         /// <summary>
         /// Colapsa todos los stackpanes "Child" de el grid proporcionado, excepto el dado.
         /// </summary>
@@ -152,7 +154,7 @@ namespace PRO_1.Ventanas
 
             }
 
-
+            ActualizarListas();
 
 
         }
@@ -185,6 +187,8 @@ namespace PRO_1.Ventanas
             Lista_ServiciosSolicitados.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
             PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+
+            ActualizarListas();
         }
         /// <summary>
         /// Cada que se eliga un Cliente de la lista, se ejecuta este codigo.
@@ -271,6 +275,8 @@ namespace PRO_1.Ventanas
                 }
             }
 
+            ActualizarListas();
+
         }
 
         /// <summary>
@@ -295,8 +301,8 @@ namespace PRO_1.Ventanas
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 this.Close();
-            
 
+                
         }
 
         /// <summary>
@@ -306,16 +312,7 @@ namespace PRO_1.Ventanas
         /// <param name="e"></param>
         public void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
-            Lista_BajaClientes.ItemsSource = null;
-            Lista_ClientesParaModificar.ItemsSource = null;
-            Lista_ClienteRecibo.ItemsSource = null;
-
-            DataBase.CargarClientesDeBDaAPP(acceso_Cliente);
-
-            
-            Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;      
-            Lista_ClientesParaModificar.ItemsSource = acceso_Cliente.ListaGlobalClientes;           
-            Lista_ClienteRecibo.ItemsSource = acceso_Cliente.ListaGlobalClientes;
+            ActualizarListas();
 
 
         }
@@ -353,7 +350,11 @@ namespace PRO_1.Ventanas
                     CollapseAllStackPanelsExcept(Parking_Stack, Grid_Ventas);
 
                     break;
+
+
             }
+
+            ActualizarListas();
 
         }
         /// <summary>
@@ -426,6 +427,7 @@ namespace PRO_1.Ventanas
 
             }
 
+            ActualizarListas();
 
         }
 
@@ -438,6 +440,7 @@ namespace PRO_1.Ventanas
         {
             grid_SeccionFacturacion.Visibility = Visibility.Collapsed;
             grid_SeccionABMCliente.Visibility = Visibility.Visible;
+            ActualizarListas();
         }
         /// <summary>
         /// Colapsa las secciones que no sean Facturacion, dejando visible esta.
@@ -448,6 +451,7 @@ namespace PRO_1.Ventanas
         {
             grid_SeccionFacturacion.Visibility = Visibility.Visible;
             grid_SeccionABMCliente.Visibility = Visibility.Collapsed;
+            ActualizarListas();
         }
         /// <summary>
         /// Crea el cliente con todos los parametros dados, creandolos en la lista local y en la base de datos
@@ -482,6 +486,8 @@ namespace PRO_1.Ventanas
                 DataBase.AgregarClienteABDYAPP(NombreCliente_TextBox.Text,ApellidoCliente_TextBox.Text,int.Parse(TelefonoCliente_TextBox.Text),MarcaVehiculoCliente_TextBox.Text,ModeloVehiculoCliente_TextBox.Text,MatriculaVehiculoCliente_TextBox.Text, acceso_Cliente);
             }
             else MessageBox.Show("ERROR: Esta matrícula ya está ingresada en el sistema. Modificar o Eliminar el respectivo.");
+
+            ActualizarListas();
             
 
         }
@@ -529,6 +535,7 @@ namespace PRO_1.Ventanas
                 break;
                     
             }
+            ActualizarListas();
         }
 
         /// <summary>
@@ -570,9 +577,25 @@ namespace PRO_1.Ventanas
                 
                 
             }
-               
+
+            ActualizarListas();
+
         }
 
+        public void ActualizarListas()
+        {
+            Lista_BajaClientes.ItemsSource = null;
+            Lista_ClientesParaModificar.ItemsSource = null;
+            Lista_ClienteRecibo.ItemsSource = null;
 
+            DataBase.CargarClientesDeBDaAPP(acceso_Cliente);
+
+
+            Lista_BajaClientes.ItemsSource = acceso_Cliente.ListaGlobalClientes;
+            Lista_ClientesParaModificar.ItemsSource = acceso_Cliente.ListaGlobalClientes;
+            Lista_ClienteRecibo.ItemsSource = acceso_Cliente.ListaGlobalClientes;
+
+
+        }
     }
 }

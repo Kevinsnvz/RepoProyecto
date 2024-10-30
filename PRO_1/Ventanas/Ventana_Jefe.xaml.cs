@@ -33,6 +33,26 @@ namespace PRO_1.Ventanas
             if(AbiertoPorOtraVentana == true) { NuevaSesion_MenuItem.IsEnabled = false; FuncionesEJ_MenuItem.Visibility = Visibility.Hidden; }
         }
 
+        public void ActualizarListas()
+        {
+            ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
+            DataBase.CargarUsuariosDeBDaAPP(acceso_usuarios);
+
+            foreach (var usuario in acceso_usuarios.ListaGlobalUsuarios)
+            {
+                if (usuario.Rol == "ejecutivo_servicio")
+                    listaMuestra.ListaGlobalUsuarios.Add(usuario);
+            }
+
+
+
+            Lista_BajaEjecutivos.ItemsSource = null;
+            Lista_BajaEjecutivos.ItemsSource = listaMuestra.ListaGlobalUsuarios;
+
+            Lista_EjecutivosParaModificar.ItemsSource = null;
+            Lista_EjecutivosParaModificar.ItemsSource = listaMuestra.ListaGlobalUsuarios;
+        }
+
         /// <summary>
         /// Al apretar el item de menu "Cerrar Sesion" cierra la sesion.
         /// </summary>
@@ -73,22 +93,7 @@ namespace PRO_1.Ventanas
         /// <param name="e"></param>
         private void ActualizarListas_Click(object sender, RoutedEventArgs e)
         {
-            ListaDeUsuarios listaMuestra = new ListaDeUsuarios();
-            DataBase.CargarUsuariosDeBDaAPP(acceso_usuarios);
-
-            foreach (var usuario in acceso_usuarios.ListaGlobalUsuarios)
-            {
-               if(usuario.Rol == "ejecutivo_servicio")
-                    listaMuestra.ListaGlobalUsuarios.Add(usuario);
-            }
-
-            
-
-            Lista_BajaEjecutivos.ItemsSource = null;
-            Lista_BajaEjecutivos.ItemsSource = listaMuestra.ListaGlobalUsuarios;
-
-            Lista_EjecutivosParaModificar.ItemsSource = null;
-            Lista_EjecutivosParaModificar.ItemsSource = listaMuestra.ListaGlobalUsuarios;
+            ActualizarListas();
 
         }
         /// <summary>
@@ -104,7 +109,8 @@ namespace PRO_1.Ventanas
             { return; }
 
             DataBase.BorrarUsuarioDeBDYAPP(UsuarioSeleccionado.UsuarioID, acceso_usuarios);
-            
+
+            ActualizarListas();
         }
         /// <summary>
         /// Crea un ejecutivo, añadiendolo a la lista local de usuarios y la base de datos.
@@ -120,6 +126,7 @@ namespace PRO_1.Ventanas
             string password = PasswordEjecutivo_TextBox.Text.Trim();
             DataBase.AgregarUsuarioABDYAPP(username, password,1,acceso_usuarios);
 
+            ActualizarListas();
         }
         /// <summary>
         /// Cuando se selecciona un ejecutivo de la lista "Lista_EjecutivosParaModificar", se ejecuta el codigo despliegando los datos a los labels correspondientes
@@ -162,7 +169,8 @@ namespace PRO_1.Ventanas
             {
                 MessageBox.Show("ERROR: Algun campo fue llenado con un dato invalido. Reiterar y arreglar.");
             }
-            
+
+            ActualizarListas();
         }
     }
 }
