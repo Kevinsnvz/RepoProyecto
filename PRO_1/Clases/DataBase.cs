@@ -17,8 +17,11 @@ using static iText.StyledXmlParser.Jsoup.Select.Evaluator;
 
 namespace PRO_1.Clases
 {
+
     public class DataBase
     {
+        static ClassPasswordHasher ClassPasswordHasher = new ClassPasswordHasher();
+
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
         /// <summary>
         /// Borra el neumatico identificado por el ID del param, de la lista dada en el param y de la base de datos.
@@ -234,8 +237,10 @@ namespace PRO_1.Clases
                 {
                     connection.Open();
 
+                    
+
                     //Como el id es unico, tomamos los campos nuevos borrando en base a la id vieja y tomando los nuevos valores de atributo para el nuevo cliente.
-                    string sql = $"UPDATE Users_ SET username = '{username}', password = '{password}', job_role = '{rol}' WHERE id = {idUsuario};";
+                    string sql = $"UPDATE Users_ SET username = '{username}', password = '{ClassPasswordHasher.Hash(password)}', job_role = '{rol}' WHERE id = {idUsuario};";
                     MySqlCommand cmd = new MySqlCommand(sql, connection);
 
                     int FilasBorradas = cmd.ExecuteNonQuery();
@@ -256,7 +261,7 @@ namespace PRO_1.Clases
                             listaUsuarios.ListaGlobalUsuarios.Remove(usuario);
                             Console.WriteLine("Cliente eliminado exitosamente de LISTA.");
 
-                            Usuarios usuarioAagregar = new Usuarios(username, password, rol, idUsuario);
+                            Usuarios usuarioAagregar = new Usuarios(username, ClassPasswordHasher.Hash(password), rol, idUsuario);
                             listaUsuarios.ListaGlobalUsuarios.Add(usuarioAagregar);
                             Console.WriteLine("Cliente modificado agregado a LISTA exitosamente");
 
@@ -366,7 +371,7 @@ namespace PRO_1.Clases
                 {
                     connection.Open();
 
-                    string query = $"INSERT INTO users_ (username,password,job_role) VALUES ('{username}','{password}','{rolSeleccionado}'); SELECT LAST_INSERT_ID();";
+                    string query = $"INSERT INTO users_ (username,password,job_role) VALUES ('{username}','{ClassPasswordHasher.Hash(password)}','{rolSeleccionado}'); SELECT LAST_INSERT_ID();";
 
                     MySqlCommand cmd = new MySqlCommand(query, connection);
 
@@ -376,7 +381,7 @@ namespace PRO_1.Clases
                     {
                         Console.WriteLine("Usuario creado exitosamente en BD");
 
-                        Usuarios usuario = new Usuarios(username, password, rolSeleccionado, Convert.ToInt32(cmd.LastInsertedId));
+                        Usuarios usuario = new Usuarios(username, ClassPasswordHasher.Hash(password), rolSeleccionado, Convert.ToInt32(cmd.LastInsertedId));
                         ListaDeUsuarios.ListaGlobalUsuarios.Add(usuario);
                         Console.WriteLine("Usuario creado exitosamente en LISTA");
 
@@ -697,7 +702,7 @@ namespace PRO_1.Clases
                 {
                     connection.Open();
 
-                    string sql = $"SELECT * FROM users_ WHERE username = '{username}' AND password = '{password}';";
+                    string sql = $"SELECT * FROM users_ WHERE username = '{username}' AND password = '{ClassPasswordHasher.Hash(password)}';";
                     MySqlCommand cmd = new MySqlCommand(sql, connection);
                     MySqlDataReader reader = cmd.ExecuteReader();
 

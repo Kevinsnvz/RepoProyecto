@@ -171,6 +171,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Clases\Adm_Ventanas.cs" />
+    <Compile Include="Clases\ClassPasswordHasher.cs" />
+    <Compile Include="Clases\InterfacePasswordHasher.cs" />
     <Compile Include="Clases\ListaDeClientes.cs" />
     <Compile Include="Clases\ListaDeUsuarios.cs" />
     <Compile Include="Clases\ListServicios.cs" />
