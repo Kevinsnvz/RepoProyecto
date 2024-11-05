@@ -563,13 +563,16 @@ namespace PRO_1.Clases
                         ;
                         Console.WriteLine("Cliente eliminado exitosamente de BD.");
 
-                        foreach (var Cliente in ListaClientes.ListaGlobalClientes)
+                        for (int i = 0; i <= ListaClientes.ListaGlobalClientes.Count - 1; i++)
                         {
-                            if (Cliente.ClienteID == idCliente)
+                            var cliente = ListaClientes.ListaGlobalClientes[i];
+
+
+                            if (cliente.ClienteID != idCliente)
                             { continue; }
 
-                            ListaClientes.ListaGlobalClientes.Remove(Cliente);
-                            copiadelista = Cliente.ListaDeServicios;
+                            ListaClientes.ListaGlobalClientes.Remove(cliente);
+                            copiadelista = cliente.ListaDeServicios;
 
                         }
 

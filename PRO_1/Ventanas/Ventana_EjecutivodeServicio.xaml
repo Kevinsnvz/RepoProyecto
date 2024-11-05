@@ -18,7 +18,7 @@
                 <MenuItem Header="ABM Cliente" FontSize="15" Click="ABMClienteMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
                 <MenuItem Header="Recibo De Cliente" FontSize="15" Click="ReciboDeClienteMenu_Click" BorderBrush="DarkGray" BorderThickness="1"></MenuItem>
             </Menu>
-            <Grid Name="grid_SeccionABMCliente" Visibility="Visible">
+            <Grid Name="grid_SeccionABMCliente" Visibility="Collapsed">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -165,7 +165,7 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Name="grid_SeccionFacturacion" Visibility="Collapsed">
+            <Grid Name="grid_SeccionFacturacion" Visibility="Visible">
                 
                 <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>

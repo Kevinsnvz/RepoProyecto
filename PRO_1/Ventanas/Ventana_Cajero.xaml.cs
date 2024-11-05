@@ -97,6 +97,7 @@ namespace PRO_1.Ventanas
             foreach (var Servicio in SelectedItemServicios)
             {
                 ServiciosACobrar_Label.Content += $"  - {Servicio.NombreServicio}: {Servicio.PrecioServicio}\n";
+                Console.WriteLine(Servicio.NombreServicio + " " + Servicio.PrecioServicio);
             }
             ServiciosACobrar_Label.Content += "\n";
 
@@ -112,75 +113,91 @@ namespace PRO_1.Ventanas
             String dest = "C:/Users/kevin/Desktop/recibo/recibo.pdf";
 
 
-
-            using (PdfWriter writer = new PdfWriter(dest))
-            using (PdfDocument pdfDocument = new PdfDocument(writer))
-            using (Document document = new Document(pdfDocument))
+            try
             {
-                Paragraph paragraph = new Paragraph("FACTURA").SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
-                Paragraph SPACING = new Paragraph();
 
-                document.Add(paragraph);
-                document.Add(SPACING);
-                document.Add(SPACING);
-
-                document.Add(new Paragraph("CLIENTE:"));
-                document.Add(new Paragraph(NombreCliente_Label.Content.ToString()));
-                document.Add(new Paragraph(ApellidoCliente_Label.Content.ToString()));
-                document.Add(new Paragraph(TelefonoCliente_Label.Content.ToString()));
-                document.Add(new Paragraph(MatriculaCliente_label.Content.ToString()));
-                document.Add(new Paragraph(IDCliente_label.Content.ToString()));
-
-                iText.Layout.Element.Table table = new iText.Layout.Element.Table(new float[] { 3, 7 });
-                table.AddCell("Servicio");
-                table.AddCell("Precio");
-
-                int TOTAL = 0;
-                
-                //Si el checkbox mostrado como "Autorizar Entregea?" es activado, modificar cliente a tener la autorizacion como TRUE si no, utilizar la autorizacion que contenga el cliente para la impresion.
-                if(Autorizar_CheckBox.IsChecked == true)
+                using (PdfWriter writer = new PdfWriter(dest))
+                using (PdfDocument pdfDocument = new PdfDocument(writer))
+                using (Document document = new Document(pdfDocument))
                 {
-                    DataBase.ModificarClienteDeBDYAPP
-                        (
-                        NombreCliente_Label.Content.ToString(),
-                        ApellidoCliente_Label.Content.ToString(),
-                        Convert.ToInt32(TelefonoCliente_Label.Content),
-                        MarcaCliente_Label.Content.ToString(),
-                        ModeloCliente_Label.Content.ToString(),
-                        MatriculaCliente_label.Content.ToString(),
-                        Convert.ToInt32(IDCliente_label.Content),
-                        true,
-                        acceso_Cliente
-                        );
+                    Paragraph paragraph = new Paragraph("FACTURA").SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.CENTER);
+                    Paragraph SPACING = new Paragraph();
+
+                    document.Add(paragraph);
+                    document.Add(SPACING);
+                    document.Add(SPACING);
+
+                    document.Add(new Paragraph("CLIENTE:"));
+                    document.Add(new Paragraph(NombreCliente_Label.Content.ToString()));
+                    document.Add(new Paragraph(ApellidoCliente_Label.Content.ToString()));
+                    document.Add(new Paragraph(TelefonoCliente_Label.Content.ToString()));
+                    document.Add(new Paragraph(MatriculaCliente_label.Content.ToString()));
+                    document.Add(new Paragraph(IDCliente_label.Content.ToString()));
+
+                    iText.Layout.Element.Table table = new iText.Layout.Element.Table(new float[] { 3, 7 });
+                    table.AddCell("Servicio");
+                    table.AddCell("Precio");
+
+                    int TOTAL = 0;
+
+                    //Si el checkbox mostrado como "Autorizar Entregea?" es activado, modificar cliente a tener la autorizacion como TRUE si no, utilizar la autorizacion que contenga el cliente para la impresion.
+                    if (Autorizar_CheckBox.IsChecked == true)
+                    {
+                        DataBase.ModificarClienteDeBDYAPP
+                            (
+                            NombreCliente_Label.Content.ToString(),
+                            ApellidoCliente_Label.Content.ToString(),
+                            Convert.ToInt32(TelefonoCliente_Label.Content),
+                            MarcaCliente_Label.Content.ToString(),
+                            ModeloCliente_Label.Content.ToString(),
+                            MatriculaCliente_label.Content.ToString(),
+                            Convert.ToInt32(IDCliente_label.Content),
+                            true,
+                            acceso_Cliente
+                            );
+                    }
+                    else
+                    {
+                        DataBase.ModificarClienteDeBDYAPP
+                            (
+                            NombreCliente_Label.Content.ToString(),
+                            ApellidoCliente_Label.Content.ToString(),
+                            Convert.ToInt32(TelefonoCliente_Label.Content),
+                            MarcaCliente_Label.Content.ToString(),
+                            ModeloCliente_Label.Content.ToString(),
+                            MatriculaCliente_label.Content.ToString(),
+                            Convert.ToInt32(IDCliente_label.Content),
+                            Convert.ToBoolean(Autorizado_label.Content),
+                            acceso_Cliente
+                            );
+                    }
+
+                    table.AddCell("TOTAL:");
+                    table.AddCell(TOTAL.ToString());
+                    document.Add(table);
+
+
+                    document.Add(SPACING);
+                    document.Add(new Paragraph("Kibe APPS")).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.LEFT);
+                    document.Close();
+
+                    MessageBox.Show("Impreso con exito.");
+
                 }
-                else
-                {
-                    DataBase.ModificarClienteDeBDYAPP
-                        (
-                        NombreCliente_Label.Content.ToString(),
-                        ApellidoCliente_Label.Content.ToString(),
-                        Convert.ToInt32(TelefonoCliente_Label.Content),
-                        MarcaCliente_Label.Content.ToString(),
-                        ModeloCliente_Label.Content.ToString(),
-                        MatriculaCliente_label.Content.ToString(),
-                        Convert.ToInt32(IDCliente_label.Content),
-                        Convert.ToBoolean(Autorizado_label.Content),
-                        acceso_Cliente
-                        );
-                }
 
-                table.AddCell("TOTAL:");
-                table.AddCell(TOTAL.ToString());
-                document.Add(table);
-                
-
-                document.Add(SPACING);
-                document.Add(new Paragraph("Kibe APPS")).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.LEFT);
-                document.Close();
-
-                MessageBox.Show("Impreso con exito.");
-                        
             }
+            catch(IOException ex)
+            {
+
+                MessageBox.Show(ex.Message + " No se pudo adquirir acceso al archivo destino. Cerrar procesos que lo esten utilizando.");
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            
             
         }
         

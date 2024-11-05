@@ -92,14 +92,14 @@ namespace PRO_1.Ventanas
         {
             if (Label_UsuarioSeleccionado.Content != null)
             {
-                foreach(var item in acceso_Cliente.ListaGlobalClientes)
+                foreach (var item in acceso_Cliente.ListaGlobalClientes)
                 {
-                    if(item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                    if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
                     {
                         var itemModificacionDeLista = item.ListaDeServicios;
                         itemModificacionDeLista.Add((nombreServicio, precioServicio));
 
-                        listServicios.Add(new ListServicios(nombreServicio,precioServicio));
+                        listServicios.Add(new ListServicios(nombreServicio, precioServicio));
 
                         Lista_ServiciosSolicitados.ItemsSource = null;
                         Lista_ServiciosSolicitados.ItemsSource = listServicios;
@@ -208,11 +208,13 @@ namespace PRO_1.Ventanas
 
             foreach (var item in acceso_Cliente.ListaGlobalClientes)
             {
-                if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                if (item.ClienteID == SelectedItem.ClienteID)
                 {
                     listServicios.Clear();
+                    
                     foreach (var itemModificacionDeLista in item.ListaDeServicios)
                     {
+                        Console.WriteLine(itemModificacionDeLista.NombreServicio + " " + itemModificacionDeLista.PrecioServicio);
                         listServicios.Add(new ListServicios(itemModificacionDeLista.NombreServicio, itemModificacionDeLista.PrecioServicio));
                     }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -134,6 +135,11 @@ namespace PRO_1.Clases
                     Console.WriteLine("ERROR: No se dio una opcion valida, proporcionar un num valido. Referirse a descripcion de parametro.");
                     break;
             }
+        }
+        public static void Mod_Cliente(Clientes newcliente, Clientes oldcliente)
+        {
+            Clientes.ListaGlobalClientes.Remove(oldcliente);
+            Clientes.ListaGlobalClientes.Add(newcliente);
         }
 
     }
