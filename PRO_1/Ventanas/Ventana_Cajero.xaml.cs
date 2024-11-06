@@ -90,11 +90,13 @@ namespace PRO_1.Ventanas
 
             
 
-            var SelectedItemServicios = SelectedItem.ListaDeServicios;
+            
 
             ServiciosACobrar_Label.Content = string.Empty;
 
-            foreach (var Servicio in SelectedItemServicios)
+            var tempList = DataBase.CargarServicios(SelectedItem.ClienteID);
+
+            foreach (var Servicio in tempList)
             {
                 ServiciosACobrar_Label.Content += $"  - {Servicio.NombreServicio}: {Servicio.PrecioServicio}\n";
                 Console.WriteLine(Servicio.NombreServicio + " " + Servicio.PrecioServicio);
@@ -137,8 +139,17 @@ namespace PRO_1.Ventanas
                     iText.Layout.Element.Table table = new iText.Layout.Element.Table(new float[] { 3, 7 });
                     table.AddCell("Servicio");
                     table.AddCell("Precio");
+                    var tempList = DataBase.CargarServicios(int.Parse(IDCliente_label.Content.ToString()));
 
-                    int TOTAL = 0;
+                    int x = 0;
+                    foreach(var i in tempList)
+                    {
+                        table.AddCell(i.NombreServicio);
+                        table.AddCell(i.PrecioServicio.ToString());
+                        x += i.PrecioServicio;
+                    }
+
+                    int TOTAL = x;
 
                     //Si el checkbox mostrado como "Autorizar Entregea?" es activado, modificar cliente a tener la autorizacion como TRUE si no, utilizar la autorizacion que contenga el cliente para la impresion.
                     if (Autorizar_CheckBox.IsChecked == true)

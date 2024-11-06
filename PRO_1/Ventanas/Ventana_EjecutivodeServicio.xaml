@@ -225,10 +225,16 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <StackPanel Name="Neumatico_stack" Visibility="Collapsed" >
+                        <StackPanel Name="Neumatico_stack" Visibility="Visible" >
                             <Label Content=" Seccion NEUMATICO" HorizontalContentAlignment="Center" FontSize="20" Background="HotPink"></Label>
                             <StackPanel>
+                                <Button Name="MontajeNeumatico_Button" FontSize="20" Width="auto" Height="auto" Content="Montaje Neumatico" Click="VentadeServicios"></Button>
 
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <Label Content="Rodado: "></Label>
+                                    <TextBox Width="50" Height="25" ></TextBox>
+                                    <Button Content="Buscar"></Button>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </Grid>

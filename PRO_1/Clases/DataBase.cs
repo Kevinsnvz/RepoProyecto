@@ -23,6 +23,97 @@ namespace PRO_1.Clases
         static ClassPasswordHasher ClassPasswordHasher = new ClassPasswordHasher();
 
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
+
+        public static void BorrarServicio(int id, string nombre_Servicio)
+        {
+            using(MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sqlquery = $"DELETE FROM ListaServicios WHERE Nombre_Servicio = '{nombre_Servicio}' AND ID = {id};";
+
+                    MySqlCommand com = new MySqlCommand(sqlquery, conn);
+
+                    MySqlDataReader reader = com.ExecuteReader();
+
+                    if(reader.HasRows)
+                    {
+                        Console.WriteLine("Servicio borrado exitosamente");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Servicio no borrado. Error desconocido.");
+                    }
+                }
+                catch(MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        public static void AgregarServicio(int id, string nombre_Servicio, int precio_Servicio)
+        {
+            using(MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sqlquery = $"INSERT INTO ListaServicios (ID, Nombre_Servicio, Precio_Servicio) VALUES ({id},'{nombre_Servicio}',{precio_Servicio});";
+
+                    using(MySqlCommand com = new MySqlCommand(sqlquery, conn))
+                    {
+                        MySqlDataReader reader = com.ExecuteReader();
+
+                        if(reader.HasRows)
+                        {
+                            Console.WriteLine("Servicio agregado exitosamente");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Servicio no se agrego. Error desconocido.");
+                        }
+                    }
+
+                }
+                catch(MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        public static List<(string NombreServicio, int PrecioServicio)> CargarServicios(int id)
+        {
+            using(MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string sqlquery = $"Select Nombre_Servicio, Precio_Servicio FROM ListaServicios WHERE ID = {id};";
+
+                   MySqlCommand com = new MySqlCommand(sqlquery, connection);
+                   
+                    using(MySqlDataReader reader = com.ExecuteReader())
+                    {
+                        List<(string NombreServicio, int PrecioServicio)> Lista = new List<(string NombreServicio, int PrecioServicio)>();
+
+                        while(reader.Read())
+                        {
+                            Lista.Add((reader.GetString(0),reader.GetInt32(1)));
+                        }
+                        return Lista;
+                    }
+                }
+                catch(MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return null;
+                }
+            }
+        }
+
         /// <summary>
         /// Borra el neumatico identificado por el ID del param, de la lista dada en el param y de la base de datos.
         /// </summary>

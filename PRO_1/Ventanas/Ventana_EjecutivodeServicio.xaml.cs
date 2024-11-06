@@ -68,7 +68,9 @@ namespace PRO_1.Ventanas
                 {
                     if (item.Matricula.Equals(matriculaUsuario))
                     {
-                        foreach (var itemListaDeServicios in item.ListaDeServicios)
+                        var tempList = DataBase.CargarServicios(item.ClienteID);
+
+                        foreach (var itemListaDeServicios in tempList)
                         {
                             x = x + itemListaDeServicios.PrecioServicio;
                         }
@@ -99,7 +101,14 @@ namespace PRO_1.Ventanas
                         var itemModificacionDeLista = item.ListaDeServicios;
                         itemModificacionDeLista.Add((nombreServicio, precioServicio));
 
-                        listServicios.Add(new ListServicios(nombreServicio, precioServicio));
+                        item.ListaDeServicios = itemModificacionDeLista;
+                        DataBase.AgregarServicio(item.ClienteID, nombreServicio, precioServicio);
+
+                        var tempList = DataBase.CargarServicios(item.ClienteID);
+
+                        listServicios.Add(new ListServicios(nombreServicio,precioServicio));
+                        
+                        
 
                         Lista_ServiciosSolicitados.ItemsSource = null;
                         Lista_ServiciosSolicitados.ItemsSource = listServicios;
@@ -129,35 +138,38 @@ namespace PRO_1.Ventanas
             {
                 var item = acceso_Cliente.ListaGlobalClientes[i];
                 if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
-                { 
+                {
 
-                    var itemModificacionDeLista = item.ListaDeServicios;
+                    var tempList = DataBase.CargarServicios(item.ClienteID);
+
                     var serviciosSeleccionado = (ListServicios)Lista_ServiciosSolicitados.SelectedItem;
-                    foreach (var ListasEnItem in itemModificacionDeLista)
+                    foreach (var ListasEnItem in tempList)
                     {
                         if (ListasEnItem.NombreServicio == serviciosSeleccionado.nombreServicio)
                         {
-                            itemModificacionDeLista.Remove(ListasEnItem);
-                            listServicios.Remove(serviciosSeleccionado);
-
-                            Lista_ServiciosSolicitados.ItemsSource = null;
-                            Lista_ServiciosSolicitados.ItemsSource = listServicios;
-
-                            PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
-                            return;
+                            DataBase.BorrarServicio(item.ClienteID, serviciosSeleccionado.nombreServicio);
                         }
-
-
                     }
+
+                    Lista_ServiciosSolicitados.ItemsSource = null;
+                    Lista_ServiciosSolicitados.Items.Clear();
+                    Lista_ServiciosSolicitados.ItemsSource = null;
+
+                    listServicios.Clear();
+                    listServicios.Clear();
+
+                    foreach (var itemModificacionDeLista in tempList)
+                    {
+                        Console.WriteLine(itemModificacionDeLista.NombreServicio + " " + itemModificacionDeLista.PrecioServicio);
+                        listServicios.Add(new ListServicios(itemModificacionDeLista.NombreServicio, itemModificacionDeLista.PrecioServicio));
+                    }
+
+                    Lista_ServiciosSolicitados.ItemsSource = listServicios;
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
                 }
-
-
             }
-
-            ActualizarListas();
-
-
         }
+
         /// <summary>
         /// Elimina todo de la lista del cliente actualmente seleccionado.
         /// </summary>
@@ -169,10 +181,16 @@ namespace PRO_1.Ventanas
             {
                 foreach (var item in acceso_Cliente.ListaGlobalClientes)
                 {
+
+
                     if (item.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
                     {
-                        var itemModificacionDeLista = item.ListaDeServicios;
-                        itemModificacionDeLista.Clear();
+                        var tempList = DataBase.CargarServicios(item.ClienteID);
+
+                        foreach(var iteminlist in tempList)
+                        {
+                            DataBase.BorrarServicio(item.ClienteID,iteminlist.NombreServicio);
+                        }
                         listServicios.Clear();
 
                     }
@@ -211,8 +229,9 @@ namespace PRO_1.Ventanas
                 if (item.ClienteID == SelectedItem.ClienteID)
                 {
                     listServicios.Clear();
-                    
-                    foreach (var itemModificacionDeLista in item.ListaDeServicios)
+                    var tempList = DataBase.CargarServicios(item.ClienteID);
+
+                    foreach (var itemModificacionDeLista in tempList)
                     {
                         Console.WriteLine(itemModificacionDeLista.NombreServicio + " " + itemModificacionDeLista.PrecioServicio);
                         listServicios.Add(new ListServicios(itemModificacionDeLista.NombreServicio, itemModificacionDeLista.PrecioServicio));
@@ -424,7 +443,11 @@ namespace PRO_1.Ventanas
 
                     AgregarServicioALista("Balanceo de Camioneta", Precios.BalanceoCamioneta);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+                    break;
+                case Button button when button == MontajeNeumatico_Button:
 
+                    AgregarServicioALista("Montaje de Neumatico", Precios.MontajeNeumatico);
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
                     break;
 
             }
