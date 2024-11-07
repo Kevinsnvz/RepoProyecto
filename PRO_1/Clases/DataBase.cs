@@ -24,6 +24,99 @@ namespace PRO_1.Clases
 
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
 
+
+        public static void BorrarFechaIngreso(int id, string nombre_Servicio)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sqlquery = $"DELETE FROM FechaIngreso WHERE ID = {id};";
+
+                    MySqlCommand com = new MySqlCommand(sqlquery, conn);
+
+                    MySqlDataReader reader = com.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        Console.WriteLine("Servicio borrado exitosamente");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Servicio no borrado. Error desconocido.");
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+        public static void AgregarFecha(int id)
+        {
+            DateTime dateTime = DateTime.Now;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    string sqlquery = $"INSERT INTO FechaIngreso (ID, Fecha) VALUES ({id},'{dateTime.ToString("yyyy-MM-dd HH:mm:ss")}');";
+
+                    using (MySqlCommand com = new MySqlCommand(sqlquery, conn))
+                    {
+                        MySqlDataReader reader = com.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            Console.WriteLine("Servicio agregado exitosamente");
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("Servicio no se agrego. Error desconocido.");
+                        }
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        public static List<DateTime> CargarFechas(int id)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string sqlquery = $"Select Fecha From FechaIngreso WHERE ID = {id};";
+
+                    MySqlCommand com = new MySqlCommand(sqlquery, connection);
+
+                    using (MySqlDataReader reader = com.ExecuteReader())
+                    {
+                        List<DateTime> list = new List<DateTime>();
+
+                        while (reader.Read())
+                        {
+                            list.Add(reader.GetDateTime(0));
+                        }
+                        return list;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return null;
+                }
+            }
+        }
+
         public static void BorrarServicio(int id, string nombre_Servicio)
         {
             using(MySqlConnection conn = new MySqlConnection(connectionString))

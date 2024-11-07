@@ -171,14 +171,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Clases\Adm_Ventanas.cs" />
+    <Compile Include="Clases\Camera.cs" />
     <Compile Include="Clases\ClassPasswordHasher.cs" />
     <Compile Include="Clases\InterfacePasswordHasher.cs" />
     <Compile Include="Clases\ListaDeClientes.cs" />
+    <Compile Include="Clases\ListaDeFechasIngresos.cs" />
     <Compile Include="Clases\ListaDeUsuarios.cs" />
     <Compile Include="Clases\ListServicios.cs" />
     <Compile Include="Clases\Neumatico.cs" />
     <Compile Include="Clases\Precios.cs" />
     <Compile Include="Clases\Usuarios.cs" />
+    <Compile Include="Ventanas\DialogVentana.xaml.cs">
+      <DependentUpon>DialogVentana.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\Ventana_Cajero.xaml.cs">
       <DependentUpon>Ventana_Cajero.xaml</DependentUpon>
     </Compile>
@@ -190,6 +195,9 @@
     </Compile>
     <Compile Include="Ventanas\Ventana_Jefe.xaml.cs">
       <DependentUpon>Ventana_Jefe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ventanas\Ventana_OperativoDeCamarasYRespaldo.xaml.cs">
+      <DependentUpon>Ventana_OperativoDeCamarasYRespaldo.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +213,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Ventanas\DialogVentana.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Ventanas\Ventana_Cajero.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -218,6 +230,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\Ventana_Jefe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\Ventana_OperativoDeCamarasYRespaldo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -251,6 +267,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Otros\DEFAULTDBCREATION.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\gettyimages-1432312638-640x640.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

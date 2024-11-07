@@ -449,6 +449,41 @@ namespace PRO_1.Ventanas
                     AgregarServicioALista("Montaje de Neumatico", Precios.MontajeNeumatico);
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
                     break;
+                case Button button when button == BridgestoneNeumatico_Button:
+
+                    foreach(var neu in Precios.NeumaticosBridgestone)
+                    {
+                        if (neu.IDNeumatico == int.Parse(BridgestoneIDNeumatico_Label.Content.ToString()))
+                        {
+                            AgregarServicioALista($"Neumatico {neu.Modelo}", neu.Precio);
+                        }
+                    }
+
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+                    break;
+                case Button button when button == MichelinNeumatico_Button:
+
+                    foreach (var neu in Precios.NeumaticosMichelin)
+                    {
+                        if (neu.IDNeumatico == int.Parse(MichelinIDNeumatico_Label.Content.ToString()))
+                        {
+                            AgregarServicioALista($"Neumatico {neu.Modelo}", neu.Precio);
+                        }
+                    }
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+                    break;
+                case Button button when button == PirelliNeumatico_Button:
+
+                    foreach (var neu in Precios.NeumaticosPirelli)
+                    {
+                        if (neu.IDNeumatico == int.Parse(PirelliIDNeumatico_Label.Content.ToString()))
+                        {
+                            AgregarServicioALista($"Neumatico {neu.Modelo}", neu.Precio);
+                        }
+                    }
+
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+                    break;
 
             }
 
@@ -620,7 +655,84 @@ namespace PRO_1.Ventanas
             Lista_ClientesParaModificar.ItemsSource = acceso_Cliente.ListaGlobalClientes;
             Lista_ClienteRecibo.ItemsSource = acceso_Cliente.ListaGlobalClientes;
 
+            NeumaticoMichelin_ComboBox.Items.Clear();
+            NeumaticoBridgestone_ComboBox.Items.Clear();
+            NeumaticoPirelli_ComboBox.Items.Clear();
 
+            foreach (var neumatico in Precios.NeumaticosMichelin)
+            {
+
+                NeumaticoMichelin_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}/{neumatico.Modelo}");
+            }
+            foreach (var neumatico in Precios.NeumaticosBridgestone)
+            {
+
+                NeumaticoBridgestone_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}/{neumatico.Modelo}");
+            }
+            foreach (var neumatico in Precios.NeumaticosPirelli)
+            {
+
+                NeumaticoPirelli_ComboBox.Items.Add($"{neumatico.Ancho}/{neumatico.Perfil}/R{neumatico.Rodado}/{neumatico.IDNeumatico}/{neumatico.Modelo}");
+            }
+
+
+        }
+
+        /// <summary>
+        /// Cuando se seleccione un item del combobox de Neumaticos Michelin, se ejecuta el codigo que pasa el ID correspondiente a un label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NeumaticoMichelinComboBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            if (NeumaticoMichelin_ComboBox.Items.Count <= 0) return;
+
+            string NeumaticoSeleccionado = NeumaticoMichelin_ComboBox.SelectedItem.ToString();
+
+            string[] partes = NeumaticoSeleccionado.Split('/');
+
+            int ID = Convert.ToInt32(partes[3]);
+            MichelinIDNeumatico_Label.Content = ID;
+
+            ActualizarListas();
+        }
+
+        /// <summary>
+        /// Cuando se seleccione un item del combobox de Neumaticos Bridgestone, se ejecuta el codigo que pasa el ID correspondiente a un label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NeumaticoBridgestoneComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (NeumaticoBridgestone_ComboBox.Items.Count <= 0) return;
+
+            string NeumaticoSeleccionado = NeumaticoBridgestone_ComboBox.SelectedItem.ToString();
+
+            string[] partes = NeumaticoSeleccionado.Split('/');
+
+            int ID = Convert.ToInt32(partes[3]);
+            BridgestoneIDNeumatico_Label.Content = ID;
+
+            ActualizarListas();
+        }
+
+        /// <summary>
+        /// Cuando se seleccione un item del combobox de Neumaticos Pirelli, se ejecuta el codigo que pasa el ID correspondiente a un label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void NeumaticoPirelliComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (NeumaticoPirelli_ComboBox.Items.Count <= 0) return;
+
+            string NeumaticoSeleccionado = NeumaticoPirelli_ComboBox.SelectedItem.ToString();
+
+            string[] partes = NeumaticoSeleccionado.Split('/');
+
+            int ID = Convert.ToInt32(partes[3]);
+            PirelliIDNeumatico_Label.Content = ID;
+
+            ActualizarListas();
         }
     }
 }

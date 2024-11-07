@@ -230,10 +230,40 @@
                             <StackPanel>
                                 <Button Name="MontajeNeumatico_Button" FontSize="20" Width="auto" Height="auto" Content="Montaje Neumatico" Click="VentadeServicios"></Button>
 
-                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                    <Label Content="Rodado: "></Label>
-                                    <TextBox Width="50" Height="25" ></TextBox>
-                                    <Button Content="Buscar"></Button>
+                                <Label Background="MediumPurple" Content="Michelin" FontSize="15"></Label>
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Label FontSize="15" Content=" Michelin: "></Label>
+                                    <ComboBox Name="NeumaticoMichelin_ComboBox" Margin="0,5" Width="100" SelectionChanged="NeumaticoMichelinComboBox_SelectionChanged"></ComboBox>
+                                    <Label Content="ID:"></Label>
+                                    <Label Name="MichelinIDNeumatico_Label"></Label>
+                                    <Button Name="MichelinNeumatico_Button" Height="25" Content="Agregar" Click="VentadeServicios"></Button>
+
+                                </StackPanel>
+
+                                <Label Background="MediumPurple" Content="Bridgestone" FontSize="15"></Label>
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Label FontSize="15" Content=" Bridgestone: "></Label>
+                                    <ComboBox Name="NeumaticoBridgestone_ComboBox" Margin="0,5" Width="100" SelectionChanged="NeumaticoBridgestoneComboBox_SelectionChanged"></ComboBox>
+                                    <Label Content="ID:"></Label>
+                                    <Label Name="BridgestoneIDNeumatico_Label"></Label>
+                                    <Button Name="BridgestoneNeumatico_Button" Height="25" Content="Agregar" Click="VentadeServicios"></Button>
+
+                                </StackPanel>
+
+                                <Label Background="MediumPurple" Content="Pirelli" FontSize="15"></Label>
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Label FontSize="15" Content=" Pirelli: "></Label>
+                                    <ComboBox Name="NeumaticoPirelli_ComboBox" Margin="0,5" Width="100" SelectionChanged="NeumaticoPirelliComboBox_SelectionChanged"></ComboBox>
+                                    <Label Content="ID:"></Label>
+                                    <Label Name="PirelliIDNeumatico_Label"></Label>
+                                    <Button Name="PirelliNeumatico_Button" Height="25" Content="Agregar" Click="VentadeServicios"></Button>
+
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

@@ -52,6 +52,11 @@ namespace PRO_1.Clases
                     ventana_Jefe.Show();
                     Application.Current.MainWindow?.Close();
                     break;
+                case "operativo":
+                    Ventana_OperativoDeCamarasYRespaldo ventana_operativo = new Ventana_OperativoDeCamarasYRespaldo();
+                    ventana_operativo.Show();
+                    Application.Current.MainWindow?.Close();
+                    break;
                 default:
                     MessageBox.Show("No se dio un rol valido");
                     break;

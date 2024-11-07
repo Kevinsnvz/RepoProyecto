@@ -50,3 +50,11 @@ CREATE TABLE Neumaticos
 INSERT INTO Neumaticos (marca,modelo,ancho,perfil,rodado,stock,precio)
 VALUES
 	('Michelin','X-ICE SNOW',100,65,15,4,150);
+
+Create TABLE ListaServicios
+(
+	ID int,
+	Nombre_Servicio VARCHAR(75),
+	Precio_Servicio VARCHAR(75),
+	FOREIGN KEY (ID) REFERENCES Clientes(ID)
+);

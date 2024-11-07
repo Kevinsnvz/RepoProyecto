@@ -8,7 +8,7 @@ namespace PRO_1.Clases
 {
     public class ListaDeClientes
     {
-        public List<Clientes> _listadeclientes = new List<Clientes>();
+        private List<Clientes> _listadeclientes = new List<Clientes>();
 
         public List<Clientes> ListaGlobalClientes
         {
