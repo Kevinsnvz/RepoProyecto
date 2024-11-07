@@ -142,6 +142,56 @@ namespace PRO_1.Clases
             get { return _neumaticosPirelli; }
             set { _neumaticosPirelli = value; }
         }
+
+        private static int _parkingcomunMoto = 50;
+        public static int ParkingComunMoto
+        {
+            get
+            {
+                return _parkingcomunMoto;
+            }
+            set { _parkingcomunMoto = value; }
+        }
+
+        private static int _parkingcomunAuto = 100;
+        public static int ParkingComunAuto
+        {
+            get
+            {
+                return _parkingcomunAuto;
+            }
+            set { _parkingcomunAuto = value; }
+        }
+
+        private static int _parkingcomunCamioneta = 120;
+        public static int ParkingComunCamioneta
+        {
+            get
+            {
+                return _parkingcomunCamioneta;
+            }
+            set { _parkingcomunCamioneta = value; }
+        }
+
+        private static int _parkingcomunPequeñoCamion= 120;
+        public static int ParkingComunPequeñoCamion
+        {
+            get
+            {
+                return _parkingcomunPequeñoCamion;
+            }
+            set { _parkingcomunPequeñoCamion = value; }
+        }
+
+        private static int _parkingcomunPequeñoUtilitario= 120;
+        public static int ParkingComunPequeñoUtilitario
+        {
+            get
+            {
+                return _parkingcomunPequeñoUtilitario;
+            }
+            set { _parkingcomunPequeñoUtilitario = value; }
+        }
     }
 }
 

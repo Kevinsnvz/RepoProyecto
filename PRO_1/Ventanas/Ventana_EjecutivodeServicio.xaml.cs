@@ -484,6 +484,36 @@ namespace PRO_1.Ventanas
 
                     PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
                     break;
+                case Button button when button == ComunMoto_button:
+
+                    int ClientID = 0;
+                    foreach(var i in acceso_Cliente.ListaGlobalClientes)
+                    {
+                        if(i.Matricula == Label_MatriculaUsuarioSeleccionado.Content.ToString())
+                        {
+                            ClientID = i.ClienteID;
+                        }
+                    }
+
+                    List<DateTime> fechas = DataBase.CargarFechas(ClientID);
+
+                    DateTime FechaActual = DateTime.Now;
+
+                    double totalHours = 0;
+
+                    foreach (var fecha in fechas)
+                    {
+                        TimeSpan Diferencia = fecha - FechaActual;
+                        totalHours = Diferencia.TotalHours;
+                    }
+
+                    MessageBox.Show(totalHours.ToString());
+                    
+                    AgregarServicioALista($"Parking cliente Comun", Precios.ParkingComunMoto * Convert.ToInt32(totalHours));
+                    
+
+                    PrecioTotal_Label.Content = UpdatePrecioTotal(Label_MatriculaUsuarioSeleccionado.Content.ToString());
+                    break;
 
             }
 
@@ -733,6 +763,27 @@ namespace PRO_1.Ventanas
             PirelliIDNeumatico_Label.Content = ID;
 
             ActualizarListas();
+        }
+
+        private void ClienteComunParking_Button_Click(object sender, RoutedEventArgs e)
+        {
+            VehiculosComun_stack.Visibility = Visibility.Visible;
+            VehiculosEventual_stack.Visibility = Visibility.Collapsed;
+            VehiculosExtraordinario_stack.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClienteEventualParking_Button_Click(object sender, RoutedEventArgs e)
+        {
+            VehiculosComun_stack.Visibility = Visibility.Collapsed;
+            VehiculosEventual_stack.Visibility = Visibility.Visible;
+            VehiculosExtraordinario_stack.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClienteExtraordinarioParking_Button_Click(object sender, RoutedEventArgs e)
+        {
+            VehiculosComun_stack.Visibility = Visibility.Collapsed;
+            VehiculosEventual_stack.Visibility = Visibility.Collapsed;
+            VehiculosExtraordinario_stack.Visibility = Visibility.Visible;
         }
     }
 }

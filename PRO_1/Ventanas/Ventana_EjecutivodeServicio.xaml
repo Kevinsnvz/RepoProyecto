@@ -197,11 +197,49 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <StackPanel Name="Parking_Stack" Visibility="Collapsed">
+                        <StackPanel Name="Parking_Stack" Visibility="Visible">
                             <Label Content="Seccion PARKING" HorizontalContentAlignment="Center" FontSize="20" Background="LightGoldenrodYellow"></Label>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Name="ClienteComunParking_Button" FontSize="20" Width="auto" Height="auto" Content="Cliente Comun" Click="ClienteComunParking_Button_Click" ></Button>
+                                    <Button Name="ClienteEventualParking_Button" FontSize="20" Width="auto" Margin="10,0,10,0" Height="auto" Content="Cliente Eventual" Click="ClienteEventualParking_Button_Click" ></Button>
+                                    <Button Name="ClienteExtraordinarioParking_Button" FontSize="20" Width="auto" Height="auto" Content="Cliente Extrao." Click="ClienteExtraordinarioParking_Button_Click"></Button>
+
+
+
+                                </StackPanel>
                             </StackPanel>
+
+                            <StackPanel x:Name="VehiculosComun_stack" Visibility="Collapsed">
+
+                                <Button x:Name="ComunMoto_button" Content="Moto" Click="VentadeServicios"></Button>
+                                <Button x:Name="ComunAuto_button" Content="Auto" Click="VentadeServicios"></Button>
+                                <Button x:Name="ComunCamioneta_button" Content="Camioneta" Click="VentadeServicios"></Button>
+                                <Button x:Name="ComunPeqCamion_button" Content="Pequeño Camion" Click="VentadeServicios"></Button>
+                                <Button x:Name="ComunPeqUtilitario_button" Content="Pequeño Utilitario" Click="VentadeServicios"></Button>
+
+                            </StackPanel>
+
+                            <StackPanel x:Name="VehiculosEventual_stack" Visibility="Collapsed">
+
+                                <Button x:Name="EventualMoto_button" Content="Moto" Click="VentadeServicios"></Button>
+                                <Button x:Name="EventualAuto_button" Content="Auto" Click="VentadeServicios"></Button>
+                                <Button x:Name="EventualCamioneta_button" Content="Camioneta" Click="VentadeServicios"></Button>
+                                <Button x:Name="EventualPeqCamion_button" Content="Pequeño Camion" Click="VentadeServicios"></Button>
+                                <Button x:Name="EventualPeqUtilitario_button" Content="Pequeño Utilitario" Click="VentadeServicios"></Button>
+
+                            </StackPanel>
+
+                            <StackPanel x:Name="VehiculosExtraordinario_stack" Visibility="Collapsed">
+
+                                <Button x:Name="ExtraordinarioMoto_button" Content="Moto" Click="VentadeServicios"></Button>
+                                <Button x:Name="ExtraordinarioAuto_button" Content="Auto" Click="VentadeServicios"></Button>
+                                <Button x:Name="ExtraordinarioCamioneta_button" Content="Camioneta" Click="VentadeServicios"></Button>
+                                <Button x:Name="ExtraordinarioPeqCamion_button" Content="Pequeño Camion" Click="VentadeServicios"></Button>
+                                <Button x:Name="ExtraordinarioPeqUtilitario_button" Content="Pequeño Utilitario" Click="VentadeServicios"></Button>
+
+                            </StackPanel>
+
                         </StackPanel>
                         
                         <StackPanel Name="Lavado_stack" Visibility="Collapsed">
@@ -225,7 +263,7 @@
                             </StackPanel>
                         </StackPanel>
 
-                        <StackPanel Name="Neumatico_stack" Visibility="Visible" >
+                        <StackPanel Name="Neumatico_stack" Visibility="Collapsed" >
                             <Label Content=" Seccion NEUMATICO" HorizontalContentAlignment="Center" FontSize="20" Background="HotPink"></Label>
                             <StackPanel>
                                 <Button Name="MontajeNeumatico_Button" FontSize="20" Width="auto" Height="auto" Content="Montaje Neumatico" Click="VentadeServicios"></Button>

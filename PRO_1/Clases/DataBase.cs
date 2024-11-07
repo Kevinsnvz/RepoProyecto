@@ -25,7 +25,7 @@ namespace PRO_1.Clases
         private const string connectionString = "SERVER=127.0.0.1;DATABASE=sys;UID=root;PASSWORD=rootpassword;";
 
 
-        public static void BorrarFechaIngreso(int id, string nombre_Servicio)
+        public static void BorrarFechaIngreso(int id)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -662,6 +662,9 @@ namespace PRO_1.Clases
 
                             ListaClientes.ListaGlobalClientes.Remove(cliente);
                             Console.WriteLine($"Cliente {id} eliminado exitosamente de LISTA");
+
+                            BorrarFechaIngreso(id);
+
                             break;
                         }
                         
@@ -706,6 +709,9 @@ namespace PRO_1.Clases
                         Console.WriteLine("Usuario creado exitosamente.");
                         Clientes Cliente = new Clientes(nombre, apellido, marca, modelo, matricula,telefono,Convert.ToInt32(cmd.LastInsertedId));
                         ListaClientes.ListaGlobalClientes.Add(Cliente);
+
+                        Console.WriteLine(Convert.ToInt32(cmd.LastInsertedId));
+                        AgregarFecha(Convert.ToInt32(cmd.LastInsertedId));
                         return true;
                     }
                     else { Console.WriteLine("ERROR: Usuario no creado. Error desconocido."); return false; }

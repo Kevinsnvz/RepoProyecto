@@ -55,6 +55,11 @@ Create TABLE ListaServicios
 (
 	ID int,
 	Nombre_Servicio VARCHAR(75),
-	Precio_Servicio VARCHAR(75),
-	FOREIGN KEY (ID) REFERENCES Clientes(ID)
+	Precio_Servicio VARCHAR(75)
+);
+
+CREATE TABLE FechaIngreso
+(
+ID int,
+Fecha DATE
 );
